@@ -1,20 +1,22 @@
 .AppHeader{
-    height: 50px;
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 20px 4px 0;
+    padding-right: 12px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     overflow: hidden;
 }
 
 
 .logo{
-    padding: 16px;
-    font-size: 24px;
+    padding: 16px 8px;
+    text-align: center;
+    font-size: 20px;
     background-color: #1677ff;
     color: white;
     width: 250px;
+    max-width: 250px;
 }
 
 .searchContainer{
