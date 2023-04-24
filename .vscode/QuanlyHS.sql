@@ -1,4 +1,4 @@
-﻿CREATE TABLE HOCSINH (
+CREATE TABLE HOCSINH (
 	MaHS smallint identity(1000,1) unique not null,
 	HoTen nvarchar(30),
 	DiaChi nvarchar(200),
