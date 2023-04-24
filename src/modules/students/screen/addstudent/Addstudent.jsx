@@ -4,14 +4,13 @@ import {
     Typography, 
     Space,
     Input,
-    Table,
     Select,
-    Button
+    Button,
+    Form
 } from 'antd'
 import style from './Addstudent.module.css'
 
 const { Title } = Typography;
-const { Meta } = Card;
 
 function Addstudent() {
     return (
@@ -20,91 +19,43 @@ function Addstudent() {
             <Space>
                 <Card>
                     <Typography.Title level={4}>Add Students</Typography.Title>
-                    <Typography.Text>NAME*</Typography.Text>
-                    <Input size="large" placeholder=""></Input>
-                    <br></br>
-                    <Typography.Text>CLASS*</Typography.Text>
-                    <br></br>
-                        <Select
-                            size="large"
-                            onChange={(value)=>{
-
-                            }}
-                            defaultValue={"Select class"}
-                            options={[{
-                                label: '10A1',
-                                value: '10A1',
-                            },
-                            {
-                                label: '10A2',
-                                value: '10A2',
-                            },
-                            {
-                                label: '10A3',
-                                value: '10A3',
-                            },
-                            {
-                                label: '11A1',
-                                value: '11A1',
-                            },
-                            {
-                                label: '11A2',
-                                value: '11A2',
-                            },
-                            {
-                                label: '11A3',
-                                value: '11A3',
-                            },
-                            {
-                                label: '12A1',
-                                value: '12A1',
-                            },
-                            {
-                                label: '12A2',
-                                value: '12A2',
-                            },
-                            {
-                                label: '12A3',
-                                value: '12A3',
-                            },
-                            ]}>   
-                        </Select>
-                    <br></br>
-                    <Typography.Text>DATE OF BIRTH*</Typography.Text>
-                    <Input size="large" placeholder=""></Input>
-                    <br></br>
-                    <Typography.Text>ID*</Typography.Text>
-                    <Input size="large" placeholder=""></Input>
-                    <br></br>
-                    <Typography.Text>GENDER*</Typography.Text>
-                    <br></br>
-                    <Select
-                        size="large"
-                        onChange={(value)=>{
-
-                        }}
-                        defaultValue={"Select Gender"} 
-                        options={[
-                            {
-                                label: "Nam",
-                                value: "Nam",
-                            },
-                            {
-                                label: "Nữ",
-                                value: "Nữ",
-                            },
-                        ]}
-                    ></Select>
-                    <br></br>
-                    <Typography.Text>ADDRESS*</Typography.Text>
-                    <Input size="large" placeholder=""></Input>
-                    <br></br>
-                    <Typography.Text>EMAIL*</Typography.Text>
-                    <Input size="large" placeholder=""></Input>
-                    <div>
-                        <Button htmlType='submit' type='primary'>Reset</Button>
-                        <Button htmlType='submit' type='primary'>Save</Button>
-                    </div>
+                    <Form>
+                        <Form.Item name={"name"} label="NAME*">
+                            <Input size="large" placeholder=""></Input>
+                        </Form.Item>
+                        <Form.Item name={"class"} label="CLASS*">
+                            <Select placeholder="Please select class">
+                                {["10A1","10A2","10A3","11A1","11A2","11A3","12A1","12A2","12A3"].map(gender=>{
+                                    return <Select.Option value={gender} key={gender}>{gender}</Select.Option>
+                                })}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name={"dateofbirth"} label="DATE OF BIRTH*">
+                            <Input size="large" placeholder=""></Input>
+                        </Form.Item>
+                        <Form.Item name={"id"} label="ID*">
+                            <Input size="large" placeholder=""></Input>
+                        </Form.Item>
+                        <Form.Item name={"gender"} label="GENDER*">
+                            <Select placeholder="Please select gender">
+                                {["Nam","Nữ"].map(gender=>{
+                                    return <Select.Option value={gender} key={gender}>{gender}</Select.Option>
+                                })}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name={"address"} label="ADDRESS*">
+                            <Input size="large" placeholder=""></Input>
+                        </Form.Item>
+                        <Form.Item name={"email"} label="EMAIL*">
+                            <Input size="large" placeholder=""></Input>
+                        </Form.Item>
+                    </Form>
+                    <div className={style.spaceButton}>
+                        <Space wrap>
+                            <Button htmlType='submit' type='primary'>Reset</Button>
+                            <Button htmlType='submit' type='primary'>Save</Button>
+                        </Space> 
+                    </div>   
                 </Card>
             </Space>
         </div>
