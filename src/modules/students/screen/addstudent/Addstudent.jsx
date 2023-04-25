@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { 
     Card, 
     Typography, 
@@ -6,7 +6,8 @@ import {
     Input,
     Select,
     Button,
-    Form
+    Form,
+    DatePicker,
 } from 'antd'
 import style from './Addstudent.module.css'
 
@@ -21,7 +22,7 @@ function Addstudent() {
                     <Typography.Title level={4}>Add Students</Typography.Title>
                     <Form>
                         <Form.Item name={"name"} label="NAME*">
-                            <Input size="large" placeholder=""></Input>
+                            <Input size="medium" placeholder=""></Input>
                         </Form.Item>
                         <Form.Item name={"class"} label="CLASS*">
                             <Select placeholder="Please select class">
@@ -31,10 +32,10 @@ function Addstudent() {
                             </Select>
                         </Form.Item>
                         <Form.Item name={"dateofbirth"} label="DATE OF BIRTH*">
-                            <Input size="large" placeholder=""></Input>
+                            <DatePicker/>
                         </Form.Item>
                         <Form.Item name={"id"} label="ID*">
-                            <Input size="large" placeholder=""></Input>
+                            <Input size="medium" placeholder=""></Input>
                         </Form.Item>
                         <Form.Item name={"gender"} label="GENDER*">
                             <Select placeholder="Please select gender">
@@ -44,10 +45,10 @@ function Addstudent() {
                             </Select>
                         </Form.Item>
                         <Form.Item name={"address"} label="ADDRESS*">
-                            <Input size="large" placeholder=""></Input>
+                            <Input size="medium" placeholder=""></Input>
                         </Form.Item>
                         <Form.Item name={"email"} label="EMAIL*">
-                            <Input size="large" placeholder=""></Input>
+                            <Input size="medium" placeholder=""></Input>
                         </Form.Item>
                     </Form>
                     <div className={style.spaceButton}>

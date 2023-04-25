@@ -7,6 +7,8 @@ import Root from "./Root";
 import HomePage from "./modules/homePage/HomePage";
 import Allstudent from "./modules/students/screen/allstudent/Allstudent";
 import Addstudent from "./modules/students/screen/addstudent/Addstudent";
+import Editstudent from "./modules/students/screen/editstudent/Editstudent";
+import Profilestudent from "./modules/students/screen/profilestudent/Profilestudent";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,16 @@ const router = createBrowserRouter([
       {
         path:"/addstudents",
         element:<Addstudent/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"/editstudent",
+        element:<Editstudent/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"/profilestudent",
+        element:<Profilestudent/>,
         errorElement:<ErrorPage/>
       },
     ]

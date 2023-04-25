@@ -1,6 +1,5 @@
 import React from 'react'
 import { 
-    pagination, 
     Table, 
     Select, 
     Card, 
