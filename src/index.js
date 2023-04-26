@@ -23,6 +23,11 @@ const router = createBrowserRouter([
       },
       {
         path:"/students",
+        element:<AllStudent/>,
+        errorElement:<ErrorPage/>
+      }
+      {
+        path:"/students",
         element:<Allstudent/>,
         errorElement:<ErrorPage/>
       },
