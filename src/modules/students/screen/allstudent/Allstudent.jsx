@@ -13,10 +13,9 @@ import style from "./Allstudent.module.css";
 function Allstudent() {
   return (
     <div className={style.Allstudent}>
-      <Card>
-        <Typography.Title level={4}>All Student Data</Typography.Title>
+      <Card title= "All Student Data">
         <div className={style.selectClass}>
-          <Space size={20}>
+          <Space>
             <AutoComplete
               style={{ width: 200 }}
               onSearch={() => {}}

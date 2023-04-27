@@ -16,8 +16,6 @@ const { Title } = Typography;
 function Addstudent() {
     return (
         <div className={style.Addstudent}>
-           
-           
                 <Card>
                     <Typography.Title level={4}>Add Students</Typography.Title>
                     <Form>
@@ -58,9 +56,8 @@ function Addstudent() {
                         </Space> 
                     </div>   
                 </Card>
-           
         </div>
-    )
+    );
 }
 
 export default Addstudent

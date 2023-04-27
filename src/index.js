@@ -33,12 +33,12 @@ const router = createBrowserRouter([
         errorElement:<ErrorPage/>
       },
       {
-        path:"/editstudent",
+        path:"/editstudents",
         element:<Editstudent/>,
         errorElement:<ErrorPage/>
       },
       {
-        path:"/profilestudent",
+        path:"/profilestudents",
         element:<Profilestudent/>,
         errorElement:<ErrorPage/>
       },

@@ -14,26 +14,12 @@ import {
 import style from './Profilestudent.module.css'
 const { Title } = Typography;
 
-const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
-
 function Profilestudent () {
     const [componentDisabled, setComponentDisabled] = useState(true);
     return (
-        <div>
-            <Typography.Title level={3}>Home {'>'} Students Data {'>'} Students Profile {'>'} Edit Student</Typography.Title>
-            <Space wrap>
-                <Card>
-                    <Typography.Title level={4}>Profile Student</Typography.Title>
-                            <Checkbox
-                                checked={componentDisabled}
-                                onChange={(e) => setComponentDisabled(e.target.checked)}
-                            >Edit Profile Student</Checkbox>
-                        <Form disabled={componentDisabled}>
+        <div className={style.Addstudent}>
+            <Card title= "Profile Student">
+                        <Form>
                             <Form.Item name={"name"} label="NAME*">
                                 <Input size="medium" placeholder=""></Input>
                             </Form.Item>
@@ -65,15 +51,14 @@ function Profilestudent () {
                             </Form.Item>
                                 <div className={style.spaceButton}>
                                     <Space wrap>
-                                        <Button htmlType='submit' type='primary'>Reset</Button>
-                                        <Button htmlType='submit' type='primary'>Save</Button>
+                                        <Button htmlType='submit' type='primary'>Edit</Button>
+                                        {/* <Button htmlType='submit' type='primary'>Save</Button> */}
                                     </Space> 
                                 </div> 
                         </Form>
-                </Card>
-            </Space>
+            </Card>
         </div>
-    )
+    );
 }
 
 export default Profilestudent
