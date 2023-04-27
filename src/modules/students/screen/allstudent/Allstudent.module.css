@@ -1,11 +1,11 @@
-/* .homePage{
-    background-color: #C4C4C4;
-    width: 100%;
-    height: 100%;
-} */
+
+
 .Addstudent{
     flex: 2px;
     padding: 2px 2px 2px 2px;
+}
+.selectClass{
+    margin: 12px 0;
 }
 .spaceButton{
     position: relative;

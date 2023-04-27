@@ -1,20 +1,16 @@
 
-.App{
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-   
-}
+
 .SideMenuAndPageContent{
     display: flex;
-    flex: 1;
+   
     justify-content: flex-start;
     align-items: flex-start;
     background-color: rgba(0, 0, 0, 0.05) ;
 }
 
 .PageContent{ 
+    flex:2;
     height: 100%;
-    padding: 50px;
+    padding: 20px 50px;
     /* padding-left: 12px; */
 }
