@@ -16,8 +16,7 @@ const { Title } = Typography;
 function Addstudent() {
     return (
         <div className={style.Addstudent}>
-                <Card>
-                    <Typography.Title level={4}>Add Students</Typography.Title>
+                <Card title="Add Students">
                     <Form>
                         <Form.Item name={"name"} label="NAME*">
                             <Input size="medium" placeholder=""></Input>
