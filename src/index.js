@@ -6,6 +6,8 @@ import ErrorPage from "./modules/errorPage/ErrorPage";
 import Root from "./Root";
 import HomePage from "./modules/homePage/HomePage";
 import AllStudent from "./modules/students/screens/AllStudent";
+import ClassInformation from "./modules/classes/classInfoPage";
+import ClassesPage from "./modules/classes/classesPage";
 
 const router = createBrowserRouter([
   {
@@ -19,9 +21,21 @@ const router = createBrowserRouter([
         errorElement:<ErrorPage/>
       },
       {
-        path:"/students",
+        path:"students",
         element:<AllStudent/>,
-        errorElement:<ErrorPage/>
+        errorElement:<errorpage/>
+      },
+      {
+        path:"classes",
+        element: <ClassesPage/>,
+        errorElement: <errorpage/>,
+        children: [
+          {
+            path:"id",
+            element: <ClassInformation/>,
+            errorElement: <errorpage/>
+          }
+        ]
       }
     ]
   }

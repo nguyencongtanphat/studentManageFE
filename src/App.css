@@ -15,5 +15,17 @@
 
 .PageContent{ 
     height: 100%;
+    width: 100%;
     padding: 20px 50px 50px 50px;
+}
+
+.Button{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    height: 100%;
+}
+
+.custom-row:hover {
+  cursor: pointer;
 }
