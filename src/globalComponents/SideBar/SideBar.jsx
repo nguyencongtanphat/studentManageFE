@@ -27,7 +27,7 @@ function SideMenu() {
     <div className={style.SideMenu}>
       <Menu
         className={style.SideMenuVertical}
-        mode="vertical"
+        mode="inline"
         onClick={(item) => {
           //item.key
           navigate(item.key);
@@ -46,8 +46,18 @@ function SideMenu() {
           },
           {
             label: "Classes",
-            key: "/classes",
+            key: "classgroup",
             icon: <GroupOutlined />,
+            children: [
+              {
+                label: "Classes",
+                key: "/classes"
+              },
+              {
+                label: "Print Student List",
+                key: "/printstudentlist"
+              }
+            ]
           },
           {
             label: "Grades",

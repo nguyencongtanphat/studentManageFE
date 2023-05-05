@@ -13,7 +13,8 @@ import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Gradesinformation from "./modules/grade/Gradesinformation/Gradesinformation";
 
 import AllStudent from "./modules/students/screens/AllStudent";
-
+import ClassInformation from "./modules/classes/classInfoPage";
+import ClassesPage from "./modules/classes/classesPage";
 
 const router = createBrowserRouter([
   {
