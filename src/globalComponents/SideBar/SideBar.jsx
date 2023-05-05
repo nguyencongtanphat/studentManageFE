@@ -35,7 +35,7 @@ function SideMenu() {
         selectedKeys={[selectedKeys]}
         items={[
           {
-            label: "Dashbaord",
+            label: "Dashboard",
             icon: <AppstoreOutlined />,
             key: "/",
           },

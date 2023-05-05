@@ -1,0 +1,14 @@
+
+
+.Addstudent{
+    flex: 2px;
+    padding: 2px 2px 2px 2px;
+}
+.selectClass{
+    margin: 12px 0;
+}
+.spaceButton{
+    position: relative;
+    bottom: 0px;
+    right: 0px;
+}
