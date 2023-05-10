@@ -15,6 +15,7 @@ import Gradesinformation from "./modules/grade/Gradesinformation/Gradesinformati
 import AllStudent from "./modules/students/screens/AllStudent";
 import ClassInformation from "./modules/classes/classInfoPage";
 import ClassesPage from "./modules/classes/classesPage";
+import PrintStudentListPage from "./modules/classes/PrintStudentListPage";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,16 @@ const router = createBrowserRouter([
       {
         path:"gradesinformation",
         element:<Gradesinformation/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"classes",
+        element:<ClassesPage/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"printstudentlist",
+        element:<PrintStudentListPage/>,
         errorElement:<ErrorPage/>
       },
     ]
