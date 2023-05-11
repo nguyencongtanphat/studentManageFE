@@ -13,8 +13,11 @@ import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Gradesinformation from "./modules/grade/Gradesinformation/Gradesinformation";
 
 import AllStudent from "./modules/students/screens/AllStudent";
-import ClassInformation from "./modules/classes/classInfoPage";
 import ClassesPage from "./modules/classes/classesPage";
+import ClassesInformation from "./modules/classes/classesInformation";
+import ClassesAdd from "./modules/classes/classesAdd";
+import ClassesEdit from "./modules/classes/classesEdit";
+import AddStudentToClass from "./modules/classes/addstudenttoclass";
 import PrintStudentListPage from "./modules/classes/PrintStudentListPage";
 
 const router = createBrowserRouter([
@@ -67,6 +70,26 @@ const router = createBrowserRouter([
       {
         path:"printstudentlist",
         element:<PrintStudentListPage/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"classesinformation",
+        element:<ClassesInformation/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"classesadd",
+        element:<ClassesAdd/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"classesedit",
+        element:<ClassesEdit/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"addstudenttoclass",
+        element:<AddStudentToClass/>,
         errorElement:<ErrorPage/>
       },
     ]

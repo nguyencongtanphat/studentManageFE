@@ -6,7 +6,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 const {Text, Link} = Typography;
 
-function ClassesEdit(){
+function ClassesInformation(){
     const [ flag, setFlag ] = useState(true);
     console.log('re-render');
     const location = useLocation();
@@ -24,7 +24,7 @@ function ClassesEdit(){
     )
 }
 
-export default ClassesEdit;
+export default ClassesInformation;
 
 const classOptions = [
     {
@@ -110,9 +110,34 @@ function PrintStudentList(props){
     const [ numPupils, setNumPupils ] = useState(0);
     const classes = useRef([]);
     
+
+    const handleClassesChange = (values) => {
+        const idClassesArr = [];
+            for (let i = 0; i < classOptions.length; i++) {
+                for (let j = 0; j < values.length; j++) {
+                    if (classOptions[i].value === values[j])
+                        idClassesArr.push(classOptions[i].label);
+            }
+        }
+        classes.current = idClassesArr;
+    };
     const handleNumsPupilsChange = (values) => {
         setNumPupils(values.target.value);
     };
+    // const handleCheckClick = (classes) => {
+    //     let filtered = []
+    //     if (classes.current.length === 0) {
+    //     filtered = dataSource;
+    //     }
+    //     else {
+    //         filtered = dataSource.filter(
+    //             (record) =>
+    //                 classes.current.includes(record.name)
+    //         );
+    //     }
+    //     if( numPupils === 0 || numPupils > filtered.length) setFilteredData(filtered);
+    //     else setFilteredData(filtered.slice(0, numPupils));
+    // }
     const handleRowClick = () => {
         navigate('/classes/id');
         props.setFlag(!props.flag);
@@ -135,8 +160,7 @@ function PrintStudentList(props){
                 handleRowClick={handleRowClick} 
                 />
                 <Row style={{ display:'flex', justifyContent: 'flex-end'}}>
-                    <Button type= 'primary' style = {{marginRight:10}}>Add Student</Button>
-                    <Button type= 'primary'>Save</Button>
+                    <Button type= 'primary'>Edit</Button>
                 </Row>
                 
             </Card>
