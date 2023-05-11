@@ -73,8 +73,9 @@ function Allstudent() {
         return student.name.includes(nameQuery);
       });
     } else if (classQuery) {
+      console.log("classQuery")
       newStudentList = studentList.filter((student) => {
-        return student.class === classQuery;
+        return student.classes.includes(classQuery);
       });
     }
 
