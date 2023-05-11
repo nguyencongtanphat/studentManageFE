@@ -21,7 +21,10 @@ function Profilestudent () {
             <Card title= "Profile Student">
                         <Form>
                             <Form.Item name={"name"} label="NAME*">
-                                <Input size="medium" placeholder=""></Input>
+                                <Input
+                                    size="medium"
+                                    placeholder=""
+                                    initialValue='aaa'></Input>
                             </Form.Item>
                             <Form.Item name={"class"} label="CLASS*">
                                 <Select placeholder="Please select class">
