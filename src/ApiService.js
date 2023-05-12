@@ -12,6 +12,16 @@ class ApiService{
             throw e;
         }
     }
+
+    static post = async (reqUrl, body)=>{
+        try{
+            console.log("POST:", urlServer + "/" + reqUrl);
+            const response = await axios.post(urlServer + "/" + reqUrl, body);
+            console.log("response create student", response)
+        }catch(e){
+            throw e;
+        }
+    }
 }
 export default ApiService;
 
