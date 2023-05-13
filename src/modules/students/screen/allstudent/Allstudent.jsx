@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Select, Card, Space, Button, AutoComplete } from "antd";
+import {Tag, Table, Select, Card, Space, Button, AutoComplete } from "antd";
 import style from "./Allstudent.module.css";
 import { useEffect } from "react";
 import ApiService from "../../../../ApiService";
@@ -15,14 +15,14 @@ function Allstudent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resultStudent = await ApiService.get("students");
-        console.log(resultStudent);
+        const resultStudent = await ApiService.get("students?isGetClass=true");
+        console.log("resultStudentsList:",resultStudent);
         const tempStudentList = resultStudent.map((student) => {
           return {
             key: student.idStudent,
             id: student.idStudent,
             name: student.fullName,
-            class: student.name,
+            classes: student.classNames,
           };
         });
         setStudentListView(tempStudentList);
@@ -49,6 +49,13 @@ function Allstudent() {
       title: "Class",
       dataIndex: "class",
       key: "class",
+      render: (_, { classes }) => (
+        <>
+          {classes.map((className) => {
+            return <Tag key={className}>{className.toUpperCase()}</Tag>;
+          })}
+        </>
+      ),
     },
   ];
 
@@ -56,21 +63,27 @@ function Allstudent() {
     let newStudentList = studentList;
     if (nameQuery && classQuery) {
       newStudentList = studentList.filter((student) => {
-        return student.name.includes(nameQuery) && student.class === classQuery;
+        return (
+          student.name.includes(nameQuery) &&
+          student.classes.includes(classQuery)
+        );
       });
     } else if (nameQuery) {
       newStudentList = studentList.filter((student) => {
         return student.name.includes(nameQuery);
       });
     } else if (classQuery) {
+      console.log("classQuery")
       newStudentList = studentList.filter((student) => {
-        return student.class === classQuery;
+        return student.classes.includes(classQuery);
       });
     }
 
     console.log("new students: ", newStudentList);
     setStudentListView(newStudentList);
   };
+
+  
 
   return (
     <div className={style.Allstudent}>
