@@ -12,6 +12,15 @@ class ApiService{
             throw e;
         }
     }
+    static put = async (reqUrl,data) => {
+        try {
+            const url = urlServer + "/" + reqUrl;
+            const response = await axios.put(url, data);
+            return response;
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     static post = async (reqUrl, body)=>{
         try{
