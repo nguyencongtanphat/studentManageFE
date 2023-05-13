@@ -12,7 +12,6 @@ import Profilestudent from "./modules/students/screen/profilestudent/Profilestud
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Gradesinformation from "./modules/grade/Gradesinformation/Gradesinformation";
 
-import AllStudent from "./modules/students/screens/AllStudent";
 import ClassesPage from "./modules/classes/classesPage";
 import ClassesInformation from "./modules/classes/classesInformation";
 import ClassesAdd from "./modules/classes/classesAdd";
@@ -22,45 +21,45 @@ import PrintStudentListPage from "./modules/classes/PrintStudentListPage";
 
 const router = createBrowserRouter([
   {
-    path:"/",
-    element:<Root/>,
-    errorElement:<ErrorPage/>,
-    children:[
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [
       {
-        path:"/",
-        element:<HomePage/>,
-        errorElement:<ErrorPage/>
+        path: "/",
+        element: <HomePage />,
+        errorElement: <ErrorPage />,
       },
-      
+
       {
-        path:"/students",
-        element:<Allstudent/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path:"/addstudents",
-        element:<Addstudent/>,
-        errorElement:<ErrorPage/>
+        path: "/students/",
+        element: <Allstudent />,
+        errorElement: <ErrorPage />,
       },
       {
-        path:"/editstudents",
-        element:<Editstudent/>,
-        errorElement:<ErrorPage/>
+        path: "add-students/*",
+        element: <Addstudent />,
+        errorElement: <ErrorPage />,
       },
       {
-        path:"/profilestudents",
-        element:<Profilestudent/>,
-        errorElement:<ErrorPage/>
+        path: "/editstudents",
+        element: <Editstudent />,
+        errorElement: <ErrorPage />,
       },
       {
-        path:"grades",
-        element:<Allgrade/>,
-        errorElement:<ErrorPage/>
+        path: "/profilestudents/:id",
+        element: <Profilestudent />,
+        errorElement: <ErrorPage />,
       },
       {
-        path:"gradesinformation",
-        element:<Gradesinformation/>,
-        errorElement:<ErrorPage/>
+        path: "grades",
+        element: <Allgrade />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "gradesinformation",
+        element: <Gradesinformation />,
+        errorElement: <ErrorPage />,
       },
       {
         path:"classes",
