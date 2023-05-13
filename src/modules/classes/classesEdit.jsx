@@ -6,7 +6,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 const {Text, Link} = Typography;
 
-function ClassesEdit(){
+function ClassesAdd(){
     const [ flag, setFlag ] = useState(true);
     console.log('re-render');
     const location = useLocation();
@@ -24,7 +24,7 @@ function ClassesEdit(){
     )
 }
 
-export default ClassesEdit;
+export default ClassesAdd;
 
 const classOptions = [
     {

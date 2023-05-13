@@ -6,7 +6,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 const {Text, Link} = Typography;
 
-function ClassesEdit(){
+function AddStudentToclass(){
     const [ flag, setFlag ] = useState(true);
     console.log('re-render');
     const location = useLocation();
@@ -24,7 +24,7 @@ function ClassesEdit(){
     )
 }
 
-export default ClassesEdit;
+export default AddStudentToclass;
 
 const classOptions = [
     {
@@ -107,12 +107,37 @@ function PrintStudentList(props){
     const navigate = useNavigate();
     const { Title } = Typography;
     const [ filteredData, setFilteredData ] = useState(dataSource);
-    const [ numPupils, setNumPupils ] = useState(0);
+    const [ numPupils, setNumPupils ] = useState('');
     const classes = useRef([]);
     
+
+    const handleClassesChange = (values) => {
+        const idClassesArr = [];
+            for (let i = 0; i < classOptions.length; i++) {
+                for (let j = 0; j < values.length; j++) {
+                    if (classOptions[i].value === values[j])
+                        idClassesArr.push(classOptions[i].label);
+            }
+        }
+        classes.current = idClassesArr;
+    };
     const handleNumsPupilsChange = (values) => {
         setNumPupils(values.target.value);
     };
+    // const handleCheckClick = (classes) => {
+    //     let filtered = []
+    //     if (classes.current.length === 0) {
+    //     filtered = dataSource;
+    //     }
+    //     else {
+    //         filtered = dataSource.filter(
+    //             (record) =>
+    //                 classes.current.includes(record.name)
+    //         );
+    //     }
+    //     if( numPupils === 0 || numPupils > filtered.length) setFilteredData(filtered);
+    //     else setFilteredData(filtered.slice(0, numPupils));
+    // }
     const handleRowClick = () => {
         navigate('/classes/id');
         props.setFlag(!props.flag);
@@ -122,7 +147,7 @@ function PrintStudentList(props){
             <Card>
                 <Row>
                     <Col flex={9} >
-                    <Title level={3} style={{ margin: 0, padding: 0}}>Classes Information </Title>
+                    <Title level={3} style={{ margin: 0, padding: 0}}>Add student to class</Title>
                     </Col>
                 </Row> 
                 <CheckStudent
@@ -135,8 +160,7 @@ function PrintStudentList(props){
                 handleRowClick={handleRowClick} 
                 />
                 <Row style={{ display:'flex', justifyContent: 'flex-end'}}>
-                    <Button type= 'primary' style = {{marginRight:10}}>Add Student</Button>
-                    <Button type= 'primary'>Save</Button>
+                    <Button type= 'primary'>Edit</Button>
                 </Row>
                 
             </Card>
@@ -149,50 +173,24 @@ function CheckStudent(props){
             
             <Col flex={10}>
                 <Row style={{display: 'flex', alignItems: 'center', flexGrow: 1, height : '100%'}}>
-                    <Text>Classes: </Text>
                     <Input
                     mode="tags"
                     style={{ width: '20%' , marginLeft: 10, height: '100%'}}
                     value={props.numPupils}
-                    placeholder="Number of pupils"
+                    placeholder="Search by name.."
                     onChange={props.onNumsPupilsChange}
                     />
                 </Row>           
             </Col>
             <Col flex={10}>
                 <Row style={{display: 'flex', alignItems: 'center', flexGrow: 1, height : '100%'}}>
-                    <Text>NoP: </Text>
-                    <Input
-                    mode="tags"
-                    style={{ width: '20%' , marginLeft: 10, height: '100%'}}
-                    value={props.numPupils}
-                    placeholder="Number of pupils"
-                    onChange={props.onNumsPupilsChange}
-                    />
-                </Row>           
-            </Col>
-            <Col flex={10}>
-                <Row style={{display: 'flex', alignItems: 'center', flexGrow: 1, height : '100%'}}>
-                    <Text>Teacher:</Text>
-                    <Input
-                    mode="tags"
-                    style={{ width: '20%' , marginLeft: 10, height: '100%'}}
-                    value={props.numPupils}
-                    placeholder="Number of pupils"
-                    onChange={props.onNumsPupilsChange}
-                    />
-                </Row>           
-            </Col>
-            <Col flex={10}>
-                <Row style={{display: 'flex', alignItems: 'center', flexGrow: 1, height : '100%'}}>
-                    <Text>Year:</Text>
-                    <Input
-                    mode="tags"
-                    style={{ width: '20%' , marginLeft: 10, height: '100%'}}
-                    value={props.numPupils}
-                    placeholder="Number of pupils"
-                    onChange={props.onNumsPupilsChange}
-                    />
+                    <Button
+                        type='primary'
+                        className='Button'
+                        onClick={() => props.onSearchingClick(props.classes)}
+                        >
+                        SEARCH
+                    </Button>
                 </Row>           
             </Col>
             
