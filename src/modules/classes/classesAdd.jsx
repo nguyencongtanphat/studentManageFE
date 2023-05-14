@@ -1,66 +1,114 @@
 import React from 'react';
-import { Card, Row, Col, Typography, Button, Select, Table, Input } from 'antd';
+import {
+  Modal,
+  Card,
+  Row,
+  Col,
+  Typography,
+  Button,
+  
+} from "antd";
 import '../../App.css';
 import { useNavigate } from 'react-router-dom';
-import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import StudentListTable from './components/StudentListTable';
 import ClassInfo from './components/classInfo';
-const {Text, Link} = Typography;
-const dataSource = [
-  {
-    id: "1",
-    Name: "Nguyen Van A",
-    Gender: "Nam",
-    Birthday: "10/3/2002",
-    Address: "10/4 Nguyen Hue",
-  },
-];
+import AddStudent from './components/AddStudent';
+
 const columns = [
   {
-    title: "#",
+    title: "ID",
     dataIndex: "id",
     key: "id",
-    flex: 1,
   },
   {
     title: "Name",
-    dataIndex: "Name",
-    key: "Name",
-    flex: 1,
+    dataIndex: "name",
+    key: "name",
   },
   {
     title: "Gender",
-    dataIndex: "Gender",
-    key: "Gender",
-    flex: 1,
+    dataIndex: "gender",
+    key: "gender",
   },
   {
     title: "Birthday",
-    dataIndex: "Birthday",
-    key: "Birthday",
-    flex: 1,
+    dataIndex: "birthday",
+    key: "birthday",
   },
   {
     title: "Address",
-    dataIndex: "Address",
-    key: "Address",
-    flex: 1,
+    dataIndex: "address",
+    key: "address",
   },
 ];
 function AddNewClass(){
      const navigate = useNavigate();
      const { Title } = Typography;
-     const [filteredData, setFilteredData] = useState(dataSource);
-     const [numPupils, setNumPupils] = useState(0);
-     const classes = useRef([]);
-
-     const handleNumsPupilsChange = (values) => {
-       setNumPupils(values.target.value);
-     };
+     const [studentsList, setStudentsList] = useState([]);
+     const [selectedTeacher, setSelectedTeacher] = useState()
+     const [selectedClass, setSelectedClass] = useState() 
+     const [selectedSemester, setSelectedSemester] = useState()
+     const [selectedYear, setSelectedYear] = useState()
      const handleRowClick = () => {
        navigate("/classes/id");
      };
+     const onStudentListChange = (newStudentList) => {
+      console.log("onStudentListChange", newStudentList);
+      //setStudentsList(newStudentList);
+      setStudentsList([...studentsList, ...newStudentList]);
+     }
+     const handlerSubmit = ()=>{
+      if(studentsList.length===0){
+        Modal.info({
+          title: "Add student to class",
+          content: (
+            <div>
+              <AddStudent studentsList={studentsList} onStudentListChange={onStudentListChange} />
+            </div>
+          ),
+          width: 800,
+          onOk() {},
+        });
+      }else{
+        if (
+          !selectedClass ||
+          !selectedTeacher ||
+          !selectedSemester ||
+          !selectedYear ||
+          studentsList.length===0
+        ){
+          Modal.error(
+             {title:"Please fill all the required fields for class"}
+          )
+        }else{
+          console.log("here submit", {
+            className: selectedClass,
+            numPupils: studentsList.length,
+            teacher: selectedTeacher,
+            semester: selectedSemester,
+            year: selectedYear,
+            studentList: studentsList,
+          });
+        }
+          
+      }
+     }
+     const handlerAddStudent = ()=>{
+       Modal.info({
+         title: "Add student to class",
+         content: (
+           <div>
+             <AddStudent
+               studentsList={studentsList}
+               onStudentListChange={onStudentListChange}
+             />
+           </div>
+         ),
+         width: 800,
+         onOk() {},
+       });
+     }
      return (
        <div>
          <Card>
@@ -72,19 +120,36 @@ function AddNewClass(){
              </Col>
            </Row>
            <ClassInfo
-             onNumsPupilsChange={handleNumsPupilsChange}
-             numPupils={numPupils}
+             onTeacherChange={(newTeacher) => {
+               setSelectedTeacher(newTeacher);
+             }}
+             onClassChange={(newClass) => {
+               setSelectedClass(newClass);
+             }}
+             onSemesterChange={(newSemester) => {
+               setSelectedSemester(newSemester);
+             }}
+             onYearChange={(newYear) => {
+               setSelectedYear(newYear.$y);
+             }}
+             numPupils={studentsList.length}
            />
            <StudentListTable
-             filteredData={filteredData}
+             filteredData={studentsList}
              columns={columns}
              handleRowClick={handleRowClick}
            />
            <Row style={{ display: "flex", justifyContent: "flex-end" }}>
-             <Button type="primary" style={{ marginRight: 10 }}>
+             <Button
+               type="primary"
+               onClick={handlerAddStudent}
+               style={{ marginRight: 10 }}
+             >
                Add Student
              </Button>
-             <Button type="primary">Save</Button>
+             <Button type="primary" onClick={handlerSubmit}>
+               Save
+             </Button>
            </Row>
          </Card>
        </div>
