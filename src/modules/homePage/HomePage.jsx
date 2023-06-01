@@ -17,7 +17,6 @@ function HomePage() {
         ApiService.get("classes"),
         ApiService.get("grades"),
       ]);
-      
       setSchoolInfo({
         studentsNumber:students.length,
         teachersNumber:teachers.length,
