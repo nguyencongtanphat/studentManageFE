@@ -83,20 +83,7 @@ function Listclassofgrade12() {
               }}
               placeholder="Search by name"
             />
-            <Select
-              onChange={(value) => {}}
-              defaultValue={"Select Semester"}
-              options={[
-                {
-                  label: "I",
-                  value: "I",
-                },
-                {
-                  label: "II",
-                  value: "II",
-                },
-              ]}
-            ></Select>
+            
             <Button onClick={searchHandler} htmlType="search" type="primary">
               Search
             </Button>
