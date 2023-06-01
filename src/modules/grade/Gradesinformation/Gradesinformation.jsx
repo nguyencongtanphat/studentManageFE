@@ -8,9 +8,85 @@ import {
   Button,
   AutoComplete,
 } from "antd";
+import { useEffect, useLayoutEffect, useState } from 'react';
 import style from "./Gradesinformation.module.css";
+import ApiService from "../../../ApiService";
 
 function Gradesinformation() {
+  const [classListView, setClassListView] = useState([]);
+  const [nameQuery, setNameQuery] = useState("");
+  const [classQuery, setClassQuery] = useState("");
+  const [classList, setClassList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resultClass = await ApiService.get("classes");
+        console.log("resultStudentsList:",resultClass);
+        const tempClassList = resultClass.map((Class) => {
+          return {
+            key: Class.idClass,
+            id: Class.idClass,
+            name: Class.name,
+            number: Class.number,
+            // teacher: CLass.Teacher,
+            // year: Class.year,
+          };
+        });
+        setClassListView(tempClassList);
+        setClassList(tempClassList);
+      } catch (e) {
+        console.log("error:", e);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const columns = [
+    {
+      title: "#",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "NoP",
+      dataIndex: "number",
+      key: "number",
+    },
+    {
+      title: "Teacher",
+      dataIndex: "number",
+      key: "number",
+    },
+    {
+      title: "Year",
+      dataIndex: "number",
+      key: "number",
+    },
+  ];
+
+  const searchHandler = () => {
+    let newClassList = classList;
+    if (nameQuery) {
+      newClassList = classList.filter((Class) => {
+        return (
+          Class.name.includes(nameQuery) 
+        );
+      });
+    } else if (nameQuery) {
+      newClassList = classList.filter((Class) => {
+        return Class.name.includes(nameQuery);
+      });
+    }
+    console.log("new classes: ", newClassList);
+    setClassListView(newClassList);
+  }
+
   return (
     <div className={style.Allstudent}>
       <Card title= "Grade Information">
@@ -18,7 +94,9 @@ function Gradesinformation() {
           <Space>
             <AutoComplete
               style={{ width: 200 }}
-              onSearch={() => {}}
+              onSearch={(value) => {
+                setNameQuery(value);
+              }}
               placeholder="Search by name"
             />
             <Select
@@ -79,36 +157,28 @@ function Gradesinformation() {
                 },
               ]}
             ></Select>
-            <Button htmlType="search" type="primary">
+            <Button onClick={searchHandler} htmlType="search" type="primary">
               Search
             </Button>
           </Space>
         </div>
         <Table
-          columns={[
-            {
-                title: "#",
+          columns={columns}
+          dataSource={classListView}
+          onRow={(record) => ({
+            onClick: () => {
+              console.log(record);
             },
-            {
-                title: "Class",
-            },
-            {
-                title: "Nop",
-            },
-            {
-                title: "Teacher",
-            },
-            {
-                title: "Year",
-            },
-          ]}
+          })}
           pagination={{
             pageSize: 7,
           }}
         ></Table>
+        <Button htmlType="search" type="primary">
+            Edit
+        </Button>
       </Card>
     </div>
   );
 }
-
 export default Gradesinformation;

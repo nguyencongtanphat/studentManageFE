@@ -9,9 +9,12 @@ import Allstudent from "./modules/students/screen/allstudent/Allstudent";
 import Addstudent from "./modules/students/screen/addstudent/Addstudent";
 import Editstudent from "./modules/students/screen/editstudent/Editstudent";
 import Profilestudent from "./modules/students/screen/profilestudent/Profilestudent";
+
+
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Gradesinformation from "./modules/grade/Gradesinformation/Gradesinformation";
-import ChangeRules from "./modules/rule/ruleChange";
+
+
 import ClassesPage from "./modules/classes/classesPage";
 import ClassesInformation from "./modules/classes/classesInformation";
 import ClassesAdd from "./modules/classes/classesAdd";
@@ -89,11 +92,6 @@ const router = createBrowserRouter([
       {
         path:"addstudenttoclass",
         element:<AddStudentToClass/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path:"editrules",
-        element:<ChangeRules/>,
         errorElement:<ErrorPage/>
       },
     ]
