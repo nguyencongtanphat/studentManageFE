@@ -12,7 +12,9 @@ import Profilestudent from "./modules/students/screen/profilestudent/Profilestud
 
 
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
-import Gradesinformation from "./modules/grade/Gradesinformation/Gradesinformation";
+import Listclassofgrade10 from "./modules/grade/listclassofgrade/Listclassofgrade10";
+import Listclassofgrade11 from "./modules/grade/listclassofgrade/Listclassofgrade11";
+import Listclassofgrade12 from "./modules/grade/listclassofgrade/Listclassofgrade12";
 
 
 import ClassesPage from "./modules/classes-semesters/classesPage";
@@ -59,11 +61,11 @@ const router = createBrowserRouter([
         element: <Allgrade />,
         errorElement: <ErrorPage />,
       },
-      {
-        path: "gradesinformation",
-        element: <Gradesinformation />,
-        errorElement: <ErrorPage />,
-      },
+      // {
+      //   path: "gradesinformation",
+      //   element: <Gradesinformation/>,
+      //   errorElement: <ErrorPage />,
+      // },
       {
         path: "classes-semesters",
         element: <ClassesPage />,
@@ -94,9 +96,39 @@ const router = createBrowserRouter([
         element: <AddStudentToClass />,
         errorElement: <ErrorPage />,
       },
-    ],
-  },
-]);
+      {
+        path:"listclassofgrade10",
+        element:<Listclassofgrade10/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"listclassofgrade11",
+        element:<Listclassofgrade11/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"listclassofgrade12",
+        element:<Listclassofgrade12/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"listclassofgrade10",
+        element:<Listclassofgrade10/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"listclassofgrade11",
+        element:<Listclassofgrade11/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"listclassofgrade12",
+        element:<Listclassofgrade12/>,
+        errorElement:<ErrorPage/>
+      },
+    ]
+  }
+])
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
