@@ -8,21 +8,15 @@ function SearchingClasses(props) {
           <Select
             style={{ width: "70%" }}
             placeholder="Select classes ..."
-            //onChange={props.onClassesChange}
+            onChange={props.onClassesChange}
             options={props.selectClassOptions}
           />
         </Col>
         <Col flex={5}>
-          {/* <Select
-            style={{ width: "70%" }}
-            placeholder="Select semester ..."
-            //onChange={props.onYearsChange}
-            options={props.selectSemesterOptions}
-          /> */}
           <Select
             style={{ width: "70%" }}
             placeholder="Select classes ..."
-            //onChange={props.onClassesChange}
+            onChange={props.onSemesterChange}
             options={props.selectSemesterOptions}
           />
         </Col>

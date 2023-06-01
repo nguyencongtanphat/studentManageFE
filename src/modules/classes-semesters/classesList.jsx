@@ -70,16 +70,20 @@ const columns = [
 function ClassesList(props) {
   const navigate = useNavigate();
   const { Title } = Typography;
-  const [ filteredData, setFilteredData ] = useState([]);
+  const [classesSemesters, setClassesSemesters] = useState([]);
+  const [classesSemestersFilter, setClassesSemestersFilter] = useState([]);
   const [classOptions, setClassOptions] = useState([])
   const [semesterOptions, setSemesterOptions] = useState([]);
   const classes = useRef([]);
   const years = useRef([]);
+  const [classSelected, setClassSelected] = useState("")
+  const [semesterSelected, setSemesterSelected] = useState("");
 
   useEffect(()=>{
    const fetchData =async ()=>{
      const classesSemesters = await ApiService.get("classes-semester");
-     setFilteredData(classesSemesters);
+     setClassesSemesters(classesSemesters);
+     setClassesSemestersFilter(classesSemesters);
      //get class options
      let tempClassOptions = [];
      classesSemesters.forEach((item)=>{
@@ -115,27 +119,29 @@ function ClassesList(props) {
 
 
 
-  const handleSearchingClick = (classes) => {
-    // let filtered = []
-    // if (classes.current.length === 0 && years.current.length === 0) {
-    //   filtered = dataSource;
-    // }
-    // else {
-    //   if (classes.current.length !== 0)
-    //     filtered = dataSource.filter(
-    //       (record) =>
-    //         classes.current.includes(record.name)
-    //     );
-    //   if (years.current.length !== 0) {
-    //     if (filtered.length === 0)
-    //       filtered = dataSource;
-    //     filtered = filtered.filter(
-    //       (record) =>
-    //         years.current.includes(record.year)
-    //     );
-    //   }
-    // }
-    // setFilteredData(filtered);
+  const handleSearchingClick = () => {
+    console.log("click search")
+    let tempClassFilter = []
+    if (classSelected !== "" && semesterSelected !== "") {
+      tempClassFilter = classesSemesters.filter((classItem) => {
+        return (
+          classItem.name === classSelected &&
+          classItem.semester === semesterSelected
+        );
+      });
+    } else if (classSelected !== "") {
+      tempClassFilter = classesSemesters.filter((classItem) => {
+        return classItem.name === classSelected;
+      });
+    } else if (semesterSelected !== "") {
+      tempClassFilter = classesSemesters.filter((classItem) => {
+        return classItem.semester === semesterSelected;
+      });
+    }else{
+      tempClassFilter = classesSemesters;
+    }
+
+    setClassesSemestersFilter(tempClassFilter);
   }
 
   const handleRowClick = () => {
@@ -144,26 +150,13 @@ function ClassesList(props) {
   }
 
   const handleClassesChange = (values) => {
-    // const idClassesArr = [];
-    // for (let i = 0; i < classOptions.length; i++) {
-    //   for (let j = 0; j < values.length; j++) {
-    //     if (classOptions[i].value === values[j])
-    //       idClassesArr.push(classOptions[i].label);
-    //   }
-    // }
-    // classes.current = idClassesArr;
+    console.log("click class changes:", values)
+    setClassSelected(values)
   };
 
-  const handleYearsChange = (values) => {
-    // const idYearsArr = [];
-    // for (let i = 0; i < yearOptions.length; i++) {
-    //   for (let j = 0; j < values.length; j++) {
-    //     if (yearOptions[i].value === values[j])
-    //       idYearsArr.push(yearOptions[i].label);
-    //   }
-    // }
-    // years.current = idYearsArr;
-    // console.log(years.current);
+  const handleSemesterChange = (values) => {
+    console.log("click semester changes:", values);
+    setSemesterSelected(values);
   };
 
 
@@ -177,7 +170,7 @@ function ClassesList(props) {
             </Title>
           </Col>
           <Col flex={2}>
-            <Button  type="primary" className="Button">
+            <Button type="primary" className="Button">
               Add Class
             </Button>
           </Col>
@@ -185,13 +178,13 @@ function ClassesList(props) {
         <SearchingClasses
           onClassesChange={handleClassesChange}
           selectClassOptions={classOptions}
-          onYearsChange={handleYearsChange}
+          onSemesterChange={handleSemesterChange}
           selectSemesterOptions={semesterOptions}
           onSearchingClick={handleSearchingClick}
           classes={classes}
         />
         <ClassesTable
-          filteredData={filteredData}
+          filteredData={classesSemestersFilter}
           columns={columns}
           handleRowClick={handleRowClick}
         />
