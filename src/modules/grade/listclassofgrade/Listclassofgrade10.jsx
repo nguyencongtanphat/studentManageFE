@@ -40,7 +40,7 @@ function Listclassofgrade10() {
     {
       title: "#",
       dataIndex: "idClass",
-      key: "idClass",
+      key: "id",
     },
     {
       title: "Name",
