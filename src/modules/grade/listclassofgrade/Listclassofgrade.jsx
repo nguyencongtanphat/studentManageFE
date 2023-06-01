@@ -7,24 +7,32 @@ import {
   Space,
   Button,
   AutoComplete,
+  Form,
 } from "antd";
 import { useEffect, useLayoutEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import style from "./Listclassofgrade10.module.css";
 import ApiService from "../../../ApiService";
 
-function Listclassofgrade11() {
+function Listclassofgrade10() {
   const [classListView, setClassListView] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [classList, setClassList] = useState([]);
+  const [Class, setClass] = useState({}); 
+
+
+  const {id} = useParams();
+ 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("id param:", id)
         const resultClass = await ApiService.get("classes");
         console.log("resultStudentsList:",resultClass);
         const tempClassList = resultClass.filter((Class) => {
-              return Class.idGrade == 2;
+              return Class.idGrade == id;
         });
         console.log(tempClassList)
         setClassListView(tempClassList);
@@ -35,6 +43,24 @@ function Listclassofgrade11() {
     };
     fetchData();
   }, []);
+
+// const HandleSubmit = () => {
+//     const {name,idgrade,gradename} = prompt.getFieldsValue();
+//     if (!name && !idgrade && !gradename)
+//         console.log('dien it nhat 1 thong tin di pa');
+//     else {
+//         const newClass = {
+//             name: name ? name: Class.name,
+//             idGrade: idgrade ? idgrade: Class.idgrade,
+//             gradeName: gradename ? gradename: Class.gradename,
+//         }
+//         const putClass = async (data) => {
+//             const putdata = await ApiService.put(requrl, data)        
+//             console.log(putdata);
+//         }
+//         putClass(newClass);
+//     }
+// }
 
   const columns = [
     {
@@ -73,7 +99,7 @@ function Listclassofgrade11() {
 
   return (
     <div className={style.Allstudent}>
-      <Card title= "List class of grade 11">
+      <Card title= "List class of grade 10">
         <div className={style.selectClass}>
           <Space>
             <AutoComplete
@@ -83,6 +109,20 @@ function Listclassofgrade11() {
               }}
               placeholder="Search by name"
             />
+            <Select
+              onChange={(value) => {}}
+              defaultValue={"Select Semester"}
+              options={[
+                {
+                  label: "I",
+                  value: "I",
+                },
+                {
+                  label: "II",
+                  value: "II",
+                },
+              ]}
+            ></Select>
             <Button onClick={searchHandler} htmlType="search" type="primary">
               Search
             </Button>
@@ -100,11 +140,16 @@ function Listclassofgrade11() {
             pageSize: 7,
           }}
         ></Table>
-        <Button htmlType="search" type="primary">
+        <Space wrap>
+          <Button
+            htmlType='submit'
+            type='primary'
+          >
             Edit
-        </Button>
+          </Button>
+        </Space>
       </Card>
     </div>
   );
 }
-export default Listclassofgrade11;
+export default Listclassofgrade10;

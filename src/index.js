@@ -9,12 +9,8 @@ import Allstudent from "./modules/students/screen/allstudent/Allstudent";
 import Addstudent from "./modules/students/screen/addstudent/Addstudent";
 import Editstudent from "./modules/students/screen/editstudent/Editstudent";
 import Profilestudent from "./modules/students/screen/profilestudent/Profilestudent";
-
-
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
-import Listclassofgrade10 from "./modules/grade/listclassofgrade/Listclassofgrade10";
-import Listclassofgrade11 from "./modules/grade/listclassofgrade/Listclassofgrade11";
-import Listclassofgrade12 from "./modules/grade/listclassofgrade/Listclassofgrade12";
+import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade";
 
 
 import ClassesPage from "./modules/classes/classesPage";
@@ -92,20 +88,11 @@ const router = createBrowserRouter([
         errorElement:<ErrorPage/>
       },
       {
-        path:"listclassofgrade10",
-        element:<Listclassofgrade10/>,
+        path:"classes-grade/:id",
+        element:<Listclassofgrade/>,
         errorElement:<ErrorPage/>
       },
-      {
-        path:"listclassofgrade11",
-        element:<Listclassofgrade11/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path:"listclassofgrade12",
-        element:<Listclassofgrade12/>,
-        errorElement:<ErrorPage/>
-      },
+     
     ]
   }
 ])
