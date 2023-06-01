@@ -37,7 +37,7 @@ function Profilestudent () {
             const tempStudent = {
                 key: resultStudent.idStudent,
                 name: resultStudent.fullName,
-                class: resultStudent.name,
+                classes: resultStudent.classes,
                 address: resultStudent.address,
                 birth: resultStudent.dayOfBirth,
                 gender: resultStudent.gender,
@@ -78,7 +78,7 @@ function Profilestudent () {
             setEditButton(!editButton);
         }
     }
-
+    console.log(student.classes);
     return (
         <div className={style.Addstudent}>
             <Card title= "Profile Student">
@@ -86,37 +86,67 @@ function Profilestudent () {
                             form={form}
                         >
                             <Form.Item name={"name"} label="NAME*">
-                                <Input
-                                    placeholder={student.name}
-                                    disabled={componentDisabled}
-                                />
+                                <div className={style.container}>
+                                    <Input
+                                        className={style.input}
+                                        placeholder={student.name}
+                                        disabled={componentDisabled}
+                                    />
+                                </div>
                             </Form.Item>
                             <Form.Item name={"birth"} label="DATE OF BIRTH*">
-                                <DatePicker
-                                    disabled={componentDisabled}
-                                    placeholder={student.birth}
-                                />
+                                <div className={style.container}>
+                                    <DatePicker
+                                        className={style.input}
+                                        disabled={componentDisabled}
+                                        placeholder={student.birth}
+                                    />
+                                </div>
                             </Form.Item>
                             <Form.Item name={"gender"} label="GENDER*">
-                                <Select placeholder={student.gender} disabled={componentDisabled}>
-                                    {["Nam","Nữ"].map(gender=>{
-                                        return <Select.Option value={gender} key={gender}>{gender}</Select.Option>
-                                    })}
-                                </Select>
+                                <div className={style.container}>
+                                    <div className={style.input}>
+                                        <Select className={style.input} placeholder={student.gender} disabled={componentDisabled}>
+                                            {["Nam","Nữ"].map(gender=>{
+                                                return <Select.Option value={gender} key={gender}>{gender}</Select.Option>
+                                            })}
+                                        </Select>
+                                    </div>
+                                </div>
                             </Form.Item>
+                            {componentDisabled && 
+                                <Form.Item name={"class"} label="CLASSES">
+                                    <div className={style.container}>
+                                        <Input
+                                            className={style.trans}
+                                            placeholder={
+                                                student.classes===undefined?
+                                                " " : student.classes.join(" ")
+                                            }
+                                            disabled={componentDisabled}
+                                        />       
+                                    </div>
+                                </Form.Item>
+                            }
                             <Form.Item name={"address"} label="ADDRESS*">
-                                <Input
-                                    size="medium"
-                                    placeholder={student.address}
-                                    disabled={componentDisabled}
-                                />
+                                <div className={style.container}>
+                                    <Input
+                                        className={style.input}
+                                        size="medium"
+                                        placeholder={student.address}
+                                        disabled={componentDisabled}
+                                    />
+                                </div>
                             </Form.Item>
                             <Form.Item name={"email"} label="EMAIL*">
-                                <Input
-                                    size="medium"
-                                    placeholder={student.email}
-                                    disabled={componentDisabled}
-                                />
+                                <div class={style.container}>
+                                    <Input
+                                        className={style.input}
+                                        size="medium"
+                                        placeholder={student.email}
+                                        disabled={componentDisabled}
+                                    />
+                                </div>
                             </Form.Item>
                                 <div className={style.spaceButton}>
                                     <Space wrap>
