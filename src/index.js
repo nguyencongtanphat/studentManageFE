@@ -13,7 +13,6 @@ import Profilestudent from "./modules/students/screen/profilestudent/Profilestud
 
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Gradesinformation from "./modules/grade/Gradesinformation/Gradesinformation";
-import Printsubjectsummary from "./modules/report/Printsubjectsummary";
 
 
 import ClassesPage from "./modules/classes/classesPage";
@@ -93,11 +92,6 @@ const router = createBrowserRouter([
       {
         path:"addstudenttoclass",
         element:<AddStudentToClass/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path:"printsubjectsummary",
-        element:<Printsubjectsummary/>,
         errorElement:<ErrorPage/>
       },
     ]
