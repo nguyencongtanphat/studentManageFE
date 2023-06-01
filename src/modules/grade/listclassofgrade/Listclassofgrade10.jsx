@@ -7,8 +7,10 @@ import {
   Space,
   Button,
   AutoComplete,
+  Form,
 } from "antd";
 import { useEffect, useLayoutEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import style from "./Listclassofgrade10.module.css";
 import ApiService from "../../../ApiService";
 
@@ -17,6 +19,11 @@ function Listclassofgrade10() {
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [classList, setClassList] = useState([]);
+  const [Class, setClass] = useState({}); 
+
+
+  const {id} = useParams();
+  const requrl = "listclassofgrade10/"+id;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +42,24 @@ function Listclassofgrade10() {
     };
     fetchData();
   }, []);
+
+const HandleSubmit = () => {
+    const {name,idgrade,gradename} = prompt.getFieldsValue();
+    if (!name && !idgrade && !gradename)
+        console.log('dien it nhat 1 thong tin di pa');
+    else {
+        const newClass = {
+            name: name ? name: Class.name,
+            idGrade: idgrade ? idgrade: Class.idgrade,
+            gradeName: gradename ? gradename: Class.gradename,
+        }
+        const putClass = async (data) => {
+            const putdata = await ApiService.put(requrl, data)        
+            console.log(putdata);
+        }
+        putClass(newClass);
+    }
+}
 
   const columns = [
     {
@@ -83,6 +108,20 @@ function Listclassofgrade10() {
               }}
               placeholder="Search by name"
             />
+            <Select
+              onChange={(value) => {}}
+              defaultValue={"Select Semester"}
+              options={[
+                {
+                  label: "I",
+                  value: "I",
+                },
+                {
+                  label: "II",
+                  value: "II",
+                },
+              ]}
+            ></Select>
             <Button onClick={searchHandler} htmlType="search" type="primary">
               Search
             </Button>
@@ -100,9 +139,14 @@ function Listclassofgrade10() {
             pageSize: 7,
           }}
         ></Table>
-        <Button htmlType="search" type="primary">
+        <Space wrap>
+          <Button
+            htmlType='submit'
+            type='primary'
+          >
             Edit
-        </Button>
+          </Button>
+        </Space>
       </Card>
     </div>
   );
