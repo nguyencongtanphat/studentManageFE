@@ -49,8 +49,8 @@ function Listclassofgrade12() {
     },
     {
       title: "Grade",
-      dataIndex: "number",
-      key: "number",
+      dataIndex: "gradeName",
+      key: "gradename",
     },
   ];
 
