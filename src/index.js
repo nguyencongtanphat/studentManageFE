@@ -23,6 +23,7 @@ import ClassesAdd from "./modules/classes/classesAdd";
 import ClassesEdit from "./modules/classes/classesEdit";
 import AddStudentToClass from "./modules/classes/addstudenttoclass";
 import PrintStudentListPage from "./modules/classes/PrintStudentListPage";
+import SubjectTable from "./modules/subject/SubjectTable";
 
 const router = createBrowserRouter([
   {
@@ -106,6 +107,11 @@ const router = createBrowserRouter([
         element:<Listclassofgrade12/>,
         errorElement:<ErrorPage/>
       },
+      {
+        path:"subjects",
+        element:<SubjectTable/>,
+        errorElement:<ErrorPage/>
+      }
     ]
   }
 ])

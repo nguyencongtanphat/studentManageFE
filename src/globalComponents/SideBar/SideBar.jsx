@@ -6,7 +6,8 @@ import {
   CheckCircleOutlined,
   BarChartOutlined,
   GroupOutlined,
-  InsertRowLeftOutlined 
+  InsertRowLeftOutlined,
+  BookOutlined
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useEffect, useState } from "react";
@@ -79,6 +80,11 @@ function SideMenu() {
             key: "/rules",
             icon: <UserOutlined />,
           },
+          {
+            label: "Subjects",
+            key: "/subjects",
+            icon: <BookOutlined />,
+          }
         ]}
       ></Menu>
     </div>
