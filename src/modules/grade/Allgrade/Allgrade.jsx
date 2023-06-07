@@ -15,11 +15,9 @@ function Allgrade() {
     let g10 =0, g11=0, g12=0;
     const fetchData = async ()=>{
       const resultGrade = await ApiService.get("classes");
-      console.log("resultClassesList:",resultGrade, " ", resultGrade.length);
         for(let i = 0; i < resultGrade.length ; i++){
           console.log(resultGrade[i]);
-          if(resultGrade[i].name.includes('10'))
-          { g10+=1; console.log(g10);}
+          if(resultGrade[i].name.includes('10')) g10+=1;
           else if(resultGrade[i].name.includes('11')) g11+=1;
           else if(resultGrade[i].name.includes('12')) g12+=1;
         }
