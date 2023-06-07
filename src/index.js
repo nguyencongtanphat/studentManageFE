@@ -10,14 +10,15 @@ import Addstudent from "./modules/students/screen/addstudent/Addstudent";
 import Editstudent from "./modules/students/screen/editstudent/Editstudent";
 import Profilestudent from "./modules/students/screen/profilestudent/Profilestudent";
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
-import Gradesinformation from "./modules/grade/Gradesinformation/Gradesinformation";
+import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade";
 
-import ClassesPage from "./modules/classes/classesPage";
-import ClassesInformation from "./modules/classes/classesInformation";
-import ClassesAdd from "./modules/classes/classesAdd";
-import ClassesEdit from "./modules/classes/classesEdit";
-import AddStudentToClass from "./modules/classes/addstudenttoclass";
-import PrintStudentListPage from "./modules/classes/PrintStudentListPage";
+
+import ClassesPage from "./modules/classes-semesters/classesPage";
+import ClassesInformation from "./modules/classes-semesters/classesInformation";
+import ClassesAdd from "./modules/classes-semesters/classesAdd";
+import ClassesEdit from "./modules/classes-semesters/classesEdit";
+import AddStudentToClass from "./modules/classes-semesters/addstudenttoclass";
+import PrintStudentListPage from "./modules/classes-semesters/PrintStudentListPage";
 
 const router = createBrowserRouter([
   {
@@ -56,25 +57,30 @@ const router = createBrowserRouter([
         element: <Allgrade />,
         errorElement: <ErrorPage />,
       },
+      // {
+      //   path: "gradesinformation",
+      //   element: <Gradesinformation/>,
+      //   errorElement: <ErrorPage />,
+      // },
       {
-        path: "gradesinformation",
-        element: <Gradesinformation />,
+        path: "classes-semesters",
+        element: <ClassesPage />,
         errorElement: <ErrorPage />,
       },
       {
-        path:"classes",
-        element:<ClassesPage/>,
-        errorElement:<ErrorPage/>
+        path: "printstudentlist",
+        element: <PrintStudentListPage />,
+        errorElement: <ErrorPage />,
       },
       {
-        path:"printstudentlist",
-        element:<PrintStudentListPage/>,
-        errorElement:<ErrorPage/>
+        path: "classesinformation",
+        element: <ClassesInformation />,
+        errorElement: <ErrorPage />,
       },
       {
-        path:"classesinformation",
-        element:<ClassesInformation/>,
-        errorElement:<ErrorPage/>
+        path: "classesadd",
+        element: <ClassesAdd />,
+        errorElement: <ErrorPage />,
       },
       {
         path:"add-class-semester",
@@ -82,15 +88,26 @@ const router = createBrowserRouter([
         errorElement:<ErrorPage/>
       },
       {
-        path:"classesedit",
-        element:<ClassesEdit/>,
-        errorElement:<ErrorPage/>
+        path: "classesedit",
+        element: <ClassesEdit />,
+        errorElement: <ErrorPage />,
       },
       {
-        path:"addstudenttoclass",
-        element:<AddStudentToClass/>,
+        path: "classesedit",
+        element: <ClassesEdit />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "addstudenttoclass",
+        element: <AddStudentToClass />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path:"classes-grade/:id",
+        element:<Listclassofgrade/>,
         errorElement:<ErrorPage/>
       },
+     
     ]
   }
 ])

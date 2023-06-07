@@ -15,8 +15,12 @@ function Allstudent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resultStudent = await ApiService.get("students?isGetClass=true");
-        console.log("resultStudentsList:",resultStudent);
+        //const resultStudent = await ApiService.get("students/?isGetClass=true");
+        const [resultStudent, classes] = await Promise.all([
+          ApiService.get("students/?isGetClass=true"),
+          ApiService.get("classes"),
+        ]);
+        
         const tempStudentList = resultStudent.map((student) => {
           return {
             key: student.idStudent,
@@ -25,6 +29,7 @@ function Allstudent() {
             classes: student.classNames,
           };
         });
+        setClassList(classes)
         setStudentListView(tempStudentList);
         setStudentList(tempStudentList);
       } catch (e) {
@@ -52,7 +57,8 @@ function Allstudent() {
       render: (_, { classes }) => (
         <>
           {classes.map((className) => {
-            return <Tag key={className}>{className.toUpperCase()}</Tag>;
+            console.log("classname: ",className)
+            return <Tag key={className}>{className}</Tag>;
           })}
         </>
       ),
@@ -102,44 +108,12 @@ function Allstudent() {
                 setClassQuery(value);
               }}
               defaultValue={"Select class"}
-              options={[
-                {
-                  label: "10A1",
-                  value: "10A1",
-                },
-                {
-                  label: "10A2",
-                  value: "10A2",
-                },
-                {
-                  label: "10A3",
-                  value: "10A3",
-                },
-                {
-                  label: "11A1",
-                  value: "11A1",
-                },
-                {
-                  label: "11A2",
-                  value: "11A2",
-                },
-                {
-                  label: "11A3",
-                  value: "11A3",
-                },
-                {
-                  label: "12A1",
-                  value: "12A1",
-                },
-                {
-                  label: "12A2",
-                  value: "12A2",
-                },
-                {
-                  label: "12A3",
-                  value: "12A3",
-                },
-              ]}
+              options={classList.map(classItem=>{
+                return {
+                  label: classItem.name,
+                  value: classItem.name,
+                };
+              })}
             ></Select>
             <Button onClick={searchHandler} htmlType="search" type="primary">
               Search

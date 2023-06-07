@@ -45,19 +45,9 @@ function SideMenu() {
             icon: <UserOutlined />,
           },
           {
-            label: "Classes",
-            key: "classgroup",
+            label: "Classes-semesters",
+            key: "/classes-semesters",
             icon: <GroupOutlined />,
-            children: [
-              {
-                label: "Classes",
-                key: "/classes"
-              },
-              {
-                label: "Print Student List",
-                key: "/printstudentlist"
-              }
-            ]
           },
           {
             label: "Grades",
