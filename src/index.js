@@ -83,6 +83,16 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
+        path:"add-class-semester",
+        element:<ClassesAdd/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path: "classesedit",
+        element: <ClassesEdit />,
+        errorElement: <ErrorPage />,
+      },
+      {
         path: "classesedit",
         element: <ClassesEdit />,
         errorElement: <ErrorPage />,
@@ -91,21 +101,6 @@ const router = createBrowserRouter([
         path: "addstudenttoclass",
         element: <AddStudentToClass />,
         errorElement: <ErrorPage />,
-      },
-      {
-        path:"listclassofgrade10",
-        element:<Listclassofgrade10/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path:"listclassofgrade11",
-        element:<Listclassofgrade11/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path:"listclassofgrade12",
-        element:<Listclassofgrade12/>,
-        errorElement:<ErrorPage/>
       },
       {
         path:"classes-grade/:id",
