@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -12,13 +12,10 @@ import Profilestudent from "./modules/students/screen/profilestudent/Profilestud
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade";
 
-
-import ClassesPage from "./modules/classes-semesters/classesPage";
-import ClassesInformation from "./modules/classes-semesters/classesInformation";
-import ClassesAdd from "./modules/classes-semesters/classesAdd";
-import ClassesEdit from "./modules/classes-semesters/classesEdit";
+import AddNewClassSemesterPage from "./modules/classes-semesters/AddNewClassSemester";
+import ClassesPage from "./modules/classes-semesters/ClassesSemesterPage";
 import AddStudentToClass from "./modules/classes-semesters/addstudenttoclass";
-import PrintStudentListPage from "./modules/classes-semesters/PrintStudentListPage";
+
 
 const router = createBrowserRouter([
   {
@@ -31,7 +28,6 @@ const router = createBrowserRouter([
         element: <HomePage />,
         errorElement: <ErrorPage />,
       },
-
       {
         path: "/students/",
         element: <Allstudent />,
@@ -43,12 +39,12 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "/editstudents",
+        path: "/edit-students",
         element: <Editstudent />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "/profilestudents/:id",
+        path: "/profile-students/:id",
         element: <Profilestudent />,
         errorElement: <ErrorPage />,
       },
@@ -57,60 +53,29 @@ const router = createBrowserRouter([
         element: <Allgrade />,
         errorElement: <ErrorPage />,
       },
-      // {
-      //   path: "gradesinformation",
-      //   element: <Gradesinformation/>,
-      //   errorElement: <ErrorPage />,
-      // },
       {
         path: "classes-semesters",
         element: <ClassesPage />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "printstudentlist",
-        element: <PrintStudentListPage />,
+        path: "/add-new-class-semester",
+        element: <AddNewClassSemesterPage />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "classesinformation",
-        element: <ClassesInformation />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "classesadd",
-        element: <ClassesAdd />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path:"add-class-semester",
-        element:<ClassesAdd/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path: "classesedit",
-        element: <ClassesEdit />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "classesedit",
-        element: <ClassesEdit />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "addstudenttoclass",
+        path: "add-student-to-class",
         element: <AddStudentToClass />,
         errorElement: <ErrorPage />,
       },
       {
-        path:"classes-grade/:id",
-        element:<Listclassofgrade/>,
-        errorElement:<ErrorPage/>
+        path: "classes-grade/:id",
+        element: <Listclassofgrade />,
+        errorElement: <ErrorPage />,
       },
-     
-    ]
-  }
-])
+    ],
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
