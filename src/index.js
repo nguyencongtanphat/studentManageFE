@@ -13,12 +13,14 @@ import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade";
 
 
-import ClassesPage from "./modules/classes-semesters/classesPage";
-import ClassesInformation from "./modules/classes-semesters/classesInformation";
-import ClassesAdd from "./modules/classes-semesters/classesAdd";
-import ClassesEdit from "./modules/classes-semesters/classesEdit";
-import AddStudentToClass from "./modules/classes-semesters/addstudenttoclass";
-import PrintStudentListPage from "./modules/classes-semesters/PrintStudentListPage";
+import SemesterReport from "./modules/semesterReport/SemesterReport";
+
+import ClassesPage from "./modules/classes/classesPage";
+import ClassesInformation from "./modules/classes/classesInformation";
+import ClassesAdd from "./modules/classes/classesAdd";
+import ClassesEdit from "./modules/classes/classesEdit";
+import AddStudentToClass from "./modules/classes/addstudenttoclass";
+import PrintStudentListPage from "./modules/classes/PrintStudentListPage";
 
 const router = createBrowserRouter([
   {
@@ -107,7 +109,6 @@ const router = createBrowserRouter([
         element:<Listclassofgrade/>,
         errorElement:<ErrorPage/>
       },
-     
     ]
   }
 ])
