@@ -6,22 +6,18 @@ import ApiService from '../../../ApiService';
 const { Text, Link } = Typography;
 
 function ClassInfo(props) {
-  const [classes, setClasses] = useState([
-    "10A1",
-    "10A2",
-    "10A3",
-    "10A4",
-    "11A1",
-    "11A2",
-    "11A3",
-    "12A1",
-    "12A2",
-  ]);
-  const [teachers, setTeachers] = useState(["Nguyễn Văn AdADA", "Nguyễn Văn B"]);
+  const [classes, setClasses] = useState([]);
+  const [teachers, setTeachers] = useState([]);
+  const [semesters, setSemesters] = useState([]);
+
   useEffect(()=>{
     const fetchData = async ()=>{
       const teachers =await ApiService.get("teachers")
+      const classes =await ApiService.get("classes");
+      const semesters = await ApiService.get("semesters");
       setTeachers(teachers);
+      setClasses(classes);
+      setSemesters(semesters);
       console.log("teachers:",teachers)
     }
     fetchData()
@@ -51,8 +47,8 @@ function ClassInfo(props) {
           >
             {classes.map((classItem) => {
               return (
-                <Select.Option value={classItem} key={"className"}>
-                  {classItem}
+                <Select.Option value={classItem.idClass} key={"className"}>
+                  {classItem.name}
                 </Select.Option>
               );
             })}
@@ -111,10 +107,10 @@ function ClassInfo(props) {
           <Text>Semester:</Text>
           <Select placeholder="select semester" 
             onChange={props.onSemesterChange}>
-            {["First", "Second"].map((classItem) => {
+            {semesters.map((semester) => {
               return (
-                <Select.Option value={classItem} key={"className"}>
-                  {classItem}
+                <Select.Option value={semester.idSemester} key={"className"}>
+                  {semester.order}-{semester.year}
                 </Select.Option>
               );
             })}
@@ -129,8 +125,6 @@ function ClassInfo(props) {
             margin: "8px 0 0 0",
           }}
         >
-          <Text>Year:</Text>
-          <DatePicker onChange={props.onYearChange} picker="year" />
         </Row>
       </Col>
     </Row>
