@@ -1,13 +1,12 @@
 import React from "react";
 
 import { Modal, Card, Row, Col, Typography, Button } from "antd";
-import "../../App.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import StudentListTable from "./components/StudentListTable";
-import ClassInfo from "./components/classInfo";
-import AddStudent from "./components/AddStudent";
-import ApiService from "../../ApiService";
+import StudentListTable from "../components/StudentListTable";
+import ClassInfo from "../components/classInfo";
+import AddStudent from "../components/AddStudent";
+import ApiService from "../../../ApiService";
 
 const columns = [
   {
@@ -148,6 +147,7 @@ function AddNewClass() {
           </Col>
         </Row>
         <ClassInfo
+          isEdit = {true}
           onTeacherChange={(newTeacher) => {
             setSelectedTeacher(newTeacher);
           }}

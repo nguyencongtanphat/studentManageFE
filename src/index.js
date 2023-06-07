@@ -12,9 +12,9 @@ import Profilestudent from "./modules/students/screen/profilestudent/Profilestud
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade";
 
-import AddNewClassSemesterPage from "./modules/classes-semesters/AddNewClassSemester";
-import ClassesPage from "./modules/classes-semesters/ClassesSemesterPage";
-import AddStudentToClass from "./modules/classes-semesters/addstudenttoclass";
+import AddNewClassSemesterPage from "./modules/classes-semesters/screens/AddNewClassSemesterPage";
+import ClassesPage from "./modules/classes-semesters/screens/ClassesSemesterPage";
+import ClassSemesterDetail from "./modules/classes-semesters/screens/ClassSemesterDetailPage";
 
 
 const router = createBrowserRouter([
@@ -64,8 +64,8 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "add-student-to-class",
-        element: <AddStudentToClass />,
+        path: "/class-semester/:id",
+        element: <ClassSemesterDetail />,
         errorElement: <ErrorPage />,
       },
       {

@@ -67,6 +67,7 @@ function AddStudent(props) {
           const found = props.studentsList.find(
             (studentInList) => studentInList.key === student.idStudent
           );
+          
           return !found;
         });
         console.log("list filtered student data:", filteredStudentList);
