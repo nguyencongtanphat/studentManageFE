@@ -77,7 +77,7 @@ const router = createBrowserRouter([
         errorElement:<ErrorPage/>
       },
       {
-        path:"add-class",
+        path:"add-class-semester",
         element:<ClassesAdd/>,
         errorElement:<ErrorPage/>
       },
