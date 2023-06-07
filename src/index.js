@@ -12,13 +12,13 @@ import Profilestudent from "./modules/students/screen/profilestudent/Profilestud
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade";
 
-
 import ClassesPage from "./modules/classes-semesters/classesPage";
 import ClassesInformation from "./modules/classes-semesters/classesInformation";
 import ClassesAdd from "./modules/classes-semesters/classesAdd";
 import ClassesEdit from "./modules/classes-semesters/classesEdit";
 import AddStudentToClass from "./modules/classes-semesters/addstudenttoclass";
 import PrintStudentListPage from "./modules/classes-semesters/PrintStudentListPage";
+import ScoreAverage from "./modules/score/scoreaverage";
 
 const router = createBrowserRouter([
   {
@@ -92,27 +92,31 @@ const router = createBrowserRouter([
         element: <AddStudentToClass />,
         errorElement: <ErrorPage />,
       },
-      {
-        path:"listclassofgrade10",
-        element:<Listclassofgrade10/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path:"listclassofgrade11",
-        element:<Listclassofgrade11/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path:"listclassofgrade12",
-        element:<Listclassofgrade12/>,
-        errorElement:<ErrorPage/>
-      },
+      // {
+      //   path:"listclassofgrade10",
+      //   element:<Listclassofgrade10/>,
+      //   errorElement:<ErrorPage/>
+      // },
+      // {
+      //   path:"listclassofgrade11",
+      //   element:<Listclassofgrade11/>,
+      //   errorElement:<ErrorPage/>
+      // },
+      // {
+      //   path:"listclassofgrade12",
+      //   element:<Listclassofgrade12/>,
+      //   errorElement:<ErrorPage/>
+      // },
       {
         path:"classes-grade/:id",
         element:<Listclassofgrade/>,
         errorElement:<ErrorPage/>
       },
-     
+      {
+        path:"scores",
+        element:<ScoreAverage/>,
+        errorElement:<ErrorPage/>
+      }
     ]
   }
 ])
