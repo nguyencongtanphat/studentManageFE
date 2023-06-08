@@ -6,22 +6,17 @@ import ApiService from '../../../ApiService';
 const { Text, Link } = Typography;
 
 function ClassInfo(props) {
-  const [classes, setClasses] = useState([
-    "10A1",
-    "10A2",
-    "10A3",
-    "10A4",
-    "11A1",
-    "11A2",
-    "11A3",
-    "12A1",
-    "12A2",
-  ]);
-  const [teachers, setTeachers] = useState(["Nguyễn Văn AdADA", "Nguyễn Văn B"]);
+  const [classes, setClasses] = useState([]);
+  const [teachers, setTeachers] = useState([]);
+  const [semesters, setSemesters] = useState([]);
   useEffect(()=>{
     const fetchData = async ()=>{
       const teachers =await ApiService.get("teachers")
+      const classes =await ApiService.get("classes");
+      const semesters = await ApiService.get("semesters");
       setTeachers(teachers);
+      setClasses(classes);
+      setSemesters(semesters);
       console.log("teachers:",teachers)
     }
     fetchData()
@@ -46,13 +41,16 @@ function ClassInfo(props) {
           }}
         >
           <Text>Classes: </Text>
-          <Select placeholder="select class"
+          <Select
+            placeholder={props.defaultValue?.className || "select class"}
+            disabled={props.isEdit ? false : true}
             onChange={props.onClassChange}
+            style={{ fontWeight: "bold" }}
           >
             {classes.map((classItem) => {
               return (
-                <Select.Option value={classItem} key={"className"}>
-                  {classItem}
+                <Select.Option value={classItem.idClass} key={"className"}>
+                  {classItem.name}
                 </Select.Option>
               );
             })}
@@ -70,11 +68,20 @@ function ClassInfo(props) {
         >
           <Text>NoP: </Text>
           <Input
+            style={{
+              "::placeholder": {
+                fontWeight: "bold",
+              },
+              // Fallback style for browsers that don't support ::placeholder
+              width: "20%",
+              marginLeft: 10,
+              height: "100%",
+            }}
             mode="tags"
-            style={{ width: "20%", marginLeft: 10, height: "100%" }}
-            value={props.numPupils}
+          
+            value={props.numPupils || props.defaultValue?.number}
             onChange={props.onNumsPupilsChange}
-            disabled={true}
+            disabled
           />
         </Row>
       </Col>
@@ -88,7 +95,14 @@ function ClassInfo(props) {
           }}
         >
           <Text>Teacher:</Text>
-          <Select onChange={props.onTeacherChange} placeholder="select class's teacher">
+          <Select
+            onChange={props.onTeacherChange}
+            placeholder={
+              props.defaultValue?.teacherName || "select class's teacher"
+            }
+            disabled={props.isEdit ? false : true}
+            style={{ fontWeight: "bold" }}
+          >
             {teachers.map((teacher) => {
               return (
                 <Select.Option value={teacher.idTeacher} key={"className"}>
@@ -109,12 +123,16 @@ function ClassInfo(props) {
           }}
         >
           <Text>Semester:</Text>
-          <Select placeholder="select semester" 
-            onChange={props.onSemesterChange}>
-            {["First", "Second"].map((classItem) => {
+          <Select
+            onChange={props.onSemesterChange}
+            placeholder={props.defaultValue?.semester || "select semester"}
+            style={{ fontWeight: "bold" }}
+            disabled={props.isEdit ? false : true}
+          >
+            {semesters.map((semester) => {
               return (
-                <Select.Option value={classItem} key={"className"}>
-                  {classItem}
+                <Select.Option value={semester.idSemester} key={"className"}>
+                  {semester.order}-{semester.year}
                 </Select.Option>
               );
             })}
@@ -128,10 +146,7 @@ function ClassInfo(props) {
             height: "100%",
             margin: "8px 0 0 0",
           }}
-        >
-          <Text>Year:</Text>
-          <DatePicker onChange={props.onYearChange} picker="year" />
-        </Row>
+        ></Row>
       </Col>
     </Row>
   );

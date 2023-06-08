@@ -1,26 +1,16 @@
 import React from 'react';
 import { Card, Row, Col, Typography, Button, Select, Table } from 'antd';
-import '../../App.css';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import SearchingClasses from './ClassComponents/SearchingClass';
-import ClassesTable from './ClassComponents/TableOfClasses';
+import SearchingClasses from '../ClassComponents/SearchingClass';
+import ClassesTable from '../ClassComponents/TableOfClasses';
 import { useEffect } from 'react';
-import ApiService from '../../ApiService';
+import ApiService from '../../../ApiService';
 
 
 
-const yearOptions = [
-  {
-    label: '2021-2022',
-    value: 2021
-  },
-  {
-    label: '2022-2023',
-    value: 2022
-  }
-];
+
 const dataSource = [
   {
     idClassSemester: 9,
