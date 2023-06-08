@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Modal,
   Table,
   Select,
   Card,
@@ -7,60 +8,46 @@ import {
   Space,
   Button,
   AutoComplete,
-  Form,
+  Input,
 } from "antd";
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import style from "./Listclassofgrade10.module.css";
 import ApiService from "../../../ApiService";
+import { DeleteOutlined } from "@ant-design/icons";
 
-function Listclassofgrade10() {
+
+function Listclassofgrade() {
   const [classListView, setClassListView] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
-  const [classQuery, setClassQuery] = useState("");
   const [classList, setClassList] = useState([]);
-  const [Class, setClass] = useState({}); 
+  const [isEdit, setIsEdit] = useState(false);
+  const [allClassesDb, setAllClassesDb] = useState([]);
 
+  const [tempClassName, setTempClassName] = useState("")
+  const [idInputEditing, setIdInputEditing] = useState()
 
-  const {id} = useParams();
- 
+  const { id } = useParams();
+  const fetchData = async () => {
+    try {
+      console.log("id param:", id);
+      const resultClass = await ApiService.get("classes");
+      console.log("resultStudentsList:", resultClass);
+      const tempClassList = resultClass.filter((classItem) => {
+        return classItem.idGrade == id;
+      });
+      console.log(tempClassList);
+      setAllClassesDb(resultClass);
+      setClassListView(tempClassList);
+      setClassList(tempClassList);
+    } catch (e) {
+      console.log("error:", e);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log("id param:", id)
-        const resultClass = await ApiService.get("classes");
-        console.log("resultStudentsList:",resultClass);
-        const tempClassList = resultClass.filter((Class) => {
-              return Class.idGrade == id;
-        });
-        console.log(tempClassList)
-        setClassListView(tempClassList);
-        setClassList(tempClassList);
-      } catch (e) {
-        console.log("error:", e);
-      }
-    };
     fetchData();
   }, []);
-
-// const HandleSubmit = () => {
-//     const {name,idgrade,gradename} = prompt.getFieldsValue();
-//     if (!name && !idgrade && !gradename)
-//         console.log('dien it nhat 1 thong tin di pa');
-//     else {
-//         const newClass = {
-//             name: name ? name: Class.name,
-//             idGrade: idgrade ? idgrade: Class.idgrade,
-//             gradeName: gradename ? gradename: Class.gradename,
-//         }
-//         const putClass = async (data) => {
-//             const putdata = await ApiService.put(requrl, data)        
-//             console.log(putdata);
-//         }
-//         putClass(newClass);
-//     }
-// }
 
   const columns = [
     {
@@ -80,13 +67,104 @@ function Listclassofgrade10() {
     },
   ];
 
+  const columnsEdit = [
+    {
+      title: "#",
+      dataIndex: "idClass",
+      key: "id",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (text, record) => (
+        <Input
+          style={{ width: 100 }}
+          placeholder={text}
+          onBlur={(event) => {
+            setTempClassName(event.target.value);
+          }}
+          onClick={(event) => {
+            setTempClassName("");
+            setIdInputEditing(record.idClass);
+          }}
+        ></Input>
+      ),
+    },
+    {
+      title: "Grade",
+      dataIndex: "gradeName",
+      key: "gradename",
+    },
+    {
+      key: "action",
+      render: (text, record) => {
+        //console.log("check disabled:", record.idClass, idInputEditing);
+        return (
+          <Button
+            disabled={(record.idClass !== idInputEditing)}
+            type="primary"
+            onClick={() => {
+              //deleteStudentHandler(record.key);
+             updateClassHandler();
+            }}
+          >
+            Save
+          </Button>
+        );
+        
+        },
+    },
+    {
+      key: "action",
+      render: (text, record) => (
+        <Button
+          danger
+          type="link"
+          icon={<DeleteOutlined />}
+          onClick={() => {
+            //deleteStudentHandler(record.key);
+          }}
+        >
+          Delete
+        </Button>
+      ),
+    },
+  ];
+
+  const updateClassHandler = async () =>{
+     console.log("hehhe", tempClassName, idInputEditing);
+     //check class is exists
+     const isExist =  allClassesDb.some((classItem)=> classItem.name === tempClassName);
+     if(isExist)
+     {
+        Modal.error({
+          title: "Error",
+          content: "Class is already exist in the database",
+          okText: "OK",
+          onOk() {},
+        });
+     }else{
+        const data = {
+          name:tempClassName,
+          idGrade: id
+        }
+        const response =  await ApiService.put(`classes/${idInputEditing}`, data)
+        Modal.success({
+          title: "Success",
+          content: "Create class successfully",
+          okText: "OK",
+          onOk() {},
+        });
+        setIdInputEditing(null)
+        fetchData()
+     }
+  }
   const searchHandler = () => {
     let newClassList = classList;
     if (nameQuery) {
       newClassList = classList.filter((Class) => {
-        return (
-          Class.name.includes(nameQuery) 
-        );
+        return Class.name.includes(nameQuery);
       });
     } else if (nameQuery) {
       newClassList = classList.filter((Class) => {
@@ -95,11 +173,67 @@ function Listclassofgrade10() {
     }
     console.log("new classes: ", newClassList);
     setClassListView(newClassList);
-  }
+  };
 
+  const editHandler = () => {
+    if (isEdit) {
+      setIsEdit(false);
+    } else {
+      setIsEdit(true);
+    }
+  };
+  const addClassHandler = () => {
+    let newClass = "";
+    Modal.info({
+      title: "Add student to class",
+      content: (
+        <div>
+          <Card title="Add new class">
+            <Input
+              onChange={(event) => {
+                newClass = event.target.value;
+              }}
+              size="medium"
+              placeholder=""
+            ></Input>
+          </Card>
+        </div>
+      ),
+      width: 500,
+      async onOk() {
+        console.log("new class: ", newClass);
+        if(!newClass) return false
+        const isClassExist = allClassesDb.some(
+          (classItem) => classItem.name === newClass
+        );
+        if (isClassExist) {
+          Modal.error({
+            title: "Error",
+            content: "Class is already exist in the database",
+            okText: "OK",
+            onOk() {},
+          });
+        } else {
+          //const response =  await ApiService.post
+          const data = {
+            className: newClass,
+            idGrade: id,
+          };
+          const response = await ApiService.post("classes", data);
+          Modal.success({
+            title: "Success",
+            content: "Create class successfully",
+            okText: "OK",
+            onOk() {},
+          });
+          await fetchData()
+        }
+      },
+    });
+  };
   return (
     <div className={style.Allstudent}>
-      <Card title= "List class of grade 10">
+      <Card title="List class">
         <div className={style.selectClass}>
           <Space>
             <AutoComplete
@@ -109,27 +243,14 @@ function Listclassofgrade10() {
               }}
               placeholder="Search by name"
             />
-            <Select
-              onChange={(value) => {}}
-              defaultValue={"Select Semester"}
-              options={[
-                {
-                  label: "I",
-                  value: "I",
-                },
-                {
-                  label: "II",
-                  value: "II",
-                },
-              ]}
-            ></Select>
+
             <Button onClick={searchHandler} htmlType="search" type="primary">
               Search
             </Button>
           </Space>
         </div>
         <Table
-          columns={columns}
+          columns={!isEdit ? columns : columnsEdit}
           dataSource={classListView}
           onRow={(record) => ({
             onClick: () => {
@@ -141,15 +262,22 @@ function Listclassofgrade10() {
           }}
         ></Table>
         <Space wrap>
+          {isEdit && (
+            <Button htmlType="submit" type="primary" onClick={addClassHandler}>
+              Add New Class
+            </Button>
+          )}
           <Button
-            htmlType='submit'
-            type='primary'
+            htmlType="submit"
+            type="primary"
+            onClick={editHandler}
+            danger={!isEdit ? false : true}
           >
-            Edit
+            {!isEdit ? "Edit" : "Close"}
           </Button>
         </Space>
       </Card>
     </div>
   );
 }
-export default Listclassofgrade10;
+export default Listclassofgrade;
