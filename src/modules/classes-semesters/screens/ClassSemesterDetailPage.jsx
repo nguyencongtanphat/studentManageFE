@@ -2,12 +2,11 @@ import React from "react";
 import { Modal, Card, Row, Col, Typography, Button } from "antd";
 import StudentListTable from "../components/StudentListTable";
 import ClassInfo from "../components/classInfo";
-import AddStudent from "../components/AddStudent";
+import AddStudent from "../components/AddStudentsDetailPage";
 import ApiService from "../../../ApiService";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DeleteOutlined } from "@ant-design/icons";
-
 
 function ClassSemesterDetail() {
   const columns = [
@@ -86,26 +85,43 @@ function ClassSemesterDetail() {
   const [selectedClass, setSelectedClass] = useState();
   const [selectedSemester, setSelectedSemester] = useState();
   const [classSemesters, setClassSemesters] = useState();
+  const [selectedNewStudent, setSelectedNewStudent] = useState();
   const [isEdit, setIsEdit] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const deleteStudentHandler = (idStudent)=>{
-    const newStudentList = studentsList.filter(
-      (student) =>{
-        console.log("check", student.key !== idStudent);
-        return student.key !== idStudent;
-      }
-    );
-    console.log("new student list", newStudentList)
-    setStudentsList(newStudentList);
-  }
+  const deleteStudentHandler = async (idStudent) => {
+    try {
+     
+      const response = await ApiService.delete(`classes-semester/${id}/${idStudent}`);
+      console.log(idStudent)
+      Modal.success({
+        title: "Success",
+        content: "Delete student successfully",
+        okText: "OK",
+        onOk() {
+          fetchData()
+        },
+      });
+
+    } catch (e) {
+      Modal.error({
+        title: "Fail",
+        content: "Create class fail, please try again",
+        okText: "OK",
+        onOk() {},
+      });
+    }
+  };
 
   const onStudentListChange = (newStudentList) => {
     console.log("onStudentListChange", newStudentList);
-    //setStudentsList(newStudentList);
-    setStudentsList([...studentsList, ...newStudentList]);
+    setSelectedNewStudent(newStudentList);
   };
+  const closeModal = () => {
+    console.log("closeModal",);
+    Modal.destroyAll()
+  }
   const addStudentHandler = () => {
     Modal.info({
       title: "Add student to class",
@@ -114,13 +130,16 @@ function ClassSemesterDetail() {
           <AddStudent
             studentsList={studentsList}
             onStudentListChange={onStudentListChange}
+            closeModal={closeModal}
+            fetchData = {fetchData}
           />
         </div>
       ),
       width: 800,
-      onOk() {},
+      okButtonProps: { style: { display: "none" } },
     });
   };
+
   const handlerSubmit = async () => {
     let isClassExist = classSemesters.some(
       (classSemester) =>
@@ -135,45 +154,46 @@ function ClassSemesterDetail() {
         onOk() {},
       });
     } else {
-      const idStudentsList = studentsList.map((student) => student.key);
       const data = {
         idClass: selectedClass || classInfo.idClass,
         number: studentsList.length,
         idTeacher: selectedTeacher || classInfo.idTeacher,
         idSemester: selectedSemester || classInfo.idSemester,
-        listIdStudent: idStudentsList,
       };
       console.log("submit here:", data);
-      await ApiService.put(`classes-semester/${classInfo.idClassSemester}`, data);
+      await ApiService.put(
+        `classes-semester/${classInfo.idClassSemester}`,
+        data
+      );
       Modal.success({
         title: "Success",
-        content: "Create class successfully",
+        content: "Update class successfully",
         okText: "OK",
         onOk() {},
       });
-      setIsEdit(false)
+      setIsEdit(false);
     }
+  };
+  const fetchData = async () => {
+    const response = await ApiService.get("classes-semester/" + id);
+    console.log("response info: ", response.classInfo);
+    const tempStudentsList = response.studentsList.map((student) => {
+      return {
+        key: student.idStudent,
+        name: student.fullName,
+        address: student.address,
+        gender: student.gender,
+        birthday: student.dayOfBirth,
+      };
+    });
+    const classSemesters = await ApiService.get("classes-semester");
+    console.log("classSemesters:", classSemesters);
+    setClassSemesters(classSemesters);
+    setStudentsList(tempStudentsList);
+    setClassInfo(response.classInfo);
   };
   //fetch class-semester data
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await ApiService.get("classes-semester/" + id);
-      console.log("response info: ", response.classInfo);
-      const tempStudentsList = response.studentsList.map((student) => {
-        return {
-          key: student.idStudent,
-          name: student.fullName,
-          address: student.address,
-          gender: student.gender,
-          birthday: student.dayOfBirth,
-        };
-      });
-      const classSemesters = await ApiService.get("classes-semester");
-      console.log("classSemesters:", classSemesters);
-      setClassSemesters(classSemesters);
-      setStudentsList(tempStudentsList);
-      setClassInfo(response.classInfo);
-    };
     fetchData();
   }, []);
   return (
