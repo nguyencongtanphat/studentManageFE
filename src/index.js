@@ -15,7 +15,7 @@ import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade"
 import AddNewClassSemesterPage from "./modules/classes-semesters/screens/AddNewClassSemesterPage";
 import ClassesPage from "./modules/classes-semesters/screens/ClassesSemesterPage";
 import ClassSemesterDetail from "./modules/classes-semesters/screens/ClassSemesterDetailPage";
-
+import LoginPage from "./modules/login/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +74,11 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
   },
 ]);
 
