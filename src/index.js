@@ -16,12 +16,6 @@ import AddNewClassSemesterPage from "./modules/classes-semesters/screens/AddNewC
 import ClassesPage from "./modules/classes-semesters/screens/ClassesSemesterPage";
 import ClassSemesterDetail from "./modules/classes-semesters/screens/ClassSemesterDetailPage";
 
-import ClassesPage from "./modules/classes-semesters/classesPage";
-import ClassesInformation from "./modules/classes-semesters/classesInformation";
-import ClassesAdd from "./modules/classes-semesters/classesAdd";
-import ClassesEdit from "./modules/classes-semesters/classesEdit";
-import AddStudentToClass from "./modules/classes-semesters/addstudenttoclass";
-import PrintStudentListPage from "./modules/classes-semesters/PrintStudentListPage";
 import ScoreAverage from "./modules/score/scoreaverage";
 import ScoreDetails from "./modules/score/scoredetails";
 import AddingScore from "./modules/score/addScorePage";
@@ -77,40 +71,6 @@ const router = createBrowserRouter([
         element: <ClassSemesterDetail />,
         errorElement: <ErrorPage />,
       },
-      {
-        path: "classes-grade/:id",
-        element: <Listclassofgrade />,
-        errorElement: <ErrorPage />,
-      },
-    ],
-  },
-]);
-
-      {
-        path: "classesedit",
-        element: <ClassesEdit />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "addstudenttoclass",
-        element: <AddStudentToClass />,
-        errorElement: <ErrorPage />,
-      },
-      // {
-      //   path:"listclassofgrade10",
-      //   element:<Listclassofgrade10/>,
-      //   errorElement:<ErrorPage/>
-      // },
-      // {
-      //   path:"listclassofgrade11",
-      //   element:<Listclassofgrade11/>,
-      //   errorElement:<ErrorPage/>
-      // },
-      // {
-      //   path:"listclassofgrade12",
-      //   element:<Listclassofgrade12/>,
-      //   errorElement:<ErrorPage/>
-      // },
       {
         path:"classes-grade/:id",
         element:<Listclassofgrade/>,

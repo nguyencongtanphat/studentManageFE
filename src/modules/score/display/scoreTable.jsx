@@ -1,4 +1,5 @@
-import { Card, Row, Col, Typography, Button, Select, Table, Input } from 'antd';
+import { Card, Row, Col, Typography, Button, Table, Input, Modal } from 'antd';
+import { useState } from 'react';
 import '../../../App.css';
 
 const columns = [
@@ -40,13 +41,106 @@ const columns = [
 ];
 
 const ScoreTable = (props) => {
+    const [visible, setVisible] = useState(false);
+    const [row, setRow] = useState({});
+    const [score15, setScore15] = useState('');
+    const [score1, setScore1] = useState('');
+    const [scoreMid, setScoreMid] = useState('');
+    const [scoreEnd, setScoreEnd] = useState('');
+
+    const handleOk = () => {
+        console.log('oke');
+        let tempTable = props.table;
+        tempTable.forEach((item) => {
+            if (item.key === row.key) {
+                item.min_15 = score15;
+                item.min_45 = score1;
+                item.mid = scoreMid;
+                item.end = scoreEnd;
+            }
+        });
+        props.setTable(tempTable);
+        setVisible(false);
+    };
+    
+    const handleCancel = () => {
+        setVisible(false);
+    };
+
+    const handleRowClick = (record) => {
+        setScore15(record.min_15);
+        setScore1(record.min_45);
+        setScoreMid(record.mid);
+        setScoreEnd(record.end); 
+        setRow(record);
+        console.log(record);
+        setVisible(true);
+    };
+
+    const handle15Change = (event) => {
+        setScore15(event.target.value);
+    };
+
+    const handle1Change = (event) => {
+        setScore1(event.target.value);
+    };
+
+    const handleMidChange = (event) => {
+        setScoreMid(event.target.value);
+    };
+
+    const handleEndChange = (event) => {
+        setScoreEnd(event.target.value);
+    };
+
     return (
         <Row>
             <Table
                 rowClassName="custom-row"
                 dataSource={props.table}
                 columns={columns}
+                onRow={(record) => ({
+                    onClick: () => handleRowClick(record)
+                })}
             />
+
+            <Modal
+                open={visible}
+                title="Update Score"
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                <Card>
+                    <Row>
+                        <Typography>15-mins scores</Typography>
+                        <Input
+                            value={score15}
+                            onChange={handle15Change}
+                        />
+                    </Row>
+                    <Row>
+                        <Typography>45-mins scores</Typography>
+                        <Input
+                            value={score1}
+                            onChange={handle1Change}
+                        />
+                    </Row>
+                    <Row>
+                        <Typography>Mid-term scores</Typography>
+                        <Input
+                            value={scoreMid}
+                            onChange={handleMidChange}
+                        />
+                    </Row>
+                    <Row>
+                        <Typography>End-term scores</Typography>
+                        <Input
+                            value={scoreEnd}
+                            onChange={handleEndChange}
+                        />
+                    </Row>
+                </Card>
+            </Modal>
         </Row>
     )
 };
