@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -11,6 +11,10 @@ import Editstudent from "./modules/students/screen/editstudent/Editstudent";
 import Profilestudent from "./modules/students/screen/profilestudent/Profilestudent";
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade";
+
+import AddNewClassSemesterPage from "./modules/classes-semesters/screens/AddNewClassSemesterPage";
+import ClassesPage from "./modules/classes-semesters/screens/ClassesSemesterPage";
+import ClassSemesterDetail from "./modules/classes-semesters/screens/ClassSemesterDetailPage";
 
 import ClassesPage from "./modules/classes-semesters/classesPage";
 import ClassesInformation from "./modules/classes-semesters/classesInformation";
@@ -33,7 +37,6 @@ const router = createBrowserRouter([
         element: <HomePage />,
         errorElement: <ErrorPage />,
       },
-
       {
         path: "/students/",
         element: <Allstudent />,
@@ -45,12 +48,12 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "/editstudents",
+        path: "/edit-students",
         element: <Editstudent />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "/profilestudents/:id",
+        path: "/profile-students/:id",
         element: <Profilestudent />,
         errorElement: <ErrorPage />,
       },
@@ -59,31 +62,30 @@ const router = createBrowserRouter([
         element: <Allgrade />,
         errorElement: <ErrorPage />,
       },
-      // {
-      //   path: "gradesinformation",
-      //   element: <Gradesinformation/>,
-      //   errorElement: <ErrorPage />,
-      // },
       {
         path: "classes-semesters",
         element: <ClassesPage />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "printstudentlist",
-        element: <PrintStudentListPage />,
+        path: "/add-new-class-semester",
+        element: <AddNewClassSemesterPage />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "classesinformation",
-        element: <ClassesInformation />,
+        path: "/class-semester/:id",
+        element: <ClassSemesterDetail />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "classesadd",
-        element: <ClassesAdd />,
+        path: "classes-grade/:id",
+        element: <Listclassofgrade />,
         errorElement: <ErrorPage />,
       },
+    ],
+  },
+]);
+
       {
         path: "classesedit",
         element: <ClassesEdit />,
