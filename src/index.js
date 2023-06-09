@@ -16,6 +16,7 @@ import AddNewClassSemesterPage from "./modules/classes-semesters/screens/AddNewC
 import ClassesPage from "./modules/classes-semesters/screens/ClassesSemesterPage";
 import ClassSemesterDetail from "./modules/classes-semesters/screens/ClassSemesterDetailPage";
 import LoginPage from "./modules/login/LoginPage";
+import AllTeacherPage from "./modules/teacher/AllTeacherPage";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
@@ -53,6 +54,11 @@ const router = createBrowserRouter([
       {
         path: "/profile-students/:id",
         element: <Profilestudent />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/teachers",
+        element: <AllTeacherPage />,
         errorElement: <ErrorPage />,
       },
       {

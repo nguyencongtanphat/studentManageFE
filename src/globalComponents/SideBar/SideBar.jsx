@@ -45,6 +45,11 @@ function SideMenu() {
             icon: <UserOutlined />,
           },
           {
+            label: "Teacher",
+            key: "/teachers",
+            icon: <UserOutlined />,
+          },
+          {
             label: "Classes-semesters",
             key: "/classes-semesters",
             icon: <GroupOutlined />,
