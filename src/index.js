@@ -16,8 +16,15 @@ import AddNewClassSemesterPage from "./modules/classes-semesters/screens/AddNewC
 import ClassesPage from "./modules/classes-semesters/screens/ClassesSemesterPage";
 import ClassSemesterDetail from "./modules/classes-semesters/screens/ClassSemesterDetailPage";
 import LoginPage from "./modules/login/LoginPage";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
   {
     path: "/",
     element: <Root />,
@@ -75,14 +82,12 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/login",
-    element: <LoginPage />,
-    errorElement: <ErrorPage />,
-  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <Provider store={store}>
+    {" "}
     <RouterProvider router={router} />
+  </Provider>
 );
