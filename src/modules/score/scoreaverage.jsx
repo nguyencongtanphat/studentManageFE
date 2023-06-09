@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Typography, Button, Select, Table } from 'antd';
+import { Card, Row, Col, Typography, Button, Select, Table, Input } from 'antd';
 import '../../App.css';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,50 +9,54 @@ import ApiService from '../../ApiService';
 const columns = [
     {
         title: 'ID',
-        indexData: 'idStudent',
+        dataIndex: 'idStudent',
         key: 'idStudent'
     },
     {
         title: 'Name',
-        indexData: 'fullName',
+        dataIndex: 'fullName',
         key: 'fullName'
     },
     {
         title: 'Class',
-        indexData: 'name',
+        dataIndex: 'name',
         key: 'name'
     },
     {
+        title: 'Semester',
+        dataIndex: 'semester',
+        key: 'semester'
+    },
+    {
+        title: 'Year',
+        dataIndex: 'year',
+        key: 'year'
+    },
+    {
         title: '1st Semester Score',
-        indexData: 'semAvg1',
+        dataIndex: 'semAvg1',
         key: 'semAvg1'
     },
     {
         title: '2nd Semester Score',
-        indexData: 'semAvg2',
+        dataIndex: 'semAvg2',
         key: 'semAvg2'
     }
 ]
 
-const source = [
-    {
-        key: 1,
-        idStudent: 1,
-        fullName: 'sdfsdf',
-        name: '11A1',
-        semAvg1: 10,
-        semAvg2: 9
-    }
-]
-
 function ScoreAverage() {
-    const [raw, setRaw] = useState([]);
+    let navigate = useNavigate();
+    const [raw, setRaw ] = useState([]);
+    const [filtered, setFiltered] = useState([]);
+    const [inputID, setInputID] = useState('');
+    const [inputYear, setInputYear] = useState('');
     useEffect(() => {
         const fetchData = async () => {
             const data = await ApiService.get("subject-score/scores");
             let orderIs1 = data.filter((item)=> item.order === 1);
             let processedData = preprocessing(orderIs1, data);
             setRaw(processedData);
+            setFiltered(processedData);
         };
 
         fetchData()
@@ -71,34 +75,32 @@ function ScoreAverage() {
                     idStudent: item.idStudent,
                     fullName: item.fullName,
                     name: item.name,
+                    semester: item.order,
+                    year: item.year,
                     semAvg1: item.avgSemScore,
-                    semAvg2: undefined
+                    semAvg2: undefined,
                 }
-            if (item.name !== matchedYear.name) {
+            else {
                 return [
                     {
                         idStudent: item.idStudent,
                         fullName: item.fullName,
                         name: item.name,
+                        semester: item.order,
+                        year: item.year,
                         semAvg1: item.avgSemScore,
-                        semAvg2: matchedYear[0].avgSemScore
+                        semAvg2: matchedYear[0].avgSemScore,
                     },
                     {
                         idStudent: item.idStudent,
                         fullName: item.fullName,
                         name: matchedYear[0].name,
+                        semester: matchedYear[0].order,
+                        year: item.year,
                         semAvg1: item.avgSemScore,
-                        semAvg2: matchedYear[0].avgSemScore
+                        semAvg2: matchedYear[0].avgSemScore,
                     }
                 ]
-            } else {
-                return {
-                    idStudent: item.idStudent,
-                    fullName: item.fullName,
-                    name: item.name,
-                    semAvg1: item.avgSemScore,
-                    semAvg2: matchedYear.avgSemScore
-                }
             }
         })
         processedData.forEach((item) => {
@@ -110,8 +112,37 @@ function ScoreAverage() {
             }
         })
         return returnData;
+    };
+
+    const handleSearch = (valueID,valueYear,data) => {
+        let newData;
+        if (valueID !== '' && valueYear !== '') {
+            newData = data.filter((item) => {
+                return String(item.idStudent) === valueID && String(item.year) === valueYear;
+            });
+            console.log(newData);
+        }
+        else if (valueID !== '' && valueYear === '') {
+            newData = data.filter((item) => {
+                return String(item.idStudent) === valueID;
+            });
+        }
+        else if (valueID === '' && valueYear !== '') {
+            newData = data.filter((item) => {
+                return String(item.year) === valueYear;
+            });
+        }
+        else {
+            newData = data;
+        }
+         setFiltered(newData);
+    };
+
+    const handleRowClick = (record) => {
+        let url = `details?idStudent=${record.idStudent}&year=${record.year}&order=${record.semester}`;
+        navigate(url);
     }
-    console.log(raw);
+
     return (
         <div>
             <Card>
@@ -119,9 +150,37 @@ function ScoreAverage() {
                     <Typography.Title level={2}>Score Average</Typography.Title>
                 </Row>
                 <Row>
-                    <Table 
-                        dataSource={source}
+                    <Col>
+                        <Input
+                            placeholder='Searching ID ...' 
+                            value={inputID}
+                            onChange={(e) => setInputID(e.target.value)}
+                        />
+                    </Col>
+                    <Col>
+                        <Input
+                            placeholder='Searching year ...' 
+                            value={inputYear}
+                            onChange={(e) => setInputYear(e.target.value)}
+                        />
+                    </Col>
+                    <Col>
+                        <Button
+                            type='primary'
+                            onClick={() => handleSearch(inputID,inputYear,raw)}
+                        >
+                            Search
+                        </Button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Table
+                        rowClassName="custom-row"
+                        dataSource={filtered}
                         columns={columns}
+                        onRow={(record) => ({
+                            onClick: () => handleRowClick(record)
+                        })}
                     />
                 </Row>
             </Card>

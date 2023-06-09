@@ -19,6 +19,8 @@ import ClassesEdit from "./modules/classes-semesters/classesEdit";
 import AddStudentToClass from "./modules/classes-semesters/addstudenttoclass";
 import PrintStudentListPage from "./modules/classes-semesters/PrintStudentListPage";
 import ScoreAverage from "./modules/score/scoreaverage";
+import ScoreDetails from "./modules/score/scoredetails";
+import AddingScore from "./modules/score/addScorePage";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +118,16 @@ const router = createBrowserRouter([
         path:"scores",
         element:<ScoreAverage/>,
         errorElement:<ErrorPage/>
+      },
+      {
+        path:"scores/details",
+        element:<ScoreDetails/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"add-score",
+        element:<AddingScore />,
+        errorElement: <ErrorPage/>
       }
     ]
   }

@@ -56,8 +56,18 @@ function SideMenu() {
           },
           {
             label: "Scores",
-            key: "/scores",
+            key: "scoregroup",
             icon: <CheckCircleOutlined />,
+            children: [
+              {
+                label: "Score Average",
+                key: "/scores"
+              },
+              {
+                label: "Add Score",
+                key: "/add-score"
+              }
+            ]
           },
           {
             label: "Report",
