@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "/profile-students/:id",
+        path: "/students/:id",
         element: <Profilestudent />,
         errorElement: <ErrorPage />,
       },

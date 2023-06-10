@@ -66,8 +66,18 @@ function SideMenu() {
           },
           {
             label: "Rules",
-            key: "/rules",
-            icon: <UserOutlined />,
+            key: "rulegroup",
+            icon: <GroupOutlined />,
+            children: [
+              {
+                label: "All Rules",
+                key: "/rules"
+              },
+              {
+                label: "Edit Rules",
+                key: "/editrules"
+              }
+            ]
           },
         ]}
       ></Menu>
