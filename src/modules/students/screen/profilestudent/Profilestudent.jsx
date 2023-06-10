@@ -1,20 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import Alert from 'antd';
+import Alert, { message } from 'antd';
 import dayjs from 'dayjs';
 import ApiService from '../../../../ApiService';
 
-import { 
-    Checkbox,
-    DatePicker,
-    Form,
-    Input,
-    Select,
-    Typography,
-    Space,
-    Card,
-    Button
-} from 'antd'
+import {
+  Checkbox,
+  DatePicker,
+  Form,
+  Input,
+  Select,
+  Typography,
+  Space,
+  Card,
+  Button,
+  Tag,
+} from "antd";
 
 import style from './Profilestudent.module.css'
 import CompoundedSpace from 'antd/es/space';
@@ -60,7 +61,7 @@ function Profilestudent () {
     const HandleSubmit = () => {
         const {name,address,birth,gender,email} = form.getFieldsValue();
         if (!name && !address && !birth && !gender && !email)
-            console.log('dien it nhat 1 thong tin di pa');
+            setEditButton(!editButton);
         else {
             const newStudent = {
                 fullName: name ? name: student.name,
@@ -70,7 +71,8 @@ function Profilestudent () {
                 Email: email ? email: student.email
             }
             const putStudent = async (data) => {
-                const putdata = await ApiService.put(requrl, data)        
+                const putdata = await ApiService.put(requrl, data)   
+                message.success("updated student successfully")     
                 console.log(putdata);
             }
             putStudent(newStudent);
@@ -80,96 +82,97 @@ function Profilestudent () {
     }
     console.log(student.classes);
     return (
-        <div className={style.Addstudent}>
-            <Card title= "Profile Student">
-                        <Form
-                            form={form}
-                        >
-                            <Form.Item name={"name"} label="NAME*">
-                                <div className={style.container}>
-                                    <Input
-                                        className={style.input}
-                                        placeholder={student.name}
-                                        disabled={componentDisabled}
-                                    />
-                                </div>
-                            </Form.Item>
-                            <Form.Item name={"birth"} label="DATE OF BIRTH*">
-                                <div className={style.container}>
-                                    <DatePicker
-                                        className={style.input}
-                                        disabled={componentDisabled}
-                                        placeholder={student.birth}
-                                    />
-                                </div>
-                            </Form.Item>
-                            <Form.Item name={"gender"} label="GENDER*">
-                                <div className={style.container}>
-                                    <div className={style.input}>
-                                        <Select className={style.input} placeholder={student.gender} disabled={componentDisabled}>
-                                            {["Nam","Nữ"].map(gender=>{
-                                                return <Select.Option value={gender} key={gender}>{gender}</Select.Option>
-                                            })}
-                                        </Select>
-                                    </div>
-                                </div>
-                            </Form.Item>
-                            {componentDisabled && 
-                                <Form.Item name={"class"} label="CLASSES">
-                                    <div className={style.container}>
-                                        <Input
-                                            className={style.trans}
-                                            placeholder={
-                                                student.classes===undefined?
-                                                " " : student.classes.join(" ")
-                                            }
-                                            disabled={componentDisabled}
-                                        />       
-                                    </div>
-                                </Form.Item>
-                            }
-                            <Form.Item name={"address"} label="ADDRESS*">
-                                <div className={style.container}>
-                                    <Input
-                                        className={style.input}
-                                        size="medium"
-                                        placeholder={student.address}
-                                        disabled={componentDisabled}
-                                    />
-                                </div>
-                            </Form.Item>
-                            <Form.Item name={"email"} label="EMAIL*">
-                                <div class={style.container}>
-                                    <Input
-                                        className={style.input}
-                                        size="medium"
-                                        placeholder={student.email}
-                                        disabled={componentDisabled}
-                                    />
-                                </div>
-                            </Form.Item>
-                                <div className={style.spaceButton}>
-                                    <Space wrap>
-                                        {editButton && <Button
-                                            htmlType='submit'
-                                            type='primary'
-                                            onClick={() => {FieldEnable()}}
-                                            >
-                                                Edit
-                                            </Button>}
-                                        {!editButton && <Button
-                                            htmlType='submit'
-                                            type='primary'
-                                            onClick={() => {HandleSubmit()}}
-                                            danger
-                                            >
-                                                Save
-                                            </Button> }
-                                    </Space> 
-                                </div> 
-                        </Form>
-            </Card>
-        </div>
+      <div className={style.Addstudent}>
+        <Card title="Profile Student">
+          <Form form={form}>
+            <Form.Item name={"name"} label="NAME*">
+              <div className={style.container}>
+                <Input
+                  className={style.input}
+                  placeholder={student.name}
+                  disabled={componentDisabled}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name={"birth"} label="DATE OF BIRTH*">
+              <div className={style.container}>
+                <DatePicker
+                  className={style.input}
+                  disabled={componentDisabled}
+                  placeholder={student.birth}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name={"gender"} label="GENDER*">
+              <div className={style.container}>
+                <div className={style.input}>
+                  <Select
+                    className={style.input}
+                    placeholder={student.gender}
+                    disabled={componentDisabled}
+                  >
+                    {["Nam", "Nữ"].map((gender) => {
+                      return (
+                        <Select.Option value={gender} key={gender}>
+                          {gender}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
+                </div>
+              </div>
+            </Form.Item>
+            
+            <Form.Item name={"address"} label="ADDRESS*">
+              <div className={style.container}>
+                <Input
+                  className={style.input}
+                  size="medium"
+                  placeholder={student.address}
+                  disabled={componentDisabled}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item name={"email"} label="EMAIL*">
+              <div class={style.container}>
+                <Input
+                  className={style.input}
+                  size="medium"
+                  placeholder={student.email}
+                  disabled={componentDisabled}
+                />
+              </div>
+            </Form.Item>
+            <div className={style.spaceButton}>
+              <Space wrap>
+                {editButton && (
+                  <Button
+                    htmlType="submit"
+                    type="primary"
+                    onClick={() => {
+                      FieldEnable();
+                    }}
+                  >
+                    Edit
+                  </Button>
+                )}
+                {!editButton && (
+                  <Button
+                    htmlType="submit"
+                    type="primary"
+                    onClick={() => {
+                      HandleSubmit();
+                    }}
+                    danger
+                  >
+                    Save
+                  </Button>
+                )}
+              </Space>
+            </div>
+          </Form>
+        </Card>
+      </div>
     );
 }
 
