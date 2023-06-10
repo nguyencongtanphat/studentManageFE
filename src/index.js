@@ -15,9 +15,20 @@ import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade"
 import AddNewClassSemesterPage from "./modules/classes-semesters/screens/AddNewClassSemesterPage";
 import ClassesPage from "./modules/classes-semesters/screens/ClassesSemesterPage";
 import ClassSemesterDetail from "./modules/classes-semesters/screens/ClassSemesterDetailPage";
+import LoginPage from "./modules/login/LoginPage";
+import AllTeacherPage from "./modules/teacher/AllTeacherPage";
+import TeacherDetailPage from "./modules/teacher/TeacherDetailPage";
+import AddNewTeacherPage from "./modules/teacher/AddNewTeacherPage"
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 
 const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
   {
     path: "/",
     element: <Root />,
@@ -44,8 +55,23 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "/profile-students/:id",
+        path: "/students/:id",
         element: <Profilestudent />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/teachers",
+        element: <AllTeacherPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/teachers/:id",
+        element: <TeacherDetailPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/add-new-teacher",
+        element: <AddNewTeacherPage />,
         errorElement: <ErrorPage />,
       },
       {
@@ -79,5 +105,8 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <Provider store={store}>
+    {" "}
     <RouterProvider router={router} />
+  </Provider>
 );
