@@ -48,17 +48,32 @@ function ScoreAverage() {
     let navigate = useNavigate();
     const [raw, setRaw ] = useState([]);
     const [filtered, setFiltered] = useState([]);
-    const [inputID, setInputID] = useState('');
-    const [inputYear, setInputYear] = useState('');
+    const [inputName, setInputName] = useState('');
+    const [year, setYear] = useState([]);
+    const [selectedYear, setSelectedYear] = useState('');
     useEffect(() => {
         const fetchData = async () => {
             const data = await ApiService.get("subject-score/scores");
+            const semesters = await ApiService.get("semesters");
+            let yearA = semesters.map((item) => {
+                return item.year;
+            });
+            const uniqueYear = yearA.filter((value, index, self) => {
+                return self.indexOf(value) === index;
+              });
+            yearA = uniqueYear.map((item,index) => {
+                return {
+                    key: index,
+                    label: item,
+                    value: item
+                }
+            });
             let orderIs1 = data.filter((item)=> item.order === 1);
             let processedData = preprocessing(orderIs1, data);
             setRaw(processedData);
             setFiltered(processedData);
+            setYear(yearA);
         };
-
         fetchData()
     }, []);
 
@@ -114,22 +129,22 @@ function ScoreAverage() {
         return returnData;
     };
 
-    const handleSearch = (valueID,valueYear,data) => {
+    const handleSearch = (valueName,valueYear,data) => {
+        console.log(valueName, valueYear);
         let newData;
-        if (valueID !== '' && valueYear !== '') {
+        if (valueName !== '' && valueYear !== '') {
             newData = data.filter((item) => {
-                return String(item.idStudent) === valueID && String(item.year) === valueYear;
-            });
-            console.log(newData);
-        }
-        else if (valueID !== '' && valueYear === '') {
-            newData = data.filter((item) => {
-                return String(item.idStudent) === valueID;
+                return String(item.fullName) === valueName && String(item.year) === String(valueYear);
             });
         }
-        else if (valueID === '' && valueYear !== '') {
+        else if (valueName !== '' && valueYear === '') {
             newData = data.filter((item) => {
-                return String(item.year) === valueYear;
+                return String(item.fullName) === valueName;
+            });
+        }
+        else if (valueName === '' && valueYear !== '') {
+            newData = data.filter((item) => {
+                return String(item.year) === String(valueYear);
             });
         }
         else {
@@ -137,6 +152,10 @@ function ScoreAverage() {
         }
          setFiltered(newData);
     };
+
+    const handleYearChange = (value) => {
+        setSelectedYear(value);
+    }
 
     const handleRowClick = (record) => {
         let url = `details?idStudent=${record.idStudent}&year=${record.year}&order=${record.semester}`;
@@ -152,22 +171,22 @@ function ScoreAverage() {
                 <Row>
                     <Col>
                         <Input
-                            placeholder='Searching ID ...' 
-                            value={inputID}
-                            onChange={(e) => setInputID(e.target.value)}
+                            placeholder='Searching name ...' 
+                            value={inputName}
+                            onChange={(e) => setInputName(e.target.value)}
                         />
                     </Col>
                     <Col>
-                        <Input
-                            placeholder='Searching year ...' 
-                            value={inputYear}
-                            onChange={(e) => setInputYear(e.target.value)}
+                        <Select
+                            style={{ width: 140 }}
+                            options={year}
+                            onChange={handleYearChange}
                         />
                     </Col>
                     <Col>
                         <Button
                             type='primary'
-                            onClick={() => handleSearch(inputID,inputYear,raw)}
+                            onClick={() => handleSearch(inputName,selectedYear,raw)}
                         >
                             Search
                         </Button>

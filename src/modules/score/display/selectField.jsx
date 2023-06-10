@@ -17,16 +17,10 @@ const SelectField = (props) => {
                 onChange={props.handleSubjectChange}
             />
             <Select
-                defaultValue={props.selectedYear}
-                style={{ width: 100 }}
-                options={props.year}
-                onChange={props.handleYearChange}
-            />
-            <Select
-                defaultValue={props.selectedOrder}
-                style={{ width: 50 }}
-                options={props.order}
-                onChange={props.handleOrderChange}
+                defaultValue={props.selectedSemester}
+                style={{ width: 200 }}
+                options={props.semester}
+                onChange={props.handleSemesterChange}
             />
         </Row>
     )

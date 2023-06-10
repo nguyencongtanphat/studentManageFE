@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Typography, Button} from 'antd';
+import { Card, Row, message, Typography, Button} from 'antd';
 import '../../App.css';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,17 +10,16 @@ import SelectField from './display/selectField';
 import ScoreTable from './display/scoreTable';
 
 function AddingScore () {
+    const [messageApi, contextHolder] = message.useMessage();
     const [classes, setClasses] = useState([]);
     const [subjects, setSubjects] = useState([]);
-    const [year, setYears] = useState([]);
-    const [order, setOrder] = useState([]);
+    const [semester, setSemester] = useState([]);
     const [student, setStudent] = useState([]);
     const [data, setData] = useState([]);
     const [table, setTable] = useState([]);
     const [selectedClass, setSelectedClass] = useState(4);
     const [selectedSubject, setSelectedSubject] = useState(1);
-    const [selectedYear, setSelectedYear] = useState(2024);
-    const [selectedOrder, setSelectedOrder] = useState(1);
+    const [selectedSemester, setSelectedSemester] = useState('1-2024');
     useEffect(() => {
         const fetchFieldData = async () => {
             const classesApi = await ApiService.get('classes');
@@ -40,44 +39,50 @@ function AddingScore () {
                     value: item.idSubject
                 }
             });
-            const yearA = semestersApi.map((item,index) => {
+            const semesterA = semestersApi.map((item,index) => {
                 return {
                     key: index,
-                    label: item.year,
-                    value: item.year
+                    label: item.order + "-" +item.year,
+                    value: item.order + "-" +item.year
                 }
             });
+            setSemester(semesterA);
             setClasses(classsA);
             setSubjects(subjectsA);
-            setYears(yearA);
-            setOrder([{label: 'I', value: 1}, {label: 'II', value: 2}]);
         }
         fetchFieldData();
     }, []);
 
     useEffect(() => {
         const fetchData = async () => {
-            let rawQuery = `year=${selectedYear}&order=${selectedOrder}&idClass=${selectedClass}`;
+            const order = selectedSemester.split('-')[0];
+            const year = selectedSemester.split('-')[1];
+            let rawQuery = `year=${year}&order=${order}&idClass=${selectedClass}`;
             const studentA = await ApiService.get('students/inclass?'+rawQuery);
             console.log(studentA);
             setStudent(studentA);
         };
         fetchData();
-    }, [selectedClass, selectedOrder, selectedYear]);
+    }, [selectedClass, selectedSemester]);
 
     useEffect(() => {
-        const data = [];
-        const fetchData = async () => {
-            for (let item of student) {
-                let query = `idStudent=${item.idStudent}&year=${selectedYear}&order=${selectedOrder}`;
-                const rawData = await ApiService.get('subject-score/details?'+query);
-                const element = {idStudent: item.idStudent, fullName: item.fullName,scores: rawData};
-                data.push(element);
-            }
-            setData(data);
-        };
-        fetchData();
+        fetchScoreData();
     }, [student]);
+
+    const fetchScoreData = async () => {
+        const data = [];
+        for (let item of student) {
+            const order = selectedSemester.split('-')[0];
+            const year = selectedSemester.split('-')[1];
+            let query = `idStudent=${item.idStudent}&year=${year}&order=${order}`;
+            const rawData = await ApiService.get('subject-score/details?'+query);
+            const element = {idStudent: item.idStudent, fullName: item.fullName,scores: rawData};
+            data.push(element);
+        }
+        setData(data);
+        console.log(data);
+    };
+
 
     useEffect(() => {
         let gpa = '';
@@ -115,7 +120,6 @@ function AddingScore () {
             }
             }
         )
-        console.log(table);
         setTable(table);
     }, [selectedSubject, data]);
 
@@ -123,20 +127,18 @@ function AddingScore () {
         setSelectedClass(value);
     };
 
-    const handleYearChange = (value) => {
-        setSelectedYear(value);
-    };
-
     const handleSubjectChange = (value) => {
         setSelectedSubject(value);
     };
 
-    const handleOrderChange = (value) => {
-        setSelectedOrder(value);
-    };
+    const handleSemesterChange = (value) => {
+        setSelectedSemester(value);
+    }
 
     const handleButtonClick = async () => {
-        const progressQuery = `year=${selectedYear}&order=${selectedOrder}&idClass=${selectedClass}`;
+        const order = selectedSemester.split('-')[0];
+        const year = selectedSemester.split('-')[1];
+        const progressQuery = `year=${year}&order=${order}&idClass=${selectedClass}`;
         const progressApi = await ApiService.get('students/progress?'+progressQuery);
         const result = progressApi.map((item) => {
             let temp;
@@ -156,11 +158,20 @@ function AddingScore () {
         });
         const body = {idSubject: selectedSubject, result: result}
         const status = await ApiService.post('subject-score/details', body);
-        console.log(body);
+        if (status === 'success') {
+            messageApi.open({
+                type: 'success',
+                content: 'Updating scores successfully',
+              });
+        }
+        setTimeout(() => {
+            fetchScoreData();
+          },500);
     }
 
     return (
         <>
+        {contextHolder}
             <Card>
                 <Row>
                     <Typography.Title level={2}>Title</Typography.Title>
@@ -170,14 +181,11 @@ function AddingScore () {
                     classes={classes}
                     selectedSubject={selectedSubject}
                     subjects={subjects}
-                    selectedYear={selectedYear}
-                    year={year}
-                    selectedOrder={selectedOrder}
-                    order={order}
                     handleClassChange={handleClassChange}
-                    handleYearChange={handleYearChange}
+                    selectedSemester={selectedSemester}
+                    semester={semester}
+                    handleSemesterChange={handleSemesterChange}
                     handleSubjectChange={handleSubjectChange}
-                    handleOrderChange={handleOrderChange}
                 />
                 <ScoreTable
                     table={table}
