@@ -22,6 +22,9 @@ import AddNewTeacherPage from "./modules/teacher/AddNewTeacherPage"
 import { Provider } from "react-redux";
 import { store } from "./store";
 
+import ScoreAverage from "./modules/score/scoreaverage";
+import ScoreDetails from "./modules/score/scoredetails";
+import AddingScore from "./modules/score/addScorePage";
 
 const router = createBrowserRouter([
   {
@@ -90,13 +93,28 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "classes-grade/:id",
-        element: <Listclassofgrade />,
-        errorElement: <ErrorPage />,
+        path:"classes-grade/:id",
+        element:<Listclassofgrade/>,
+        errorElement:<ErrorPage/>
       },
-    ],
-  },
-]);
+      {
+        path:"scores",
+        element:<ScoreAverage/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"scores/details",
+        element:<ScoreDetails/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"add-score",
+        element:<AddingScore />,
+        errorElement: <ErrorPage/>
+      }
+    ]
+  }
+])
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
