@@ -17,8 +17,10 @@ import ClassesPage from "./modules/classes-semesters/screens/ClassesSemesterPage
 import ClassSemesterDetail from "./modules/classes-semesters/screens/ClassSemesterDetailPage";
 import LoginPage from "./modules/login/LoginPage";
 import AllTeacherPage from "./modules/teacher/AllTeacherPage";
+import AddNewTeacherPage from "./modules/teacher/AddNewTeacherPage"
 import { Provider } from "react-redux";
 import { store } from "./store";
+
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,11 @@ const router = createBrowserRouter([
       {
         path: "/teachers",
         element: <AllTeacherPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/add-new-teacher",
+        element: <AddNewTeacherPage />,
         errorElement: <ErrorPage />,
       },
       {

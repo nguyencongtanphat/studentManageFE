@@ -115,6 +115,9 @@ function AllTeacherPage() {
             },
           })}
         />
+        <Button type="primary">
+          Add new teacher
+        </Button>
       </Card>
     </div>
   );
