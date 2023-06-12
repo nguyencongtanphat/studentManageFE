@@ -89,7 +89,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "class-semester/:id",
+        path: "classes-semesters/:id",
         element: <ClassSemesterDetail />,
         errorElement: <ErrorPage />,
       },
