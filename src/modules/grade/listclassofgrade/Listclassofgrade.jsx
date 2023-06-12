@@ -185,7 +185,7 @@ function Listclassofgrade() {
   const addClassHandler = () => {
     let newClass = "";
     Modal.info({
-      title: "Add student to class",
+      title: "Add new class to grade",
       content: (
         <div>
           <Card title="Add new class">
