@@ -25,6 +25,7 @@ import { store } from "./store";
 import ScoreAverage from "./modules/score/scoreaverage";
 import ScoreDetails from "./modules/score/scoredetails";
 import AddingScore from "./modules/score/addScorePage";
+import SubjectTable from "./modules/subject/SubjectTable";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +112,11 @@ const router = createBrowserRouter([
         path:"add-score",
         element:<AddingScore />,
         errorElement: <ErrorPage/>
+      },
+      {
+        path:"subjects",
+        element:<SubjectTable/>,
+        errorElement:<ErrorPage/>
       }
     ]
   }
