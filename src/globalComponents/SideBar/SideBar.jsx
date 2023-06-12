@@ -86,7 +86,7 @@ function SideMenu() {
             children: [
               {
                 label: "All Rules",
-                key: "/rules"
+                key: "/change-rules"
               },
               {
                 label: "Edit Rules",
