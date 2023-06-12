@@ -46,19 +46,14 @@ function SideMenu() {
             icon: <UserOutlined />,
           },
           {
-            label: "Classes",
-            key: "classgroup",
+            label: "Teacher",
+            key: "/teachers",
+            icon: <UserOutlined />,
+          },
+          {
+            label: "Classes-semesters",
+            key: "/classes-semesters",
             icon: <GroupOutlined />,
-            children: [
-              {
-                label: "Classes",
-                key: "/classes"
-              },
-              {
-                label: "Print Student List",
-                key: "/printstudentlist"
-              }
-            ]
           },
           {
             label: "Grades",
@@ -67,8 +62,18 @@ function SideMenu() {
           },
           {
             label: "Scores",
-            key: "/scores",
+            key: "scoregroup",
             icon: <CheckCircleOutlined />,
+            children: [
+              {
+                label: "Score Average",
+                key: "/scores"
+              },
+              {
+                label: "Add Score",
+                key: "/add-score"
+              }
+            ]
           },
           {
             label: "Report",
@@ -77,8 +82,18 @@ function SideMenu() {
           },
           {
             label: "Rules",
-            key: "/rules",
-            icon: <UserOutlined />,
+            key: "rulegroup",
+            icon: <GroupOutlined />,
+            children: [
+              {
+                label: "All Rules",
+                key: "/rules"
+              },
+              {
+                label: "Edit Rules",
+                key: "/editrules"
+              }
+            ]
           },
           {
             label: "Subjects",

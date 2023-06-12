@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import ClassesList from "./classesList";
+import ClassesList from "../components/classesList";
 
 function ClassesPage() {
     const [ flag, setFlag ] = useState(true);
