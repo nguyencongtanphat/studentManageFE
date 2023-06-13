@@ -15,13 +15,6 @@ import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade"
 
 import SemesterReport from "./modules/semesterReport/SemesterReport";
 
-import ClassesPage from "./modules/classes/classesPage";
-import ClassesInformation from "./modules/classes/classesInformation";
-import ClassesAdd from "./modules/classes/classesAdd";
-import ClassesEdit from "./modules/classes/classesEdit";
-import AddStudentToClass from "./modules/classes/addstudenttoclass";
-import PrintStudentListPage from "./modules/classes/PrintStudentListPage";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -64,49 +57,54 @@ const router = createBrowserRouter([
       //   element: <Gradesinformation/>,
       //   errorElement: <ErrorPage />,
       // },
-      {
-        path: "classes-semesters",
-        element: <ClassesPage />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "printstudentlist",
-        element: <PrintStudentListPage />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "classesinformation",
-        element: <ClassesInformation />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "classesadd",
-        element: <ClassesAdd />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path:"add-class-semester",
-        element:<ClassesAdd/>,
-        errorElement:<ErrorPage/>
-      },
-      {
-        path: "classesedit",
-        element: <ClassesEdit />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "classesedit",
-        element: <ClassesEdit />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "addstudenttoclass",
-        element: <AddStudentToClass />,
-        errorElement: <ErrorPage />,
-      },
+      // {
+      //   path: "classes-semesters",
+      //   element: <ClassesPage />,
+      //   errorElement: <ErrorPage />,
+      // },
+      // {
+      //   path: "printstudentlist",
+      //   element: <PrintStudentListPage />,
+      //   errorElement: <ErrorPage />,
+      // },
+      // {
+      //   path: "classesinformation",
+      //   element: <ClassesInformation />,
+      //   errorElement: <ErrorPage />,
+      // },
+      // {
+      //   path: "classesadd",
+      //   element: <ClassesAdd />,
+      //   errorElement: <ErrorPage />,
+      // },
+      // {
+      //   path:"add-class-semester",
+      //   element:<ClassesAdd/>,
+      //   errorElement:<ErrorPage/>
+      // },
+      // {
+      //   path: "classesedit",
+      //   element: <ClassesEdit />,
+      //   errorElement: <ErrorPage />,
+      // },
+      // {
+      //   path: "classesedit",
+      //   element: <ClassesEdit />,
+      //   errorElement: <ErrorPage />,
+      // },
+      // {
+      //   path: "addstudenttoclass",
+      //   element: <AddStudentToClass />,
+      //   errorElement: <ErrorPage />,
+      // },
       {
         path:"classes-grade/:id",
         element:<Listclassofgrade/>,
+        errorElement:<ErrorPage/>
+      },
+      {
+        path:"semesterReport",
+        element:<SemesterReport/>,
         errorElement:<ErrorPage/>
       },
     ]
