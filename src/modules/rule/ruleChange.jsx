@@ -11,7 +11,8 @@ import {
     Form,
     Row,
     Col,
-    Divider
+    Divider,
+    Modal,
   } from "antd";
 
   import "./rules.module.css"
@@ -20,8 +21,21 @@ import {
     const [form] = Form.useForm();
     const [editMode, setEditMode] = useState(false);
 
+    const fetchData = async () => {
+        const results = await ApiService.get("parameters");
+        console.log("fetch result", results);
+        form.setFieldsValue({
+            minage: parseInt(results[0]["value"]),
+            maxage: parseInt(results[1]["value"]),
+            maxquan: parseInt(results[2]["value"]),
+            subjectpassingscore: parseFloat(results[3]["value"]),
+            passingscore: parseFloat(results[4]["value"]),
+            minscore: parseFloat(results[5]["value"]),
+            maxscore: parseFloat(results[6]["value"]),
+        })
+    };
+
     const onFinish = (values) => {
-        setEditMode(!editMode);
         const updateData = async () => {
             const data = {
                 "minage" : parseInt(form.getFieldValue("minage")),
@@ -34,28 +48,34 @@ import {
             };
             const results = await ApiService.put("parameters/update", data);
             console.log("data sended: ", data);
+            return results;
         };
-        const fetchData = async () => {
-            const results = await ApiService.get("parameters");
-            console.log("fetch result", results);
-            form.setFieldsValue({
-                minage: parseInt(results[0]["value"]),
-                maxage: parseInt(results[1]["value"]),
-                maxquan: parseInt(results[2]["value"]),
-                subjectpassingscore: parseFloat(results[3]["value"]),
-                passingscore: parseFloat(results[4]["value"]),
-                minscore: parseFloat(results[5]["value"]),
-                maxscore: parseFloat(results[6]["value"]),
-            })
-        };
+        
         if(editMode === true) {
             const temp = async () => {
                 console.log("send data");
-                await updateData(); 
-                fetchData();
+                const results = await updateData(); 
+                if (results.status == 200){
+                    Modal.success({
+                        title: "Success",
+                        content: "Update rule successfully",
+                        okText: "OK",
+                        onOk() {},
+                    });
+                }
+                else{
+                    Modal.success({
+                        title: "Error",
+                        content: "Update rule failed",
+                        okText: "OK",
+                        onOk() {},
+                    });
+                }
+                await fetchData();
             }
             temp();
         }
+        setEditMode(!editMode);
     }
     useEffect(() => {
         const fetchData = async () => {
