@@ -74,9 +74,9 @@ function Addstudent() {
               <Form.Item
                 name={"idClassSemester"}
                 label="CLASS-SEMESTER"
-                rules={[
-                  { required: true, message: "Please choose your class!" },
-                ]}
+                // rules={[
+                //   { required: true, message: "Please choose your class!" },
+                // ]}
               >
                 <Select placeholder="Please select class-semester">
                   {classesSemester.map((item) => {
