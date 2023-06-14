@@ -27,10 +27,21 @@ class ApiService {
       console.log("POST:", urlServer + "/" + reqUrl);
       const response = await axios.post(urlServer + "/" + reqUrl, body);
       console.log("response", response);
-      return response.data.ResponseResult;
+      return response.data.ResponseResult.result;
     } catch (e) {
       throw new Error(e.response.data.ResponseResult.Message);
     }
   };
+
+  static delete = async (reqUrl)=>{
+    try {
+      console.log("DELETE:", urlServer + "/" + reqUrl);
+      const response = await axios.delete(urlServer + "/" + reqUrl);
+      console.log("response", response);
+      return response.data.ResponseResult;
+    } catch (e) {
+      throw new Error(e.Message);
+    }
+  }
 }
 export default ApiService;

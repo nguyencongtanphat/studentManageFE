@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -12,23 +12,40 @@ import Profilestudent from "./modules/students/screen/profilestudent/Profilestud
 import Allgrade from "./modules/grade/Allgrade/Allgrade";
 import Listclassofgrade from "./modules/grade/listclassofgrade/Listclassofgrade";
 
+import AddNewClassSemesterPage from "./modules/classes-semesters/screens/AddNewClassSemesterPage";
+import ClassesPage from "./modules/classes-semesters/screens/ClassesSemesterPage";
+import ClassSemesterDetail from "./modules/classes-semesters/screens/ClassSemesterDetailPage";
+import LoginPage from "./modules/login/LoginPage";
+import AllTeacherPage from "./modules/teacher/AllTeacherPage";
+import TeacherDetailPage from "./modules/teacher/TeacherDetailPage";
+import AddNewTeacherPage from "./modules/teacher/AddNewTeacherPage"
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 import SemesterReport from "./modules/semesterReport/SemesterReport";
+import ScoreAverage from "./modules/score/scoreaverage";
+import ScoreDetails from "./modules/score/scoredetails";
+import AddingScore from "./modules/score/addScorePage";
+import SubjectTable from "./modules/subject/SubjectTable";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/app",
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: "",
         element: <HomePage />,
         errorElement: <ErrorPage />,
       },
-
       {
-        path: "/students/",
+        path: "students",
         element: <Allstudent />,
         errorElement: <ErrorPage />,
       },
@@ -38,13 +55,18 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "/editstudents",
-        element: <Editstudent />,
+        path: "teachers",
+        element: <AllTeacherPage />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "/profilestudents/:id",
-        element: <Profilestudent />,
+        path: "teachers/:id",
+        element: <TeacherDetailPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "add-new-teacher",
+        element: <AddNewTeacherPage />,
         errorElement: <ErrorPage />,
       },
       {
@@ -52,55 +74,50 @@ const router = createBrowserRouter([
         element: <Allgrade />,
         errorElement: <ErrorPage />,
       },
-      // {
-      //   path: "gradesinformation",
-      //   element: <Gradesinformation/>,
-      //   errorElement: <ErrorPage />,
-      // },
-      // {
-      //   path: "classes-semesters",
-      //   element: <ClassesPage />,
-      //   errorElement: <ErrorPage />,
-      // },
-      // {
-      //   path: "printstudentlist",
-      //   element: <PrintStudentListPage />,
-      //   errorElement: <ErrorPage />,
-      // },
-      // {
-      //   path: "classesinformation",
-      //   element: <ClassesInformation />,
-      //   errorElement: <ErrorPage />,
-      // },
-      // {
-      //   path: "classesadd",
-      //   element: <ClassesAdd />,
-      //   errorElement: <ErrorPage />,
-      // },
-      // {
-      //   path:"add-class-semester",
-      //   element:<ClassesAdd/>,
-      //   errorElement:<ErrorPage/>
-      // },
-      // {
-      //   path: "classesedit",
-      //   element: <ClassesEdit />,
-      //   errorElement: <ErrorPage />,
-      // },
-      // {
-      //   path: "classesedit",
-      //   element: <ClassesEdit />,
-      //   errorElement: <ErrorPage />,
-      // },
-      // {
-      //   path: "addstudenttoclass",
-      //   element: <AddStudentToClass />,
-      //   errorElement: <ErrorPage />,
-      // },
       {
-        path:"classes-grade/:id",
-        element:<Listclassofgrade/>,
-        errorElement:<ErrorPage/>
+        path: "classes-grade/:id",
+        element: <Listclassofgrade />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "classes-semesters",
+        element: <ClassesPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "add-new-class-semester",
+        element: <AddNewClassSemesterPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "classes-semesters/:id",
+        element: <ClassSemesterDetail />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "scores",
+        element: <ScoreAverage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "scores/details",
+        element: <ScoreDetails />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "add-score",
+        element: <AddingScore />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "subjects",
+        element: <SubjectTable />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "students/:id",
+        element: <Profilestudent />,
+        errorElement: <ErrorPage />,
       },
       {
         path:"semesterReport",
@@ -113,5 +130,8 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <Provider store={store}>
+    {" "}
     <RouterProvider router={router} />
+  </Provider>
 );

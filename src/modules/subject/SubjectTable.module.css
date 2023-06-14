@@ -1,4 +1,4 @@
-selectClass{
+.selectSubject{
     display: flex;
     justify-content: end;
 }

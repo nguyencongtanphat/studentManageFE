@@ -1,6 +1,7 @@
 import {  Row,  Table,  } from "antd";
 
 function StudentListTable(props) {
+  console.log("StudentListTableData:", props.filteredData);
   return (
     <Row style={{ display: "flex" }}>
       <Table

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Space, Select, Table, Card, AutoComplete, Button, Tag } from "antd";
+import { Space, Select, Table, Card, AutoComplete, Button, Tag, Modal } from "antd";
 import ApiService from "../../../ApiService";
-function AddStudent(props) {
+function AddStudentDetailPage(props) {
   const columns = [
     {
       title: "ID",
@@ -34,22 +34,20 @@ function AddStudent(props) {
   const [studentListView, setStudentListView] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
- 
 
   const rowSelection = {
     selectedRowKeys,
     onChange: (selectedKeys, selectedRows) => {
       setSelectedRowKeys(selectedKeys);
-      props.onStudentListChange(selectedRows);
     },
   };
 
   const searchHandler = () => {
     let newStudentList = studentList;
-    if (nameQuery){
-       newStudentList = studentList.filter((student) => {
-         return student.name.includes(nameQuery);
-       });
+    if (nameQuery) {
+      newStudentList = studentList.filter((student) => {
+        return student.name.includes(nameQuery);
+      });
     }
     setStudentListView(newStudentList);
   };
@@ -67,6 +65,7 @@ function AddStudent(props) {
           const found = props.studentsList.find(
             (studentInList) => studentInList.key === student.idStudent
           );
+
           return !found;
         });
         console.log("list filtered student data:", filteredStudentList);
@@ -91,7 +90,7 @@ function AddStudent(props) {
     };
     fetchData();
   }, []);
-  
+
   return (
     <Card title="All Student Data">
       <div>
@@ -99,7 +98,7 @@ function AddStudent(props) {
           <AutoComplete
             style={{ width: 200 }}
             onSearch={(value) => {
-                setNameQuery(value);
+              setNameQuery(value);
             }}
             placeholder="Search by name"
           />
@@ -118,8 +117,23 @@ function AddStudent(props) {
         })}
         rowSelection={rowSelection}
       />
+      <Button 
+        type="primary"
+        onClick={async ()=>{
+        const response = await ApiService.post(`classes-semester/8`, {
+          listIdStudent: selectedRowKeys,
+        });
+        props.closeModal();
+        props.fetchData()
+        Modal.success({
+          title: "Success",
+          content: "Add student successfully",
+          okText: "OK",
+          onOk() {},
+        });
+        }}>Save</Button>
     </Card>
   );
 }
 
-export default AddStudent;
+export default AddStudentDetailPage;
