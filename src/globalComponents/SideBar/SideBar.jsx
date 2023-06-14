@@ -46,7 +46,7 @@ function SideMenu() {
             icon: <UserOutlined />,
           },
           {
-            label: "Teacher",
+            label: "Teachers",
             key: "teachers",
             icon: <UserOutlined />,
           },
@@ -79,27 +79,26 @@ function SideMenu() {
             label: "Report",
             key: "report",
             icon: <BarChartOutlined />,
-            children:[
+            children: [
+              {
+                label: "Class Report",
+                key: "semesterReport",
+              },
               {
                 label: "Semester Report",
-                key: "/semesterReport",
-              }
-            ]
+                key: "semesterReport",
+              },
+            ],
           },
           {
             label: "Rules",
-            key: "/change-rules",
+            key: "change-rules",
             icon: <GroupOutlined />,
-            children: [
-              {
-                label: "All Rules",
-                key: "rules",
-              },
-              {
-                label: "Edit Rules",
-                key: "editrules",
-              },
-            ],
+          },
+          {
+            label: "Semester",
+            key: "semester",
+            icon: <GroupOutlined />,
           },
           {
             label: "Subjects",

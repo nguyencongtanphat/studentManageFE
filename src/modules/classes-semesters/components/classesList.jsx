@@ -159,8 +159,11 @@ function ClassesList(props) {
               Classes Data
             </Title>
           </Col>
-          <Col flex={2}>
-            <Button type="primary" className="Button">
+          <Col flex={1.4}>
+            <Button 
+              style={{width:'80%'}}
+              type="primary" className="Button"
+            >
               Add Class
             </Button>
           </Col>

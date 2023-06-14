@@ -29,7 +29,7 @@ import AddingScore from "./modules/score/addScorePage";
 import ChangeRules from "./modules/rule/ruleChange";
 import SubjectTable from "./modules/subject/SubjectTable";
 import Semester from "./modules/semester/semester";
-import Error from "./modules/Error/Error";
+import Error from "./modules/Error/error";
 
 
 const router = createBrowserRouter([
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: "add-students/*",
+        path: "add-new-student",
         element: <Addstudent />,
         errorElement: <Error />,
       },

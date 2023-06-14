@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, message, Typography, Button} from 'antd';
+import { Card, Row, Col, message, Typography, Button} from 'antd';
 import '../../App.css';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -204,12 +204,19 @@ function AddingScore () {
                     data={data}
                     selectedSubject={selectedSubject}
                 />
-                <Button
-                    type='primary'
-                    onClick={handleButtonClick}
-                >
-                    Save
-                </Button>
+
+                <Row style={{ marginTop: 9, marginBottom: 9 }}>
+                    <Col flex={4}>
+                    </Col>
+                    <Col flex={0.5}>
+                        <Button
+                        type='primary'
+                        onClick={handleButtonClick}
+                        >
+                            Save
+                        </Button>
+                    </Col>
+                </Row>
             </Card>
         </>
     );
