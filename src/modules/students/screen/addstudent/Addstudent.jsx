@@ -14,8 +14,12 @@ import {
 import style from "./Addstudent.module.css";
 import ApiService from "../../../../ApiService";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 function Addstudent() {
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   const [form] = Form.useForm();
   const [classesSemester, setClassesSemester] = useState([]);
     const navigate = useNavigate();
@@ -64,6 +68,7 @@ function Addstudent() {
   }
 
   return (
+    user.role === 'Admin' ?
     <div className={style.Addstudent}>
       <Card title="Add Students">
         <Form form={form} onFinish={submitHandler}>
@@ -152,6 +157,8 @@ function Addstudent() {
           </Form.Item>
         </Form>
       </Card>
+    </div> : <div>
+      You don't have right here
     </div>
   );
 }

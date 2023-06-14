@@ -114,6 +114,23 @@ function AddTeacher() {
             <Input size="medium" placeholder=""></Input>
           </Form.Item>
           <Form.Item
+            name={"userName"}
+            label="USERNAME"
+            rules={[{ required: true, message: "Please input your Username!" }]}
+          >
+            <Input size="medium" placeholder=""></Input>
+          </Form.Item>
+          <Form.Item
+            name={"password"}
+            label="PASSWORD"
+            rules={[
+              { required: true, message: "Please input your Password!" },
+              { type: "password"},
+            ]}
+          >
+            <Input size="medium" placeholder=""></Input>
+          </Form.Item>
+          <Form.Item
             name={"Subjects"}
             label="SUBJECTS"
             rules={[{ required: true, message: "Please choose subjects" }]}

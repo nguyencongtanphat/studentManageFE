@@ -3,6 +3,7 @@ import { Table, Card, Space, Button, Select, Modal, Input, Form, Row, Col, messa
 import style from "./semester.module.css";
 import { useEffect } from "react";
 import ApiService from "../../ApiService";
+import { useSelector, useDispatch } from "react-redux";
 
 function Semester() {
   const [semesterListView, setSemesterListView] = useState([]);
@@ -10,7 +11,9 @@ function Semester() {
   const [yearList, setYearList] = useState([]);
   const [yearQuery, setYearQuery] = useState("");
   const [form] = Form.useForm();
-
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   //fetch data
   useEffect(() => {
     const fetchData = async () => {
@@ -154,9 +157,9 @@ function Semester() {
           <Col flex={4}>
           </Col>
           <Col flex={0.3}>
-            <Button htmlType="submit" type="primary" onClick={addSemesterHandler}>
+           {user.role ==="Admin" && <Button htmlType="submit" type="primary" onClick={addSemesterHandler}>
               Add New Semester
-            </Button>
+            </Button>}
           </Col>
         </Row>
       </Card>

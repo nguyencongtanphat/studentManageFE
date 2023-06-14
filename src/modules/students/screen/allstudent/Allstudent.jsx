@@ -1,9 +1,21 @@
 import React, { useState } from "react";
-import {Tag, Table, Select, Card, Space, Button, AutoComplete, Row, Col, Typography } from "antd";
+import {
+  Tag,
+  Table,
+  Select,
+  Card,
+  Space,
+  Button,
+  AutoComplete,
+  Row,
+  Col,
+  Typography,
+} from "antd";
 import style from "./Allstudent.module.css";
 import { useEffect } from "react";
 import ApiService from "../../../../ApiService";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 function Allstudent() {
   const { Title } = Typography;
@@ -12,8 +24,10 @@ function Allstudent() {
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [studentList, setStudentList] = useState([]);
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   //fetch data
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +37,7 @@ function Allstudent() {
           ApiService.get("students/?isGetClass=true"),
           ApiService.get("classes"),
         ]);
-        
+
         const tempStudentList = resultStudent.map((student) => {
           return {
             key: student.idStudent,
@@ -32,7 +46,7 @@ function Allstudent() {
             classes: student.classNames,
           };
         });
-        setClassList(classes)
+        setClassList(classes);
         setStudentListView(tempStudentList);
         setStudentList(tempStudentList);
       } catch (e) {
@@ -60,7 +74,7 @@ function Allstudent() {
       render: (_, { classes }) => (
         <>
           {classes.map((className) => {
-            console.log("classname: ",className)
+            console.log("classname: ", className);
             return <Tag key={className}>{className}</Tag>;
           })}
         </>
@@ -82,7 +96,7 @@ function Allstudent() {
         return student.name.includes(nameQuery);
       });
     } else if (classQuery) {
-      console.log("classQuery")
+      console.log("classQuery");
       newStudentList = studentList.filter((student) => {
         return student.classes.includes(classQuery);
       });
@@ -91,8 +105,6 @@ function Allstudent() {
     console.log("new students: ", newStudentList);
     setStudentListView(newStudentList);
   };
-
-  
 
   return (
     <div className={style.Allstudent}>
@@ -132,11 +144,16 @@ function Allstudent() {
             },
           })}
         />
-        <Button type="primary" onClick={()=>{
-          navigate("/app/add-new-student");
-        }}>
-          Add new student
-        </Button>
+        {user.role === "Admin" && (
+          <Button
+            type="primary"
+            onClick={() => {
+              navigate("/app/add-new-student");
+            }}
+          >
+            Add new student
+          </Button>
+        )}
       </Card>
     </div>
   );
