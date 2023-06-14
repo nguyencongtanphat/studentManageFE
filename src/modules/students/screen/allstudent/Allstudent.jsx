@@ -3,6 +3,7 @@ import {Tag, Table, Select, Card, Space, Button, AutoComplete } from "antd";
 import style from "./Allstudent.module.css";
 import { useEffect } from "react";
 import ApiService from "../../../../ApiService";
+import { useNavigate } from "react-router-dom";
 
 function Allstudent() {
   const [studentListView, setStudentListView] = useState([]);
@@ -10,6 +11,7 @@ function Allstudent() {
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [studentList, setStudentList] = useState([]);
+    const navigate = useNavigate();
 
   //fetch data
   useEffect(() => {
@@ -108,7 +110,7 @@ function Allstudent() {
                 setClassQuery(value);
               }}
               defaultValue={"Select class"}
-              options={classList.map(classItem=>{
+              options={classList.map((classItem) => {
                 return {
                   label: classItem.name,
                   value: classItem.name,
@@ -125,10 +127,15 @@ function Allstudent() {
           dataSource={studentListView}
           onRow={(record) => ({
             onClick: () => {
-              console.log(record);
+              navigate("/app/students/" + record.id);
             },
           })}
         />
+        <Button type="primary" onClick={()=>{
+          navigate("/app/add-new-student");
+        }}>
+          Add new student
+        </Button>
       </Card>
     </div>
   );
