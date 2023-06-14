@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Space, Select, Table, Card, AutoComplete, Button, Tag } from "antd";
+import { Space, Select, Table, Card, AutoComplete, Button, Tag, Row, Col } from "antd";
 import ApiService from "../../../ApiService";
 function AddStudent(props) {
   const columns = [
@@ -96,18 +96,24 @@ function AddStudent(props) {
   return (
     <Card title="All Student Data">
       <div>
-        <Space>
-          <AutoComplete
-            style={{ width: 200 }}
-            onSearch={(value) => {
+        <Row>
+          <Col flex={4}>
+          </Col>
+          <Col flex={0.2}>
+            <AutoComplete
+              style={{ width: 200 }}
+              onSearch={(value) => {
                 setNameQuery(value);
-            }}
-            placeholder="Search by name"
-          />
-          <Button onClick={searchHandler} htmlType="search" type="primary">
-            Search
-          </Button>
-        </Space>
+              }}
+              placeholder="Search by name"
+            />
+          </Col>
+          <Col flex={0}>
+            <Button onClick={searchHandler} htmlType="search" type="primary">
+              Search
+            </Button>
+          </Col>
+        </Row>
       </div>
       <Table
         columns={columns}

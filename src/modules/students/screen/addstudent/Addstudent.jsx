@@ -74,30 +74,6 @@ function Addstudent() {
           >
             <Input size="medium" placeholder=""></Input>
           </Form.Item>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name={"idClassSemester"}
-                label="CLASS-SEMESTER"
-                // rules={[
-                //   { required: true, message: "Please choose your class!" },
-                // ]}
-              >
-                <Select placeholder="Please select class-semester">
-                  {classesSemester.map((item) => {
-                    return (
-                      <Select.Option
-                        value={item.idClassSemester}
-                        key={item.idClassSemester}
-                      >
-                        {item.name} - semester: {item.order}/{item.year}
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
           <Form.Item
             name={"dateOfBirth"}
             label="DATE OF BIRTH"
@@ -144,8 +120,8 @@ function Addstudent() {
               <Col flex={4}>
               </Col>
               <Col flex={0}>
-                <Button type="primary" htmlType="submit">
-                  Submit
+                <Button  type="primary" htmlType="submit" danger>
+                  Save
                 </Button>
               </Col>
             </Row>

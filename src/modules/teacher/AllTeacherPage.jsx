@@ -95,16 +95,17 @@ function AllTeacherPage() {
       <Card title="All Teachers Data">
         <div >
           <Row style={{ marginTop: 9, marginBottom: 9 }}>
-            <Col flex={4}>
+            <Col flex={4}></Col>
+            <Col flex={1}>
             <AutoComplete
-              style={{ width: 200 }}
+              style={{ width: '90%' }}
               onSearch={(value) => {
                 setNameQuery(value);
               }}
               placeholder="Search by name"
             />
             </Col>
-            <Col flex={0.5}>
+            <Col flex={0}>
               <Button onClick={searchHandler} htmlType="search" type="primary">
                 Search
               </Button>
@@ -122,8 +123,13 @@ function AllTeacherPage() {
         />
         <Row style={{ marginTop: 9, marginBottom: 9 }}>
           <Col flex={4}></Col>
-          <Col flex={0.3}>
-            <Button type="primary">
+          <Col flex={0}>
+            <Button  
+              onClick={()=>{
+                navigate("/app/add-new-teacher");
+              }}
+              type="primary"
+            >
               Add new teacher
             </Button>
           </Col>

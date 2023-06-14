@@ -159,8 +159,34 @@ function ClassesList(props) {
               Classes Data
             </Title>
           </Col>
-          <Col flex={1.4}>
+        </Row>
+        <Row>
+          <Col flex={4}>
+          </Col>
+          <Col flex={1.5}>
+            <SearchingClasses
+            style ={{with:'150%'}}
+            onClassesChange={handleClassesChange}
+            selectClassOptions={classOptions}
+            onSemesterChange={handleSemesterChange}
+            selectSemesterOptions={semesterOptions}
+            onSearchingClick={handleSearchingClick}
+            classes={classes}
+          />
+          </Col>
+        </Row>
+        <ClassesTable
+          filteredData={classesSemestersFilter}
+          columns={columns}
+          handleRowClick={handleRowClick}
+        />
+        <Row>
+          <Col flex={4}></Col>
+          <Col flex={0.5}>
             <Button 
+              onClick={() =>{
+                navigate("add-class");
+              }}
               style={{width:'80%'}}
               type="primary" className="Button"
             >
@@ -168,20 +194,8 @@ function ClassesList(props) {
             </Button>
           </Col>
         </Row>
-        <SearchingClasses
-          onClassesChange={handleClassesChange}
-          selectClassOptions={classOptions}
-          onSemesterChange={handleSemesterChange}
-          selectSemesterOptions={semesterOptions}
-          onSearchingClick={handleSearchingClick}
-          classes={classes}
-        />
-        <ClassesTable
-          filteredData={classesSemestersFilter}
-          columns={columns}
-          handleRowClick={handleRowClick}
-        />
       </Card>
+      
     </div>
   );
 }

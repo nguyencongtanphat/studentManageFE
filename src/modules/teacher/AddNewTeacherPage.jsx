@@ -136,11 +136,19 @@ function AddTeacher() {
               })}
             </Select>
           </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Save
-            </Button>
-          </Form.Item>
+            <Row>
+              <Col flex={4}>
+              </Col>
+              <Col flex={0}>
+                <Button 
+                  // onClick={()=>{
+                  //   navigate("/app/teachers");
+                  // }}
+                  type="primary" htmlType="submit" danger>
+                  Save
+                </Button>
+              </Col>
+            </Row>
         </Form>
       </Card>
     </div>

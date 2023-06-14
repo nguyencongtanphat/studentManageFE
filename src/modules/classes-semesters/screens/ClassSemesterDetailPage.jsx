@@ -247,7 +247,7 @@ function ClassSemesterDetail() {
                   : handlerSubmit
               }
             >
-              {!isEdit ? "Edit" : "Save"}
+              {!isEdit ? "Edit" :  "Save" }
             </Button>
           </Col>
         </Row>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Card, Space, Button, Select, Modal, Input, Form, Row, Col, message } from "antd";
+import { Table, Card, Space, Button, Select, Modal, Input, Form, Row, Col, message, AutoComplete } from "antd";
 import style from "./semester.module.css";
 import { useEffect } from "react";
 import ApiService from "../../ApiService";
@@ -12,7 +12,6 @@ function Semester() {
   const [form] = Form.useForm();
 
   //fetch data
-  useEffect(() => {
     const fetchData = async () => {
       try {
         const [resultSemester , year ] = await Promise.all([
@@ -34,8 +33,9 @@ function Semester() {
         console.log("error:", e);
       }
     };
-    fetchData();
-  }, []);
+    useEffect(() => {
+      fetchData();
+    }, []);
 
   const columns = [
     {
@@ -56,20 +56,19 @@ function Semester() {
   ];
 
   const searchHandler = () => {
-    let newYearList = yearList;
+    let newYeartList = yearList;
     if (yearQuery) {
-      newYearList = yearList.filter((semester) => {
+      newYeartList = yearList.filter((semester) => {
         return semester.year.includes(yearQuery);
       });
     }
   };
-
   const submitHandler = async () => {
     try {
       const formValues = form.getFieldsValue();
       console.log("Form values:", formValues);
       const res = await ApiService.post("semesters", formValues);
-      if (res.ErrorCode === 0)  message.success("Successfully created");
+      if (res.ErrorCode === 0)  message.success("Successfully created new Semester");
       form.resetFields();
     } catch (e) {
      message.error(`${e.message}   email is used or incorrect format`);
@@ -99,9 +98,15 @@ function Semester() {
                   <Input size="medium" placeholder=""></Input>
                 </Form.Item>
                 <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Submit
-                  </Button>
+                  <Row>
+                    <Col flex={4}>
+                    </Col>
+                    <Col flex={0}>
+                      <Button danger type="primary" htmlType="submit">
+                        Save
+                      </Button>
+                    </Col>
+                  </Row>
                 </Form.Item>
               </Form>
             </Card>
@@ -117,21 +122,17 @@ function Semester() {
         <div className={style.selectClass}>
           <Row style={{ marginTop: 9, marginBottom: 9 }}>
             <Col flex={4}>
-              <Select
-                style={{width:'30%'}}
-                onChange={(value) => {
+            </Col>
+            <Col flex={2}>
+              <AutoComplete
+                placeholder="Please type year"
+                style={{width:'90%'}}
+                onSearch={(value) => {
                   setYearQuery(value);
                 }}
-                defaultValue={"Select year"}
-                options={semesterList.map(semesterItem=>{
-                  return {
-                    label: semesterItem.year,
-                    value: semesterItem.year,
-                  };
-                })}
-              ></Select>
+              />
             </Col>
-            <Col flex={0.5}>
+            <Col flex={0}>
               <Button onClick={searchHandler} htmlType="search" type="primary">
                 Search
               </Button>

@@ -127,21 +127,21 @@ function Listclassofgrade() {
         );
       },
     },
-    {
-      key: "action",
-      render: (text, record) => (
-        <Button
-          danger
-          type="link"
-          icon={<DeleteOutlined />}
-          onClick={() => {
-            //deleteStudentHandler(record.key);
-          }}
-        >
-          Delete
-        </Button>
-      ),
-    },
+    // {
+    //   key: "action",
+    //   render: (text, record) => (
+    //     <Button
+    //       danger
+    //       type="link"
+    //       icon={<DeleteOutlined />}
+    //       onClick={() => {
+    //         //deleteStudentHandler(record.key);
+    //       }}
+    //     >
+    //       Delete
+    //     </Button>
+    //   ),
+    // },
   ];
 
   const updateClassHandler = async () => {
@@ -275,8 +275,10 @@ function Listclassofgrade() {
         <div className={style.selectSuject}>
           <Row style={{ marginTop: 9, marginBottom: 9 }}>
             <Col flex={4}>
+            </Col>
+            <Col flex={1}>
               <AutoComplete
-                style={{ width:'50%' }}
+                style={{ width:'90%' }}
                 onSearch={(value) => {
                   setNameQuery(value);
                 }}
