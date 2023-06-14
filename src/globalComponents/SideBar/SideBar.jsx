@@ -46,7 +46,7 @@ function SideMenu() {
             icon: <UserOutlined />,
           },
           {
-            label: "Teacher",
+            label: "Teachers",
             key: "teachers",
             icon: <UserOutlined />,
           },
