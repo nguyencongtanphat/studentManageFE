@@ -197,7 +197,7 @@ import {
                                         validator(_, value){
                                             if (!editMode) return Promise.resolve();
                                             if (value.length > 0 && isNaN(value)) return Promise.reject(new Error('must type number'))
-                                            if (value < 0) return Promise.reject(new Error('must >0'))
+                                            if (parseFloat(value) < 0) return Promise.reject(new Error('must >0'))
                                             if( parseFloat(value) === 0.0 || parseFloat(value)){
                                                 return Promise.resolve();
                                             }
@@ -226,7 +226,7 @@ import {
                                         validator(_, value){
                                             if(!editMode) return Promise.resolve();
                                             if (value.length > 0 && isNaN(value)) return Promise.reject(new Error('must type number'))
-                                            if (value < 0) return Promise.reject(new Error('must >0'))
+                                            if (parseFloat(value) < 0) return Promise.reject(new Error('must >0'))
                                             if( parseFloat(value) === 0.0 || parseFloat(value)){
                                                 return Promise.resolve();
                                             }
@@ -251,7 +251,7 @@ import {
                                         validator(_, value){
                                             if(!editMode) return Promise.resolve();
                                             if (value.length > 0 && isNaN(value)) return Promise.reject(new Error('must type number'))
-                                            if (value < 0) return Promise.reject(new Error('must >0'))
+                                            if (parseFloat(value) < 0) return Promise.reject(new Error('must >0'))
                                             if( parseFloat(value) === 0.0 || parseFloat(value)){
                                                 return Promise.resolve();
                                             }
@@ -276,7 +276,7 @@ import {
                                         validator(_, value){
                                             if(!editMode) return Promise.resolve();
                                             if (value.length > 0 && isNaN(value)) return Promise.reject(new Error('must type number'))
-                                            if (value < 0) return Promise.reject(new Error('must >0'))
+                                            if (parseFloat(value) < 0) return Promise.reject(new Error('must >0'))
                                             if( parseFloat(value) === 0.0 || parseFloat(value)){
                                                 return Promise.resolve();
                                             }
