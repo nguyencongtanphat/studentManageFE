@@ -79,13 +79,14 @@ function AddingScore () {
             const element = {idStudent: item.idStudent, fullName: item.fullName,scores: rawData};
             data.push(element);
         }
-        setData(data);
         console.log(data);
+        setData(data);
     };
 
 
     useEffect(() => {
         let gpa = '';
+        let idSTCS = undefined;
         const table = data.map((item, index) => {
             const test_15 = item.scores.filter((item2) => {
                 return item2.idSubject === selectedSubject && item2.testName === '15 minutes';
@@ -103,6 +104,14 @@ function AddingScore () {
                 return item2.idSubject === selectedSubject && item2.testName === 'end-term';
             });
             const score_end = test_end.map(item3 => item3.score).join(',');
+            const idSTCSObj = item.scores.filter((item2) => {
+                return item2.idSubject === selectedSubject
+            });
+            try {
+                idSTCS = idSTCSObj[0].idSubjectTeacherClassSemester;
+            } catch (e) {
+                idSTCS = undefined;
+            }
             try {
                 gpa = test_end[0].avgScore;
             } catch (e) {
@@ -116,10 +125,12 @@ function AddingScore () {
                 min_45: score_1,
                 mid: score_mid,
                 end: score_end,
-                gpa: gpa
+                gpa: gpa,
+                idSTCS: idSTCS
             }
             }
         )
+        console.log(table);
         setTable(table);
     }, [selectedSubject, data]);
 
