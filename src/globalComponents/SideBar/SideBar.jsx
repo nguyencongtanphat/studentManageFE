@@ -88,7 +88,7 @@ function SideMenu() {
           },
           {
             label: "Rules",
-            key: "rulegroup",
+            key: "/change-rules",
             icon: <GroupOutlined />,
             children: [
               {

@@ -1,3 +1,21 @@
 .fillcolor {
     background: blue;
 }
+.dangerbutton{
+    background: red;
+    background-color: red;
+}
+.text-style{
+    font-weight: bold;
+    font-size: 25px;
+}
+.content-right{
+    text-align: right;
+}
+.form-item{
+    display: flex;
+    justify-content: space-between;
+}
+.text_right{
+    text-align: right;
+}

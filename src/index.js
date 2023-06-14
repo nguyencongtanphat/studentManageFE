@@ -26,6 +26,7 @@ import SemesterReport from "./modules/semesterReport/SemesterReport";
 import ScoreAverage from "./modules/score/scoreaverage";
 import ScoreDetails from "./modules/score/scoredetails";
 import AddingScore from "./modules/score/addScorePage";
+import ChangeRules from "./modules/rule/ruleChange";
 import SubjectTable from "./modules/subject/SubjectTable";
 
 const router = createBrowserRouter([
@@ -118,6 +119,11 @@ const router = createBrowserRouter([
         path: "students/:id",
         element: <Profilestudent />,
         errorElement: <ErrorPage />,
+      },
+      {
+        path:"change-rules",
+        element: <ChangeRules/>,
+        errorElement: <ErrorPage/>
       },
       {
         path:"semesterReport",
