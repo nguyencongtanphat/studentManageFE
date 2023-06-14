@@ -26,97 +26,109 @@ import ScoreAverage from "./modules/score/scoreaverage";
 import ScoreDetails from "./modules/score/scoredetails";
 import AddingScore from "./modules/score/addScorePage";
 import SubjectTable from "./modules/subject/SubjectTable";
+import Semester from "./modules/semester/semester";
+import Error from "./modules/Error/Error";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LoginPage />,
-    errorElement: <ErrorPage />,
+    errorElement: <Error />,
   },
   {
     path: "/app",
     element: <Root />,
-    errorElement: <ErrorPage />,
+    errorElement: <Error />,
     children: [
       {
         path: "",
         element: <HomePage />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "students",
         element: <Allstudent />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "add-students/*",
         element: <Addstudent />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "teachers",
         element: <AllTeacherPage />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "teachers/:id",
         element: <TeacherDetailPage />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "add-new-teacher",
         element: <AddNewTeacherPage />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "grades",
         element: <Allgrade />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "classes-grade/:id",
         element: <Listclassofgrade />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "classes-semesters",
         element: <ClassesPage />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "add-new-class-semester",
         element: <AddNewClassSemesterPage />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "classes-semesters/:id",
         element: <ClassSemesterDetail />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "scores",
         element: <ScoreAverage />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "scores/details",
         element: <ScoreDetails />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "add-score",
         element: <AddingScore />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "subjects",
         element: <SubjectTable />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
       },
       {
         path: "students/:id",
         element: <Profilestudent />,
-        errorElement: <ErrorPage />,
+        errorElement: <Error />,
+      },
+      {
+        path: "semester",
+        element: <Semester />,
+        errorElement: <Error />,
+      },
+      {
+        path: "error",
+        element: <Error />,
       },
     ],
   },
