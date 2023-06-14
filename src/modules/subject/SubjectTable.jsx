@@ -11,6 +11,8 @@ import {
   AutoComplete,
   Input,
   Form,
+  Row,
+  Col
 } from "antd";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -271,19 +273,22 @@ function Listclassofgrade() {
     <div className={style.Allstudent}>
       <Card title="List subject">
         <div className={style.selectSuject}>
-          <Space>
-            <AutoComplete
-              style={{ width: 200 }}
-              onSearch={(value) => {
-                setNameQuery(value);
-              }}
-              placeholder="Search by name"
-            />
-
-            <Button onClick={searchHandler} htmlType="search" type="primary">
-              Search
-            </Button>
-          </Space>
+          <Row style={{ marginTop: 9, marginBottom: 9 }}>
+            <Col flex={4}>
+              <AutoComplete
+                style={{ width:'50%' }}
+                onSearch={(value) => {
+                  setNameQuery(value);
+                }}
+                placeholder="Search by name"
+              />
+            </Col>
+            <Col flex={0.5}>
+              <Button onClick={searchHandler} htmlType="search" type="primary">
+                Search
+              </Button>         
+            </Col>
+          </Row>
         </div>
         <Table
           columns={!isEdit ? columns : columnsEdit}
@@ -297,25 +302,32 @@ function Listclassofgrade() {
             pageSize: 7,
           }}
         ></Table>
-        <Space wrap>
-          {isEdit && (
+        <Row style={{ marginTop: 9, marginBottom: 9 }}>
+          <Col flex={4}></Col>
+          <Col flex={0.6}>
+            {isEdit && (
+              <Button
+                style={{width:'80%'}}
+                htmlType="submit"
+                type="primary"
+                onClick={addSubjectHandler}
+              >
+                Add New Subject
+              </Button>
+            )}
+          </Col>
+          <Col flex={0.5}>
             <Button
+              style={{width:'50%'}}
               htmlType="submit"
               type="primary"
-              onClick={addSubjectHandler}
+              onClick={editHandler}
+              danger={!isEdit ? false : true}
             >
-              Add New Subject
+              {!isEdit ? "Edit" : "Close"}
             </Button>
-          )}
-          <Button
-            htmlType="submit"
-            type="primary"
-            onClick={editHandler}
-            danger={!isEdit ? false : true}
-          >
-            {!isEdit ? "Edit" : "Close"}
-          </Button>
-        </Space>
+          </Col>
+        </Row>
       </Card>
     </div>
   );

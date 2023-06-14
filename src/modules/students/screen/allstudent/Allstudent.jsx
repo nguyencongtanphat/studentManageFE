@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import {Tag, Table, Select, Card, Space, Button, AutoComplete } from "antd";
+import {Tag, Table, Select, Card, Space, Button, AutoComplete, Row, Col, Typography } from "antd";
 import style from "./Allstudent.module.css";
 import { useEffect } from "react";
 import ApiService from "../../../../ApiService";
 
 function Allstudent() {
+  const { Title } = Typography;
   const [studentListView, setStudentListView] = useState([]);
   const [classList, setClassList] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
@@ -94,8 +95,8 @@ function Allstudent() {
   return (
     <div className={style.Allstudent}>
       <Card title="All Student Data">
-        <div className={style.selectClass}>
-          <Space>
+        <Row style={{ marginTop: 9, marginBottom: 9 }}>
+          <Col flex={4}>
             <AutoComplete
               style={{ width: 200 }}
               onSearch={(value) => {
@@ -103,23 +104,13 @@ function Allstudent() {
               }}
               placeholder="Search by name"
             />
-            <Select
-              onChange={(value) => {
-                setClassQuery(value);
-              }}
-              defaultValue={"Select class"}
-              options={classList.map(classItem=>{
-                return {
-                  label: classItem.name,
-                  value: classItem.name,
-                };
-              })}
-            ></Select>
+          </Col>
+          <Col flex={0.5}>
             <Button onClick={searchHandler} htmlType="search" type="primary">
               Search
             </Button>
-          </Space>
-        </div>
+          </Col>
+        </Row>
         <Table
           columns={columns}
           dataSource={studentListView}

@@ -135,9 +135,15 @@ function Addstudent() {
             <Input size="medium" placeholder=""></Input>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
+            <Row>
+              <Col flex={4}>
+              </Col>
+              <Col flex={0}>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Col>
+            </Row>
           </Form.Item>
         </Form>
       </Card>

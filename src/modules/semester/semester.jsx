@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Card, Space, Button, AutoComplete, Modal, Input } from "antd";
+import { Table, Card, Space, Button, Select, Modal, Input, Form, Row, Col, message } from "antd";
 import style from "./semester.module.css";
 import { useEffect } from "react";
 import ApiService from "../../ApiService";
@@ -7,14 +7,17 @@ import ApiService from "../../ApiService";
 function Semester() {
   const [semesterListView, setSemesterListView] = useState([]);
   const [semesterList, setSemesterList] = useState([]);
-  const [nameQuery, setNameQuery] = useState("");
-  const [allSemesterDb, setAllSemesterDb] = useState([]);
+  const [yearList, setYearList] = useState([]);
+  const [yearQuery, setYearQuery] = useState("");
+  const [form] = Form.useForm();
 
   //fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resultSemester = await ApiService.get("semesters");
+        const [resultSemester , year ] = await Promise.all([
+          ApiService.get("semesters"),
+        ]);
         console.log(resultSemester);
         const tempSemesterList = resultSemester.map((semester) => {
           return {
@@ -24,6 +27,7 @@ function Semester() {
             year: semester.year,
           };
         });
+        setYearList(year)
         setSemesterListView(tempSemesterList);
         setSemesterList(tempSemesterList);
       } catch (e) {
@@ -52,15 +56,24 @@ function Semester() {
   ];
 
   const searchHandler = () => {
-    let newSemesterList = semesterList;
-    if (nameQuery) {
-        newSemesterList = semesterList.filter((semester) => {
-        return semester.year.includes(nameQuery) 
+    let newYearList = yearList;
+    if (yearQuery) {
+      newYearList = yearList.filter((semester) => {
+        return semester.year.includes(yearQuery);
       });
     }
+  };
 
-    console.log("new semester: ", newSemesterList);
-    setSemesterListView(newSemesterList);
+  const submitHandler = async () => {
+    try {
+      const formValues = form.getFieldsValue();
+      console.log("Form values:", formValues);
+      const res = await ApiService.post("semesters", formValues);
+      if (res.ErrorCode === 0)  message.success("Successfully created");
+      form.resetFields();
+    } catch (e) {
+     message.error(`${e.message}   email is used or incorrect format`);
+    }
   };
   
   const addSemesterHandler = () => {
@@ -69,83 +82,85 @@ function Semester() {
         title: "Add new Semester",
         content: (
           <div>
-            <Card title="Add new class">
-              <Input
-                onChange={(event) => {
-                  newSemester = event.target.value;
-                }}
-                size="medium"
-                placeholder=""
-              ></Input>
+            <Card title="Add new Semester">
+              <Form form={form} onFinish={submitHandler}>
+                <Form.Item  
+                  name={"order"}
+                  label="Order"
+                  rules={[{ required: true, message: "Please input order!" }]}
+                >
+                  <Input size="medium" placeholder=""></Input>
+                </Form.Item>
+                <Form.Item
+                  name={"year"}
+                  label="Year"
+                  rules={[{ required: true, message: "Please input year!" }]}
+                >
+                  <Input size="medium" placeholder=""></Input>
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
             </Card>
           </div>
         ),
-        width: 500,
-        async onOk() {
-        console.log("new semester: ", newSemester);
-        if(!newSemester) return false
-        const isClassExist = allSemesterDb.some(
-          (semesterItem) => semesterItem.name === newSemester
-        );
-        if (isClassExist) {
-          Modal.error({
-            title: "Error",
-            content: "Class is already exist in the database",
-            okText: "OK",
-            onOk() {},
-          });
-        } else {
-          //const response =  await ApiService.post
-          const data = {
-            seName: newSemester,
-            idGrade: id,
-          };
-          const response = await ApiService.post("classes", data);
-          Modal.success({
-            title: "Success",
-            content: "Create class successfully",
-            okText: "OK",
-            onOk() {},
-          });
-          await fetchData()
-        }
-      },
   })
 };
+
 
   return (
     <div className={style.Semester}>
       <Card title="All Semester Data">
         <div className={style.selectClass}>
-          <Space>
-            <AutoComplete
-              style={{ width: 200 }}
-              onSearch={(value) => {
-                setNameQuery(value);
-              }}
-              placeholder="Search by year"
-            />
-          <Button onClick={searchHandler} htmlType="search" type="primary">
-            Search
-          </Button>
-          </Space>
-          
+          <Row style={{ marginTop: 9, marginBottom: 9 }}>
+            <Col flex={4}>
+              <Select
+                style={{width:'30%'}}
+                onChange={(value) => {
+                  setYearQuery(value);
+                }}
+                defaultValue={"Select year"}
+                options={semesterList.map(semesterItem=>{
+                  return {
+                    label: semesterItem.year,
+                    value: semesterItem.year,
+                  };
+                })}
+              ></Select>
+            </Col>
+            <Col flex={0.5}>
+              <Button onClick={searchHandler} htmlType="search" type="primary">
+                Search
+              </Button>
+            </Col>
+          </Row>
         </div>
         <Table
           columns={columns}
           dataSource={semesterListView}
+          pagination={{
+            pageSize: 7,
+          }}
           onRow={(record) => ({
             onClick: () => {
               console.log(record);
             },
           })}
         />
-        <Space wrap>
+        <Row style={{ marginTop: 9, marginBottom: 9 }}>
+          <Col flex={4}>
+          </Col>
+          <Col flex={0.3}>
             <Button htmlType="submit" type="primary" onClick={addSemesterHandler}>
-              Add New Class
+              Add New Semester
             </Button>
-        </Space>
+          </Col>
+        </Row>
       </Card>
+      
     </div>
   );
 }

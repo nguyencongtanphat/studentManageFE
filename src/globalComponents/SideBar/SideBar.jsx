@@ -79,6 +79,12 @@ function SideMenu() {
             label: "Report",
             key: "report",
             icon: <BarChartOutlined />,
+            children: [
+              {
+                label: "Semester",
+                key: "semester",
+              },
+            ],
           },
           {
             label: "Rules",
