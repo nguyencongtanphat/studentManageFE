@@ -100,6 +100,7 @@ import {
     return (
         <Card title="Edit Rules">
             <Form onFinish={onFinish} form={form}>
+            <div></div>
                 <Row gutter={128}>
                     <Col span={8} >
                     <Row gutter={16}>
@@ -293,11 +294,15 @@ import {
                 </Row>
                 {editMode? 
                     (<Form.Item>
-                        <Button type="primary" danger  htmlType="submit">Save</Button>
+                        <div style={{textAlign:'right', width: '63%'}}>  
+                            <Button type="primary" danger  htmlType="submit">Save</Button>
+                        </div>  
                     </Form.Item>)
                     :(
                     <Form.Item>
-                        <Button type='primary' htmlType="submit">Edit</Button>
+                        <div style={{textAlign:'right', width: '63%'}}>
+                            <Button type='primary' htmlType="submit">Edit</Button>
+                        </div> 
                     </Form.Item>)
                 }
                 
