@@ -22,6 +22,7 @@ import AddNewTeacherPage from "./modules/teacher/AddNewTeacherPage"
 import { Provider } from "react-redux";
 import { store } from "./store";
 
+import SemesterReport from "./modules/semesterReport/SemesterReport";
 import ScoreAverage from "./modules/score/scoreaverage";
 import ScoreDetails from "./modules/score/scoredetails";
 import AddingScore from "./modules/score/addScorePage";
@@ -124,9 +125,14 @@ const router = createBrowserRouter([
         element: <ChangeRules/>,
         errorElement: <ErrorPage/>
       },
-    ],
-  },
-]);
+      {
+        path:"semesterReport",
+        element:<SemesterReport/>,
+        errorElement:<ErrorPage/>
+      },
+    ]
+  }
+])
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
