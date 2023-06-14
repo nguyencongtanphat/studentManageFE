@@ -128,6 +128,7 @@ function ClassSemesterDetail() {
       content: (
         <div>
           <AddStudent
+            idClassSemester={id}
             studentsList={studentsList}
             onStudentListChange={onStudentListChange}
             closeModal={closeModal}
