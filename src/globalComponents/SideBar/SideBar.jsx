@@ -6,7 +6,8 @@ import {
   CheckCircleOutlined,
   BarChartOutlined,
   GroupOutlined,
-  InsertRowLeftOutlined 
+  InsertRowLeftOutlined,
+  BookOutlined
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useEffect, useState } from "react";
@@ -37,26 +38,26 @@ function SideMenu() {
           {
             label: "Dashboard",
             icon: <AppstoreOutlined />,
-            key: "/",
+            key: "/app",
           },
           {
             label: "Students",
-            key: "/students",
+            key: "students",
             icon: <UserOutlined />,
           },
           {
             label: "Teacher",
-            key: "/teachers",
+            key: "teachers",
             icon: <UserOutlined />,
           },
           {
             label: "Classes-semesters",
-            key: "/classes-semesters",
+            key: "classes-semesters",
             icon: <GroupOutlined />,
           },
           {
             label: "Grades",
-            key: "/grades",
+            key: "grades",
             icon: <InsertRowLeftOutlined />,
           },
           {
@@ -66,23 +67,38 @@ function SideMenu() {
             children: [
               {
                 label: "Score Average",
-                key: "/scores"
+                key: "scores",
               },
               {
                 label: "Add Score",
-                key: "/add-score"
-              }
-            ]
+                key: "add-score",
+              },
+            ],
           },
           {
             label: "Report",
-            key: "/report",
+            key: "report",
             icon: <BarChartOutlined />,
           },
           {
             label: "Rules",
             key: "/change-rules",
             icon: <GroupOutlined />,
+            children: [
+              {
+                label: "All Rules",
+                key: "rules",
+              },
+              {
+                label: "Edit Rules",
+                key: "editrules",
+              },
+            ],
+          },
+          {
+            label: "Subjects",
+            key: "subjects",
+            icon: <BookOutlined />,
           },
         ]}
       ></Menu>

@@ -90,7 +90,7 @@ function AllTeacherPage() {
 
   return (
     <div>
-      <Card title="All Student Data">
+      <Card title="All Teachers Data">
         <div >
           <Space>
             <AutoComplete
