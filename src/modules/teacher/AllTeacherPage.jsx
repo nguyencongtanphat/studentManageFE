@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Tag, Table, Select, Card, Space, Button, AutoComplete } from "antd";
+import { Tag, Table, Select, Card, Space, Button, AutoComplete, Row, Col } from "antd";
 import { useEffect } from "react";
 import ApiService from "../../ApiService";
+import { useNavigate } from "react-router-dom";
 
 function AllTeacherPage() {
   const [teacherListView, setTeacherListView] = useState([]);
@@ -9,6 +10,7 @@ function AllTeacherPage() {
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [teacherList, setTeacherList] = useState([]);
+  const navigate = useNavigate();
 
   //fetch data
   useEffect(() => {
@@ -92,7 +94,8 @@ function AllTeacherPage() {
     <div>
       <Card title="All Teachers Data">
         <div >
-          <Space>
+          <Row style={{ marginTop: 9, marginBottom: 9 }}>
+            <Col flex={4}>
             <AutoComplete
               style={{ width: 200 }}
               onSearch={(value) => {
@@ -100,24 +103,31 @@ function AllTeacherPage() {
               }}
               placeholder="Search by name"
             />
-           
-            <Button onClick={searchHandler} htmlType="search" type="primary">
-              Search
-            </Button>
-          </Space>
+            </Col>
+            <Col flex={0.5}>
+              <Button onClick={searchHandler} htmlType="search" type="primary">
+                Search
+              </Button>
+            </Col>
+          </Row>
         </div>
         <Table
           columns={columns}
           dataSource={teacherListView}
           onRow={(record) => ({
             onClick: () => {
-              console.log(record);
+              navigate("/app/teachers/"+record.id);
             },
           })}
         />
-        <Button type="primary">
-          Add new teacher
-        </Button>
+        <Row style={{ marginTop: 9, marginBottom: 9 }}>
+          <Col flex={4}></Col>
+          <Col flex={0.3}>
+            <Button type="primary">
+              Add new teacher
+            </Button>
+          </Col>
+        </Row>
       </Card>
     </div>
   );

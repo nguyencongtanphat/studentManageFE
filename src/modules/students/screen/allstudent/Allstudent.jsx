@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import {Tag, Table, Select, Card, Space, Button, AutoComplete } from "antd";
+import {Tag, Table, Select, Card, Space, Button, AutoComplete, Row, Col, Typography } from "antd";
 import style from "./Allstudent.module.css";
 import { useEffect } from "react";
 import ApiService from "../../../../ApiService";
+import { useNavigate } from "react-router-dom";
 
 function Allstudent() {
+  const { Title } = Typography;
   const [studentListView, setStudentListView] = useState([]);
   const [classList, setClassList] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [studentList, setStudentList] = useState([]);
+    const navigate = useNavigate();
 
   //fetch data
   useEffect(() => {
@@ -94,8 +97,8 @@ function Allstudent() {
   return (
     <div className={style.Allstudent}>
       <Card title="All Student Data">
-        <div className={style.selectClass}>
-          <Space>
+        <Row style={{ marginTop: 9, marginBottom: 9 }}>
+          <Col flex={4}>
             <AutoComplete
               style={{ width: 200 }}
               onSearch={(value) => {
@@ -108,7 +111,7 @@ function Allstudent() {
                 setClassQuery(value);
               }}
               defaultValue={"Select class"}
-              options={classList.map(classItem=>{
+              options={classList.map((classItem) => {
                 return {
                   label: classItem.name,
                   value: classItem.name,
@@ -118,17 +121,22 @@ function Allstudent() {
             <Button onClick={searchHandler} htmlType="search" type="primary">
               Search
             </Button>
-          </Space>
-        </div>
+          </Col>
+        </Row>
         <Table
           columns={columns}
           dataSource={studentListView}
           onRow={(record) => ({
             onClick: () => {
-              console.log(record);
+              navigate("/app/students/" + record.id);
             },
           })}
         />
+        <Button type="primary" onClick={()=>{
+          navigate("/app/add-new-student");
+        }}>
+          Add new student
+        </Button>
       </Card>
     </div>
   );

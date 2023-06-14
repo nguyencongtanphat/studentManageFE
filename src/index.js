@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: "add-students/*",
+        path: "add-new-student",
         element: <Addstudent />,
         errorElement: <Error />,
       },

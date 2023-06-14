@@ -168,22 +168,22 @@ function ScoreAverage() {
                 <Row>
                     <Typography.Title level={2}>Score Average</Typography.Title>
                 </Row>
-                <Row>
-                    <Col>
-                        <Input
+                <Row style={{ marginTop: 9, marginBottom: 9 }}>
+                    <Col flex={4}>
+                        <Input style={{width:'70%'}}
                             placeholder='Searching name ...' 
                             value={inputName}
                             onChange={(e) => setInputName(e.target.value)}
                         />
                     </Col>
-                    <Col>
+                    <Col flex={2}>
                         <Select
                             style={{ width: 140 }}
                             options={year}
                             onChange={handleYearChange}
                         />
                     </Col>
-                    <Col>
+                    <Col flex={0}>
                         <Button
                             type='primary'
                             onClick={() => handleSearch(inputName,selectedYear,raw)}

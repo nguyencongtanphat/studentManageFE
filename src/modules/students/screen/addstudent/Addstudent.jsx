@@ -13,10 +13,13 @@ import {
 } from "antd";
 import style from "./Addstudent.module.css";
 import ApiService from "../../../../ApiService";
+import { useNavigate } from "react-router-dom";
 
 function Addstudent() {
   const [form] = Form.useForm();
   const [classesSemester, setClassesSemester] = useState([]);
+    const navigate = useNavigate();
+
   useEffect(() => {
     const getData = async () => {
       const classesSemesterDB = await ApiService.get(`classes-semester`);
@@ -36,8 +39,10 @@ function Addstudent() {
       formValues.dayOfBirth = dayOfBirth;
       console.log("Form values:", formValues);
       const res = await ApiService.post("students", formValues);
-      if (res.ErrorCode === 0)  message.success("Successfully created");
+      message.success("Successfully created");
       form.resetFields();
+      navigate("/app/students");
+
     } catch (e) {
      message.error(`${e.message}   email is used or incorrect format`);
       
@@ -135,9 +140,15 @@ function Addstudent() {
             <Input size="medium" placeholder=""></Input>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
+            <Row>
+              <Col flex={4}>
+              </Col>
+              <Col flex={0}>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Col>
+            </Row>
           </Form.Item>
         </Form>
       </Card>
