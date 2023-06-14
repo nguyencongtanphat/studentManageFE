@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Alert, { message } from 'antd';
 import dayjs from 'dayjs';
 import ApiService from '../../../../ApiService';
@@ -29,6 +29,8 @@ function Profilestudent () {
 
     const {id} = useParams();
     const requrl = "students/"+id;
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -78,6 +80,8 @@ function Profilestudent () {
             putStudent(newStudent);
             setComponentDisabled(!componentDisabled);
             setEditButton(!editButton);
+            navigate("/app/students/");
+
         }
     }
     console.log(student.classes);

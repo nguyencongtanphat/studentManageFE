@@ -22,12 +22,14 @@ import AddNewTeacherPage from "./modules/teacher/AddNewTeacherPage"
 import { Provider } from "react-redux";
 import { store } from "./store";
 
+import SemesterReport from "./modules/semesterReport/SemesterReport";
 import ScoreAverage from "./modules/score/scoreaverage";
 import ScoreDetails from "./modules/score/scoredetails";
 import AddingScore from "./modules/score/addScorePage";
+import ChangeRules from "./modules/rule/ruleChange";
 import SubjectTable from "./modules/subject/SubjectTable";
 import Semester from "./modules/semester/semester";
-import Error from "./modules/Error/Error";
+import Error from "./modules/Error/error";
 
 
 const router = createBrowserRouter([
@@ -52,7 +54,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: "add-students/*",
+        path: "add-new-student",
         element: <Addstudent />,
         errorElement: <Error />,
       },
@@ -130,9 +132,19 @@ const router = createBrowserRouter([
         path: "error",
         element: <Error />,
       },
-    ],
-  },
-]);
+      {
+        path:"change-rules",
+        element: <ChangeRules/>,
+        errorElement: <ErrorPage/>
+      },
+      {
+        path:"semesterReport",
+        element:<SemesterReport/>,
+        errorElement:<ErrorPage/>
+      },
+    ]
+  }
+])
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -1,12 +1,13 @@
 import React from "react";
 
-import { Modal, Card, Row, Col, Typography, Button } from "antd";
+import { Modal, Card, Row, Col, Typography, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import StudentListTable from "../components/StudentListTable";
 import ClassInfo from "../components/classInfo";
 import AddStudent from "../components/AddStudent";
 import ApiService from "../../../ApiService";
+import AddSubjectTeacher from "../components/AddSubjectTeacher";
 
 const columns = [
   {
@@ -43,6 +44,7 @@ function AddNewClass() {
   const [selectedClass, setSelectedClass] = useState();
   const [selectedSemester, setSelectedSemester] = useState();
   const [classSemesters, setClassSemesters] = useState();
+  const [subjectTeacherList, setSubjectTeacherList] = useState([]);
 
   //load class semester
   useEffect(() => {
@@ -82,41 +84,37 @@ function AddNewClass() {
         !selectedClass ||
         !selectedTeacher ||
         !selectedSemester ||
-        studentsList.length === 0
+        studentsList.length === 0 ||
+        subjectTeacherList.length === 0
       ) {
         Modal.error({ title: "Please fill all the required fields for class" });
       } else {
-        
         let isClassExist = classSemesters.some(
           (classSemester) =>
             classSemester.idClass === selectedClass &&
             classSemester.idSemester === selectedSemester
         );
-        if(isClassExist){
-         Modal.error({
-           title: "Error",
-           content: "Class is already exist in this semester",
-           okText: "OK",
-           onOk() {},
-         });
-        }else{
-          const idStudentsList = studentsList.map(student=>student.id);
+        if (isClassExist) {
+          Modal.error({
+            title: "Error",
+            content: "Class is already exist in this semester",
+            okText: "OK",
+            onOk() {},
+          });
+        } else {
+          const idStudentsList = studentsList.map((student) => student.id);
           const data = {
             idClass: selectedClass,
             number: studentsList.length,
             idTeacher: selectedTeacher,
             idSemester: selectedSemester,
             listIdStudent: idStudentsList,
+            listSubjectTeacher: subjectTeacherList,
           };
-          console.log("submit here:",data)
+          console.log("submit here:", data);
           const response = await ApiService.post("classes-semester", data);
-           Modal.success({
-             title: "Success",
-             content: "Create class successfully",
-             okText: "OK",
-             onOk() {},
-           });
-          navigate("/classes-semesters");
+          message.success("create successfully");
+          navigate("/app/classes-semesters");
         }
       }
     }
@@ -136,6 +134,22 @@ function AddNewClass() {
       onOk() {},
     });
   };
+  const addTeacherSubject= ()=>{
+     Modal.info({
+       title: "Add subject teacher to class",
+       content: (
+         <div>
+           <AddSubjectTeacher setSubjectTeacherList = {(subjectTeacherList)=>{
+            setSubjectTeacherList(subjectTeacherList);
+           }}/>
+         </div>
+       ),
+       width: 800,
+       onOk() {},
+     });
+  }
+
+
   return (
     <div>
       <Card>
@@ -147,7 +161,7 @@ function AddNewClass() {
           </Col>
         </Row>
         <ClassInfo
-          isEdit = {true}
+          isEdit={true}
           onTeacherChange={(newTeacher) => {
             setSelectedTeacher(newTeacher);
           }}
@@ -165,6 +179,13 @@ function AddNewClass() {
           handleRowClick={handleRowClick}
         />
         <Row style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            type="primary"
+            onClick={addTeacherSubject}
+            style={{ marginRight: 10 }}
+          >
+            Add Subject-Teacher
+          </Button>
           <Button
             type="primary"
             onClick={handlerAddStudent}

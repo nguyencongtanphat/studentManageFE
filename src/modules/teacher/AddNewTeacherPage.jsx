@@ -14,10 +14,13 @@ import {
 } from "antd";
 
 import ApiService from "../../ApiService";
+import { useNavigate } from "react-router-dom";
 
 function AddTeacher() {
   const [subjects, setSubjects] = useState([])
   const [form] = Form.useForm();
+    const navigate = useNavigate();
+
   useEffect(() => {
     const getData = async () => {
         const subjects = await ApiService.get("subjects");
@@ -40,6 +43,8 @@ function AddTeacher() {
       const res = await ApiService.post("teachers", formValues);
       message.success("Successfully created");
       form.resetFields();
+      navigate("/app/teachers");
+
     } catch (e) {
       message.error(`${e.message}   email is used or incorrect format`);
     }

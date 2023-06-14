@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Tag, Table, Select, Card, Space, Button, AutoComplete, Row, Col } from "antd";
 import { useEffect } from "react";
 import ApiService from "../../ApiService";
+import { useNavigate } from "react-router-dom";
 
 function AllTeacherPage() {
   const [teacherListView, setTeacherListView] = useState([]);
@@ -9,6 +10,7 @@ function AllTeacherPage() {
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [teacherList, setTeacherList] = useState([]);
+  const navigate = useNavigate();
 
   //fetch data
   useEffect(() => {
@@ -114,7 +116,7 @@ function AllTeacherPage() {
           dataSource={teacherListView}
           onRow={(record) => ({
             onClick: () => {
-              console.log(record);
+              navigate("/app/teachers/"+record.id);
             },
           })}
         />

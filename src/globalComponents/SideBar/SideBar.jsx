@@ -81,25 +81,24 @@ function SideMenu() {
             icon: <BarChartOutlined />,
             children: [
               {
-                label: "Semester",
-                key: "semester",
+                label: "Class Report",
+                key: "semesterReport",
+              },
+              {
+                label: "Semester Report",
+                key: "semesterReport",
               },
             ],
           },
           {
             label: "Rules",
-            key: "rulegroup",
+            key: "change-rules",
             icon: <GroupOutlined />,
-            children: [
-              {
-                label: "All Rules",
-                key: "rules",
-              },
-              {
-                label: "Edit Rules",
-                key: "editrules",
-              },
-            ],
+          },
+          {
+            label: "Semester",
+            key: "semester",
+            icon: <GroupOutlined />,
           },
           {
             label: "Subjects",
