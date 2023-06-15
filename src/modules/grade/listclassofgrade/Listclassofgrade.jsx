@@ -120,21 +120,7 @@ function Listclassofgrade() {
         
         },
     },
-    {
-      key: "action",
-      render: (text, record) => (
-        <Button
-          danger
-          type="link"
-          icon={<DeleteOutlined />}
-          onClick={() => {
-            //deleteStudentHandler(record.key);
-          }}
-        >
-          Delete
-        </Button>
-      ),
-    },
+    
   ];
 
   const updateClassHandler = async () =>{

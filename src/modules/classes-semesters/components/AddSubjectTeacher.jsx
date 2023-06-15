@@ -54,8 +54,8 @@ function AddSubjectTeacher(props) {
           </Form.Item>
         ))}
        {!isSave && <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button type="primary" htmlType="submit" danger>
+            Save
           </Button>
         </Form.Item>}
       </Form>

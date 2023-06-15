@@ -34,47 +34,36 @@ function Allgrade() {
     <div className={style.homePage}>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <Card>
+          <Card
+            onClick={() => {
+              navigate("/app/classes-grade/1");
+            }}
+          >
             <Title level={2}>Grade 10</Title>
             <Divider />
-            <Button 
-              onClick={()=>{
-                navigate("/app/classes-grade/10");
-              }}
-              type='Text'
-            >
             <h1>{grade10}</h1>
-            </Button>
-            
           </Card>
         </Col>
         <Col span={12}>
-          <Card>
+          <Card
+            onClick={() => {
+              navigate("/app/classes-grade/2");
+            }}
+          >
             <Title level={2}>Grade 11</Title>
             <Divider />
-            <Button 
-              onClick={()=>{
-                navigate("/app/classes-grade/11");
-              }}
-              type='Text'
-            >
             <h1>{grade11}</h1>
-            </Button>
-            
           </Card>
         </Col>
         <Col span={12}>
-          <Card>
+          <Card
+            onClick={() => {
+              navigate("/app/classes-grade/3");
+            }}
+          >
             <Title level={2}>Grade 12</Title>
             <Divider />
-            <Button 
-              onClick={()=>{
-                navigate("/app/classes-grade/12");
-              }}
-              type='Text'
-            >
             <h1>{grade12}</h1>
-            </Button>
           </Card>
         </Col>
       </Row>

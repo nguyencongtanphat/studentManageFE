@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import ApiService from '../../../ApiService';
 import { useSelector, useDispatch } from "react-redux";
 
+
 const columns = [
   {
     title: "id",
@@ -38,7 +39,7 @@ const columns = [
 ];
 
 function ClassesList(props) {
- 
+  const navigate = useNavigate()
   const user = useSelector((state) => {
     return state.login.value;
   });
@@ -144,10 +145,7 @@ function ClassesList(props) {
               Classes Data
             </Title>
           </Col>
-        {user.role === "Admin" && </Row>
-        <Row>
-          <Col flex={4}>
-          </Col>}
+       
           <Col flex={1.5}>
             <SearchingClasses
             style ={{with:'150%'}}
@@ -170,7 +168,7 @@ function ClassesList(props) {
           <Col flex={0.5}>
             <Button 
               onClick={() =>{
-                navigate("add-class");
+                navigate("/app/add-new-class-semester");
               }}
               style={{width:'80%'}}
               type="primary" className="Button"
