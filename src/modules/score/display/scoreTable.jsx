@@ -1,4 +1,4 @@
-import { Card, Row, Col, Typography, Button, Table, Input, Modal } from 'antd';
+import { Card, Row, Col, Typography, Button, Table, Input, Modal, message } from 'antd';
 import { useState } from 'react';
 import '../../../App.css';
 
@@ -49,15 +49,18 @@ const ScoreTable = (props) => {
     const [scoreEnd, setScoreEnd] = useState('');
 
     const inputCheck = (str) => {
+        console.log("str check", str)
+       
         let count = 0;
         const arr = str.split(',');
         console.log(arr);
-        if (arr === ['']) {
+        console.log("arr", arr.length);
+        if (arr.length === 1 && arr[0]==="") {
             return true;
         }
         for (let i = 0; i < arr.length; i++) {
             const element = parseFloat(arr[i]);
-            console.log(props.minScore);
+            console.log("HERE", props.minScore.current,props.maxScore.current, element);
             if (Number.isInteger(element)) {
               if (element >= props.minScore.current && element <= props.maxScore.current) {
                     count++;
@@ -66,7 +69,9 @@ const ScoreTable = (props) => {
               return false;
             }
         }
+        console.log("count: ", count=== arr.length);
         if (count === arr.length) {
+            console.log("true");
             return true;
         }
         return false;
@@ -88,6 +93,7 @@ const ScoreTable = (props) => {
                                 item.end = scoreEnd;
                             }
                         });
+                        message.success("add success")
                         props.setTable(tempTable);
                         setVisible(false);
                     }
