@@ -49,7 +49,9 @@ function ScoreDetails () {
     useEffect(() => {
         const fetchData = async () => {
             const subjects = await ApiService.get("subjects");
+            console.log("url:", "subject-score/details" + rawQuery);
             const data = await ApiService.get("subject-score/details"+rawQuery);
+             console.log("data:", data);
             const processedData = preprocessing(data, subjects);
             console.log(processedData);
             setRaw(processedData);
@@ -58,22 +60,31 @@ function ScoreDetails () {
     }, []);
 
     const preprocessing = (data, subjects) => {
+        console.log("subjects: ", subjects)
         const processedData = subjects.map((item,index) => {
             let gpa = '';
-            const test_15 = data.filter((item2) =>
-                item2.name === item.name && item2.testName ==="15 minutes"
+            const test_15 = data.filter(
+              (item2) =>
+                item2.idSubject === item.idSubject &&
+                item2.testName === "15 minutes"
             );
             const score_15 = test_15.map(item3 => item3.score).join(', ');
-            const test_1 = data.filter((item2) =>
-                item2.name === item.name && item2.testName ==="1 period"
+            const test_1 = data.filter(
+              (item2) =>
+                item2.idSubject === item.idSubject &&
+                item2.testName === "1 period"
             );
             const score_1 = test_1.map(item3 => item3.score).join(', ');
-            const test_mid = data.filter((item2) =>
-                item2.name === item.name && item2.testName ==="mid-term"
+            const test_mid = data.filter(
+              (item2) =>
+                item2.idSubject === item.idSubject &&
+                item2.testName === "mid-term"
             );
             const score_mid = test_mid.map(item3 => item3.score).join(', ');
-            const test_end = data.filter((item2) =>
-                item2.name === item.name && item2.testName ==="end-term"
+            const test_end = data.filter(
+              (item2) =>
+                item2.idSubject === item.idSubject &&
+                item2.testName === "end-term"
             );
             const score_end = test_end.map(item3 => item3.score).join(', ');
             try {
