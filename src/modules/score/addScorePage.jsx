@@ -20,11 +20,14 @@ function AddingScore () {
     const [selectedClass, setSelectedClass] = useState(4);
     const [selectedSubject, setSelectedSubject] = useState(1);
     const [selectedSemester, setSelectedSemester] = useState('1-2024');
+    const minScore = useRef();
+    const maxScore = useRef();
     useEffect(() => {
         const fetchFieldData = async () => {
             const classesApi = await ApiService.get('classes');
             const subjectsApi = await ApiService.get('subjects');
             const semestersApi = await ApiService.get('semesters');
+            const parametersApi = await ApiService.get('parameters');
             const classsA = classesApi.map((item,index) => {
                 return {
                     key: index,
@@ -46,6 +49,14 @@ function AddingScore () {
                     value: item.order + "-" +item.year
                 }
             });
+            parametersApi.forEach((item) => {
+                if (item.name === "minimum score") {
+                    minScore.current = parseInt(item.value)
+                }
+                else if (item.name === "maximum score") {
+                    maxScore.current = parseInt(item.value)
+                }
+            })
             setSemester(semesterA);
             setClasses(classsA);
             setSubjects(subjectsA);
@@ -157,6 +168,7 @@ function AddingScore () {
                 if (item.idStudent === item2.idStudent) {
                     temp = {
                         idStudentProgress: item.idStudentProgress,
+                        idSubjectTeacherClassSemester: item2.idSTCS,
                         1: !item2.min_15 ? [] : item2.min_15.split(','),
                         2: !item2.min_45 ? [] : item2.min_45.split(','),
                         3: !item2.mid ? [] : item2.mid.split(','),
@@ -167,7 +179,8 @@ function AddingScore () {
             });
             return temp;
         });
-        const body = {idSubject: selectedSubject, result: result}
+        const body = {result: result};
+        console.log(body);
         const status = await ApiService.post('subject-score/details', body);
         if (status === 'success') {
             messageApi.open({
@@ -203,6 +216,9 @@ function AddingScore () {
                     setTable={setTable}
                     data={data}
                     selectedSubject={selectedSubject}
+                    minScore={minScore}
+                    maxScore={maxScore}
+                    messageApi={messageApi}
                 />
 
                 <Row style={{ marginTop: 9, marginBottom: 9 }}>
