@@ -48,19 +48,76 @@ const ScoreTable = (props) => {
     const [scoreMid, setScoreMid] = useState('');
     const [scoreEnd, setScoreEnd] = useState('');
 
+    const inputCheck = (str) => {
+        let count = 0;
+        const arr = str.split(',');
+        console.log(arr);
+        if (arr === ['']) {
+            return true;
+        }
+        for (let i = 0; i < arr.length; i++) {
+            const element = parseFloat(arr[i]);
+            console.log(props.minScore);
+            if (Number.isInteger(element)) {
+              if (element >= props.minScore.current && element <= props.maxScore.current) {
+                    count++;
+                } 
+            } else {
+              return false;
+            }
+        }
+        if (count === arr.length) {
+            return true;
+        }
+        return false;
+    }
+        
+
     const handleOk = () => {
         console.log('oke');
-        let tempTable = props.table;
-        tempTable.forEach((item) => {
-            if (item.key === row.key) {
-                item.min_15 = score15;
-                item.min_45 = score1;
-                item.mid = scoreMid;
-                item.end = scoreEnd;
+        if (inputCheck(score15)) {
+            if (inputCheck(score1)) {
+                if (inputCheck(scoreMid)) {
+                    if (inputCheck(scoreEnd)) {
+                        let tempTable = props.table;
+                        tempTable.forEach((item) => {
+                            if (item.key === row.key) {
+                                item.min_15 = score15;
+                                item.min_45 = score1;
+                                item.mid = scoreMid;
+                                item.end = scoreEnd;
+                            }
+                        });
+                        props.setTable(tempTable);
+                        setVisible(false);
+                    }
+                    else {
+                        props.messageApi.open({
+                            type: 'error',
+                            content: 'Please following the input format.',
+                          });
+                    }
+                }
+                else {
+                    props.messageApi.open({
+                        type: 'error',
+                        content: 'Please following the input format.',
+                      });
+                }
             }
-        });
-        props.setTable(tempTable);
-        setVisible(false);
+            else {
+                props.messageApi.open({
+                    type: 'error',
+                    content: 'Please following the input format.',
+                  });
+            }
+        }
+        else {
+            props.messageApi.open({
+                type: 'error',
+                content: 'Please following the input format.',
+              });
+        }
     };
     
     const handleCancel = () => {
