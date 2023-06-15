@@ -16,11 +16,15 @@ import {
   } from "antd";
 
   import "./rules.module.css"
+  import { useSelector, useDispatch } from "react-redux";
+
 
   function ChangeRules () {
     const [form] = Form.useForm();
     const [editMode, setEditMode] = useState(false);
-
+    const user = useSelector((state) => {
+      return state.login.value;
+    });
     const fetchData = async () => {
         const results = await ApiService.get("parameters");
         console.log("fetch result", results);

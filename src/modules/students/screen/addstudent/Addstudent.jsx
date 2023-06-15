@@ -13,10 +13,17 @@ import {
 } from "antd";
 import style from "./Addstudent.module.css";
 import ApiService from "../../../../ApiService";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 function Addstudent() {
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   const [form] = Form.useForm();
   const [classesSemester, setClassesSemester] = useState([]);
+    const navigate = useNavigate();
+
   useEffect(() => {
     const getData = async () => {
       const classesSemesterDB = await ApiService.get(`classes-semester`);
@@ -36,8 +43,10 @@ function Addstudent() {
       formValues.dayOfBirth = dayOfBirth;
       console.log("Form values:", formValues);
       const res = await ApiService.post("students", formValues);
-      if (res.ErrorCode === 0)  message.success("Successfully created");
+      message.success("Successfully created");
       form.resetFields();
+      navigate("/app/students");
+
     } catch (e) {
      message.error(`${e.message}   email is used or incorrect format`);
       
@@ -59,6 +68,7 @@ function Addstudent() {
   }
 
   return (
+    user.role === 'Admin' ?
     <div className={style.Addstudent}>
       <Card title="Add Students">
         <Form form={form} onFinish={submitHandler}>
@@ -74,9 +84,9 @@ function Addstudent() {
               <Form.Item
                 name={"idClassSemester"}
                 label="CLASS-SEMESTER"
-                rules={[
-                  { required: true, message: "Please choose your class!" },
-                ]}
+                // rules={[
+                //   { required: true, message: "Please choose your class!" },
+                // ]}
               >
                 <Select placeholder="Please select class-semester">
                   {classesSemester.map((item) => {
@@ -135,12 +145,20 @@ function Addstudent() {
             <Input size="medium" placeholder=""></Input>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
+            <Row>
+              <Col flex={4}>
+              </Col>
+              <Col flex={0}>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Col>
+            </Row>
           </Form.Item>
         </Form>
       </Card>
+    </div> : <div>
+      You don't have right here
     </div>
   );
 }

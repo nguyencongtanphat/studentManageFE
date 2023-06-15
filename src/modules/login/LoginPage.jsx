@@ -25,12 +25,12 @@ const LoginPage = () => {
       console.log("data", response);
       dispatch(setState(response));
       Modal.success({
-        title: "Fail",
+        title: "Success",
         content: "login success",
         okText: "OK",
         onOk() {
           setLoading(false);
-          navigate("/");
+          navigate("/app");
         },
       });
     }catch(e){

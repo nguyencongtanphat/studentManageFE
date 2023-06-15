@@ -120,9 +120,12 @@ function AddStudentDetailPage(props) {
       <Button 
         type="primary"
         onClick={async ()=>{
-        const response = await ApiService.post(`classes-semester/8`, {
-          listIdStudent: selectedRowKeys,
-        });
+        const response = await ApiService.post(
+          `classes-semester/${props.idClassSemester}`,
+          {
+            listIdStudent: selectedRowKeys,
+          }
+        );
         props.closeModal();
         props.fetchData()
         Modal.success({

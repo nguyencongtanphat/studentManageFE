@@ -1,16 +1,33 @@
 import React, { useState } from "react";
-import {Tag, Table, Select, Card, Space, Button, AutoComplete } from "antd";
+import {
+  Tag,
+  Table,
+  Select,
+  Card,
+  Space,
+  Button,
+  AutoComplete,
+  Row,
+  Col,
+  Typography,
+} from "antd";
 import style from "./Allstudent.module.css";
 import { useEffect } from "react";
 import ApiService from "../../../../ApiService";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 function Allstudent() {
+  const { Title } = Typography;
   const [studentListView, setStudentListView] = useState([]);
   const [classList, setClassList] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [studentList, setStudentList] = useState([]);
-
+  const navigate = useNavigate();
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   //fetch data
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +37,7 @@ function Allstudent() {
           ApiService.get("students/?isGetClass=true"),
           ApiService.get("classes"),
         ]);
-        
+
         const tempStudentList = resultStudent.map((student) => {
           return {
             key: student.idStudent,
@@ -29,7 +46,7 @@ function Allstudent() {
             classes: student.classNames,
           };
         });
-        setClassList(classes)
+        setClassList(classes);
         setStudentListView(tempStudentList);
         setStudentList(tempStudentList);
       } catch (e) {
@@ -57,7 +74,7 @@ function Allstudent() {
       render: (_, { classes }) => (
         <>
           {classes.map((className) => {
-            console.log("classname: ",className)
+            console.log("classname: ", className);
             return <Tag key={className}>{className}</Tag>;
           })}
         </>
@@ -79,7 +96,7 @@ function Allstudent() {
         return student.name.includes(nameQuery);
       });
     } else if (classQuery) {
-      console.log("classQuery")
+      console.log("classQuery");
       newStudentList = studentList.filter((student) => {
         return student.classes.includes(classQuery);
       });
@@ -89,13 +106,11 @@ function Allstudent() {
     setStudentListView(newStudentList);
   };
 
-  
-
   return (
     <div className={style.Allstudent}>
       <Card title="All Student Data">
-        <div className={style.selectClass}>
-          <Space>
+        <Row style={{ marginTop: 9, marginBottom: 9 }}>
+          <Col flex={4}>
             <AutoComplete
               style={{ width: 200 }}
               onSearch={(value) => {
@@ -108,7 +123,7 @@ function Allstudent() {
                 setClassQuery(value);
               }}
               defaultValue={"Select class"}
-              options={classList.map(classItem=>{
+              options={classList.map((classItem) => {
                 return {
                   label: classItem.name,
                   value: classItem.name,
@@ -118,17 +133,27 @@ function Allstudent() {
             <Button onClick={searchHandler} htmlType="search" type="primary">
               Search
             </Button>
-          </Space>
-        </div>
+          </Col>
+        </Row>
         <Table
           columns={columns}
           dataSource={studentListView}
           onRow={(record) => ({
             onClick: () => {
-              console.log(record);
+              navigate("/app/students/" + record.id);
             },
           })}
         />
+        {user.role === "Admin" && (
+          <Button
+            type="primary"
+            onClick={() => {
+              navigate("/app/add-new-student");
+            }}
+          >
+            Add new student
+          </Button>
+        )}
       </Card>
     </div>
   );

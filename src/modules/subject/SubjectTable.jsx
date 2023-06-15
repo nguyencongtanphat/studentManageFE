@@ -11,14 +11,20 @@ import {
   AutoComplete,
   Input,
   Form,
+  Row,
+  Col
 } from "antd";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import style from "./SubjectTable.module.css";
 import ApiService from "../../ApiService";
 import { DeleteOutlined } from "@ant-design/icons";
+import { useSelector, useDispatch } from "react-redux";
 
 function Listclassofgrade() {
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   const [subjectListView, setSubjectListView] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
   const [subjectList, setSubjectList] = useState([]);
@@ -271,19 +277,22 @@ function Listclassofgrade() {
     <div className={style.Allstudent}>
       <Card title="List subject">
         <div className={style.selectSuject}>
-          <Space>
-            <AutoComplete
-              style={{ width: 200 }}
-              onSearch={(value) => {
-                setNameQuery(value);
-              }}
-              placeholder="Search by name"
-            />
-
-            <Button onClick={searchHandler} htmlType="search" type="primary">
-              Search
-            </Button>
-          </Space>
+          <Row style={{ marginTop: 9, marginBottom: 9 }}>
+            <Col flex={4}>
+              <AutoComplete
+                style={{ width:'50%' }}
+                onSearch={(value) => {
+                  setNameQuery(value);
+                }}
+                placeholder="Search by name"
+              />
+            </Col>
+            <Col flex={0.5}>
+              <Button onClick={searchHandler} htmlType="search" type="primary">
+                Search
+              </Button>         
+            </Col>
+          </Row>
         </div>
         <Table
           columns={!isEdit ? columns : columnsEdit}
@@ -297,25 +306,32 @@ function Listclassofgrade() {
             pageSize: 7,
           }}
         ></Table>
-        <Space wrap>
-          {isEdit && (
-            <Button
+        <Row style={{ marginTop: 9, marginBottom: 9 }}>
+          <Col flex={4}></Col>
+          <Col flex={0.6}>
+            {isEdit && (
+              <Button
+                style={{width:'80%'}}
+                htmlType="submit"
+                type="primary"
+                onClick={addSubjectHandler}
+              >
+                Add New Subject
+              </Button>
+            )}
+          </Col>
+          <Col flex={0.5}>
+            {user.role==="Admin" && <Button
+              style={{width:'50%'}}
               htmlType="submit"
               type="primary"
-              onClick={addSubjectHandler}
+              onClick={editHandler}
+              danger={!isEdit ? false : true}
             >
-              Add New Subject
-            </Button>
-          )}
-          <Button
-            htmlType="submit"
-            type="primary"
-            onClick={editHandler}
-            danger={!isEdit ? false : true}
-          >
-            {!isEdit ? "Edit" : "Close"}
-          </Button>
-        </Space>
+              {!isEdit ? "Edit" : "Close"}
+            </Button>}
+          </Col>
+        </Row>
       </Card>
     </div>
   );
