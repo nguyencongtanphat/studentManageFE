@@ -16,11 +16,15 @@ import {
   } from "antd";
 
   import "./rules.module.css"
+  import { useSelector, useDispatch } from "react-redux";
+
 
   function ChangeRules () {
     const [form] = Form.useForm();
     const [editMode, setEditMode] = useState(false);
-
+    const user = useSelector((state) => {
+      return state.login.value;
+    });
     const fetchData = async () => {
         const results = await ApiService.get("parameters");
         console.log("fetch result", results);
@@ -100,6 +104,7 @@ import {
     return (
         <Card title="Edit Rules">
             <Form onFinish={onFinish} form={form}>
+            <div></div>
                 <Row gutter={128}>
                     <Col span={8} >
                     <Row gutter={16}>
@@ -195,8 +200,9 @@ import {
                                     { required: editMode, message: 'Please enter maximum score' },
                                     ({getFieldValue}) =>({
                                         validator(_, value){
-                                            if(!editMode) return Promise.resolve();
+                                            if (!editMode) return Promise.resolve();
                                             if (value.length > 0 && isNaN(value)) return Promise.reject(new Error('must type number'))
+                                            if (parseFloat(value) < 0) return Promise.reject(new Error('must >0'))
                                             if( parseFloat(value) === 0.0 || parseFloat(value)){
                                                 return Promise.resolve();
                                             }
@@ -225,6 +231,7 @@ import {
                                         validator(_, value){
                                             if(!editMode) return Promise.resolve();
                                             if (value.length > 0 && isNaN(value)) return Promise.reject(new Error('must type number'))
+                                            if (parseFloat(value) < 0) return Promise.reject(new Error('must >0'))
                                             if( parseFloat(value) === 0.0 || parseFloat(value)){
                                                 return Promise.resolve();
                                             }
@@ -249,6 +256,7 @@ import {
                                         validator(_, value){
                                             if(!editMode) return Promise.resolve();
                                             if (value.length > 0 && isNaN(value)) return Promise.reject(new Error('must type number'))
+                                            if (parseFloat(value) < 0) return Promise.reject(new Error('must >0'))
                                             if( parseFloat(value) === 0.0 || parseFloat(value)){
                                                 return Promise.resolve();
                                             }
@@ -273,6 +281,7 @@ import {
                                         validator(_, value){
                                             if(!editMode) return Promise.resolve();
                                             if (value.length > 0 && isNaN(value)) return Promise.reject(new Error('must type number'))
+                                            if (parseFloat(value) < 0) return Promise.reject(new Error('must >0'))
                                             if( parseFloat(value) === 0.0 || parseFloat(value)){
                                                 return Promise.resolve();
                                             }
@@ -289,11 +298,15 @@ import {
                 </Row>
                 {editMode? 
                     (<Form.Item>
-                        <Button type="primary" danger  htmlType="submit">Save</Button>
+                        <div style={{textAlign:'right', width: '63%'}}>  
+                            <Button type="primary" danger  htmlType="submit">Save</Button>
+                        </div>  
                     </Form.Item>)
                     :(
                     <Form.Item>
-                        <Button type='primary' htmlType="submit">Edit</Button>
+                        <div style={{textAlign:'right', width: '63%'}}>
+                            <Button type='primary' htmlType="submit">Edit</Button>
+                        </div> 
                     </Form.Item>)
                 }
                 

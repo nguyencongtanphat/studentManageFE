@@ -3,6 +3,7 @@ import { Tag, Table, Select, Card, Space, Button, AutoComplete, Row, Col } from 
 import { useEffect } from "react";
 import ApiService from "../../ApiService";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 function AllTeacherPage() {
   const [teacherListView, setTeacherListView] = useState([]);
@@ -10,6 +11,9 @@ function AllTeacherPage() {
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [teacherList, setTeacherList] = useState([]);
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   const navigate = useNavigate();
 
   //fetch data
@@ -93,7 +97,7 @@ function AllTeacherPage() {
   return (
     <div>
       <Card title="All Teachers Data">
-        <div >
+        <div>
           <Row style={{ marginTop: 9, marginBottom: 9 }}>
             <Col flex={4}></Col>
             <Col flex={1}>
@@ -117,19 +121,14 @@ function AllTeacherPage() {
           dataSource={teacherListView}
           onRow={(record) => ({
             onClick: () => {
-              navigate("/app/teachers/"+record.id);
+              if (user.role === "Admin") navigate("/app/teachers/" + record.id);
             },
           })}
         />
         <Row style={{ marginTop: 9, marginBottom: 9 }}>
           <Col flex={4}></Col>
-          <Col flex={0}>
-            <Button  
-              onClick={()=>{
-                navigate("/app/add-new-teacher");
-              }}
-              type="primary"
-            >
+          <Col flex={0.3}>
+            <Button type="primary">
               Add new teacher
             </Button>
           </Col>

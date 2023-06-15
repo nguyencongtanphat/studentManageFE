@@ -7,27 +7,7 @@ import SearchingClasses from '../ClassComponents/SearchingClass';
 import ClassesTable from '../ClassComponents/TableOfClasses';
 import { useEffect } from 'react';
 import ApiService from '../../../ApiService';
-
-
-
-
-const dataSource = [
-  {
-    idClassSemester: 9,
-    idClass: 5,
-    idSemester: 6,
-    idTeacher: 2,
-    semester: "2 - 2024",
-    number: 4,
-    updatedAt: "2023-05-20T02:02:49.000Z",
-    createdAt: "2023-05-20T02:02:49.000Z",
-    name: "11A1",
-    idGrade: 2,
-    order: 2,
-    year: 2024,
-    teacherName: "Nguyễn Văn B",
-  },
-];
+import { useSelector, useDispatch } from "react-redux";
 
 const columns = [
   {
@@ -58,7 +38,10 @@ const columns = [
 ];
 
 function ClassesList(props) {
-  const navigate = useNavigate();
+ 
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   const { Title } = Typography;
   const [classesSemesters, setClassesSemesters] = useState([]);
   const [classesSemestersFilter, setClassesSemestersFilter] = useState([]);
@@ -71,7 +54,14 @@ function ClassesList(props) {
 
   useEffect(()=>{
    const fetchData =async ()=>{
-     const classesSemesters = await ApiService.get("classes-semester");
+     let classesSemesters = await ApiService.get("classes-semester");
+     console.log("classesSemesters", classesSemesters)
+     if(user.role !== "Admin"){
+       const newClassesSemesters = classesSemesters.filter(
+         (classSemester) => classSemester.idTeacher === user.idTeacher
+       );
+       classesSemesters = newClassesSemesters;
+     }
      setClassesSemesters(classesSemesters);
      setClassesSemestersFilter(classesSemesters);
      //get class options
@@ -107,8 +97,6 @@ function ClassesList(props) {
    fetchData()
   },[])
 
-
-
   const handleSearchingClick = () => {
     console.log("click search")
     let tempClassFilter = []
@@ -134,10 +122,7 @@ function ClassesList(props) {
     setClassesSemestersFilter(tempClassFilter);
   }
 
-  const handleRowClick = () => {
-    // navigate('/classes/id');
-    // props.setFlag(!props.flag);
-  }
+  
 
   const handleClassesChange = (values) => {
     console.log("click class changes:", values)
@@ -159,10 +144,10 @@ function ClassesList(props) {
               Classes Data
             </Title>
           </Col>
-        </Row>
+        {user.role === "Admin" && </Row>
         <Row>
           <Col flex={4}>
-          </Col>
+          </Col>}
           <Col flex={1.5}>
             <SearchingClasses
             style ={{with:'150%'}}
@@ -178,7 +163,7 @@ function ClassesList(props) {
         <ClassesTable
           filteredData={classesSemestersFilter}
           columns={columns}
-          handleRowClick={handleRowClick}
+         
         />
         <Row>
           <Col flex={4}></Col>
