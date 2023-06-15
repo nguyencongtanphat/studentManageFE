@@ -19,8 +19,12 @@ import { useParams } from "react-router-dom";
 import style from "./SubjectTable.module.css";
 import ApiService from "../../ApiService";
 import { DeleteOutlined } from "@ant-design/icons";
+import { useSelector, useDispatch } from "react-redux";
 
 function Listclassofgrade() {
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   const [subjectListView, setSubjectListView] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
   const [subjectList, setSubjectList] = useState([]);
@@ -317,7 +321,7 @@ function Listclassofgrade() {
             )}
           </Col>
           <Col flex={0.5}>
-            <Button
+            {user.role==="Admin" && <Button
               style={{width:'50%'}}
               htmlType="submit"
               type="primary"
@@ -325,7 +329,7 @@ function Listclassofgrade() {
               danger={!isEdit ? false : true}
             >
               {!isEdit ? "Edit" : "Close"}
-            </Button>
+            </Button>}
           </Col>
         </Row>
       </Card>

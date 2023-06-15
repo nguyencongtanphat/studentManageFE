@@ -3,6 +3,7 @@ import { Tag, Table, Select, Card, Space, Button, AutoComplete, Row, Col } from 
 import { useEffect } from "react";
 import ApiService from "../../ApiService";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 function AllTeacherPage() {
   const [teacherListView, setTeacherListView] = useState([]);
@@ -10,6 +11,9 @@ function AllTeacherPage() {
   const [nameQuery, setNameQuery] = useState("");
   const [classQuery, setClassQuery] = useState("");
   const [teacherList, setTeacherList] = useState([]);
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   const navigate = useNavigate();
 
   //fetch data
@@ -93,16 +97,16 @@ function AllTeacherPage() {
   return (
     <div>
       <Card title="All Teachers Data">
-        <div >
+        <div>
           <Row style={{ marginTop: 9, marginBottom: 9 }}>
             <Col flex={4}>
-            <AutoComplete
-              style={{ width: 200 }}
-              onSearch={(value) => {
-                setNameQuery(value);
-              }}
-              placeholder="Search by name"
-            />
+              <AutoComplete
+                style={{ width: 200 }}
+                onSearch={(value) => {
+                  setNameQuery(value);
+                }}
+                placeholder="Search by name"
+              />
             </Col>
             <Col flex={0.5}>
               <Button onClick={searchHandler} htmlType="search" type="primary">
@@ -116,18 +120,26 @@ function AllTeacherPage() {
           dataSource={teacherListView}
           onRow={(record) => ({
             onClick: () => {
-              navigate("/app/teachers/"+record.id);
+              if (user.role === "Admin") navigate("/app/teachers/" + record.id);
             },
           })}
         />
-        <Row style={{ marginTop: 9, marginBottom: 9 }}>
-          <Col flex={4}></Col>
-          <Col flex={0.3}>
-            <Button type="primary">
-              Add new teacher
-            </Button>
-          </Col>
-        </Row>
+        {user.role === "Admin" && (
+          <Row style={{ marginTop: 9, marginBottom: 9 }}>
+            <Col flex={4}></Col>
+            <Col flex={0.3}>
+              <Button
+                type="primary"
+                onClick={() => {
+                 
+                    navigate("/app/add-new-teacher");
+                }}
+              >
+                Add new teacher
+              </Button>
+            </Col>
+          </Row>
+        )}
       </Card>
     </div>
   );

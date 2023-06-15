@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import style from "./Listclassofgrade10.module.css";
 import ApiService from "../../../ApiService";
 import { DeleteOutlined } from "@ant-design/icons";
+import { useSelector, useDispatch } from "react-redux";
 
 
 function Listclassofgrade() {
@@ -23,11 +24,13 @@ function Listclassofgrade() {
   const [classList, setClassList] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [allClassesDb, setAllClassesDb] = useState([]);
-
   const [tempClassName, setTempClassName] = useState("")
   const [idInputEditing, setIdInputEditing] = useState()
 
   const { id } = useParams();
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   const fetchData = async () => {
     try {
       console.log("id param:", id);
@@ -261,7 +264,7 @@ function Listclassofgrade() {
             pageSize: 7,
           }}
         ></Table>
-        <Space wrap>
+        {user.role==="Admin"&&<Space wrap>
           {isEdit && (
             <Button htmlType="submit" type="primary" onClick={addClassHandler}>
               Add New Class
@@ -275,7 +278,7 @@ function Listclassofgrade() {
           >
             {!isEdit ? "Edit" : "Close"}
           </Button>
-        </Space>
+        </Space>}
       </Card>
     </div>
   );
