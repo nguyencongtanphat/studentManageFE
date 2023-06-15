@@ -258,27 +258,29 @@ function Listclassofgrade() {
             pageSize: 7,
           }}
         ></Table>
+        {user.role === "Admin" && 
         <Row>
-          <Col flex={4}>
-          </Col>
-          <Col flex={0.2}>
-            {isEdit && (
-              <Button htmlType="submit" type="primary" onClick={addClassHandler}>
-                Add New Class
-              </Button>
-            )}
-          </Col>
-          <Col flex={0}>
-            <Button
-              htmlType="submit"
-              type="primary"
-              onClick={editHandler}
-              danger={!isEdit ? false : true}
-            >
-              {!isEdit ? "Edit" : "Close"}
+        <Col flex={4}>
+        </Col>
+        <Col flex={0.2}>
+          {isEdit && (
+            <Button htmlType="submit" type="primary" onClick={addClassHandler}>
+              Add New Class
             </Button>
-          </Col>
-        </Row>
+          )}
+        </Col>
+        <Col flex={0}>
+          <Button
+            htmlType="submit"
+            type="primary"
+            onClick={editHandler}
+            danger={!isEdit ? false : true}
+          >
+            {!isEdit ? "Edit" : "Close"}
+          </Button>
+        </Col>
+      </Row>
+      }
       </Card>
     </div>
   );

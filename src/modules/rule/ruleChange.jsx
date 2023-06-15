@@ -296,20 +296,27 @@ import {
                     </Row>
                     </Col>
                 </Row>
-                {editMode? 
-                    (<Form.Item>
-                        <div style={{textAlign:'right', width: '63%'}}>  
-                            <Button type="primary" danger  htmlType="submit">Save</Button>
-                        </div>  
-                    </Form.Item>)
-                    :(
-                    <Form.Item>
-                        <div style={{textAlign:'right', width: '63%'}}>
-                            <Button type='primary' htmlType="submit">Edit</Button>
-                        </div> 
-                    </Form.Item>)
+                {user.role === "Admin" &&     
+                    <Row>
+                        <Col flex={3}>
+                        </Col>
+                        <Col flex={200}>
+                            {editMode? 
+                                (<Form.Item>
+                                    <div style={{textAlign:'right', width: '63%'}}>  
+                                        <Button type="primary" danger  htmlType="submit">Save</Button>
+                                    </div>  
+                                </Form.Item>)
+                                :(
+                                <Form.Item>
+                                    <div style={{textAlign:'right', width: '63%'}}>
+                                        <Button type='primary' htmlType="submit">Edit</Button>
+                                    </div> 
+                                </Form.Item>)
+                            }
+                        </Col>
+                    </Row>
                 }
-                
             </Form>
         </Card>
     )

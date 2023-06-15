@@ -32,59 +32,39 @@ function HomePage() {
     <div className={style.homePage}>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <Card>
+          <Card onClick={()=>{
+                navigate("/app/students");
+              }}>
             <Title level={3}>Total students </Title>
             <Divider />
-            <Button 
-              onClick={()=>{
-                navigate("/app/students");
-              }}
-              type='Text'
-            >
             <h1>{schoolInfo.studentsNumber}</h1>
-            </Button>
           </Card>
         </Col>
         <Col span={12}>
-          <Card>
+          <Card onClick={()=>{
+                navigate("/app/classes-semesters");
+              }}>
             <Title level={3}>Total classes</Title>
             <Divider />
-            <Button 
-              onClick={()=>{
-                navigate("/app/students");
-              }}
-              type='Text'
-            >
             <h1>{schoolInfo.classesNumber}</h1>
-            </Button>
           </Card>
         </Col>
         <Col span={12}>
-          <Card>
+          <Card onClick={()=>{
+                navigate("/app/grades");
+              }}>
             <Title level={3}>Total grades</Title>
             <Divider />
-            <Button 
-              onClick={()=>{
-                navigate("/app/students");
-              }}
-              type='Text'
-            >
              <h1>{schoolInfo.gradesNumber}</h1>
-            </Button>
           </Card>
         </Col>
         <Col span={12}>
-          <Card>
+          <Card onClick={()=>{
+                navigate("/app/teachers");
+              }}>
             <Title level={3}>Total teachers</Title>
             <Divider />
-            <Button 
-              onClick={()=>{
-                navigate("/app/students");
-              }}
-              type='Text'
-            >
              <h1>{schoolInfo.teachersNumber}</h1>
-            </Button>
           </Card>
         </Col>
       </Row>
