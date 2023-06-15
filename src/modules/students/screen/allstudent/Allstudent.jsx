@@ -154,7 +154,7 @@ function Allstudent() {
           })}
         />
 
-        <Row>
+       {user.role ==="Admin" && <Row>
           <Col flex={4}></Col>
           <Col flex={0}>
             <Button type="primary" onClick={()=>{
@@ -163,7 +163,7 @@ function Allstudent() {
               Add new student
             </Button>
           </Col>
-        </Row>
+        </Row>}
 
       </Card>
     </div>
