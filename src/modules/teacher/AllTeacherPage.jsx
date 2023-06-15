@@ -125,14 +125,18 @@ function AllTeacherPage() {
             },
           })}
         />
-        <Row style={{ marginTop: 9, marginBottom: 9 }}>
+        { user.role === "Admin" && <Row style={{ marginTop: 9, marginBottom: 9 }}>
           <Col flex={4}></Col>
           <Col flex={0.3}>
-            <Button type="primary">
+            <Button onClick={() => {
+              navigate("/app/add-new-teacher");
+            }}
+            type="primary">
               Add new teacher
             </Button>
           </Col>
         </Row>
+        }
       </Card>
     </div>
   );

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Alert, { Col, Row, message } from 'antd';
 import dayjs from 'dayjs';
 import ApiService from '../../../../ApiService';
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   Checkbox,
@@ -30,6 +31,10 @@ function Profilestudent () {
     const {id} = useParams();
     const requrl = "students/"+id;
     const navigate = useNavigate();
+
+    const user = useSelector((state) => {
+      return state.login.value;
+    });
 
 
     useEffect(() => {
@@ -148,36 +153,37 @@ function Profilestudent () {
               </div>
             </Form.Item>
             <div className={style.spaceButton}>
+              {user.role === "Admin" &&
               <Row>
-                <Col flex={4}></Col>
-                <Col flex={0}>
-                  {editButton && (
-                    <Button
-                      htmlType="submit"
-                      type="primary"
-                      onClick={() => {
-                        FieldEnable();
-                      }}
-                    >
-                      Edit
-                    </Button>
-                  )}  
-                </Col>
-                <Col flex={0}>
-                  {!editButton && (
-                    <Button
-                      htmlType="submit"
-                      type="primary"
-                      onClick={() => {
-                        HandleSubmit();
-                      }}
-                      danger
-                    >
-                      Save
-                    </Button>
-                  )}
-                </Col>
-              </Row>
+              <Col flex={4}></Col>
+              <Col flex={0}>
+                {editButton && (
+                  <Button
+                    htmlType="submit"
+                    type="primary"
+                    onClick={() => {
+                      FieldEnable();
+                    }}
+                  >
+                    Edit
+                  </Button>
+                )}  
+              </Col>
+              <Col flex={0}>
+                {!editButton && (
+                  <Button
+                    htmlType="submit"
+                    type="primary"
+                    onClick={() => {
+                      HandleSubmit();
+                    }}
+                    danger
+                  >
+                    Save
+                  </Button>
+                )}
+              </Col>
+            </Row>}
             </div>
           </Form>
         </Card>
