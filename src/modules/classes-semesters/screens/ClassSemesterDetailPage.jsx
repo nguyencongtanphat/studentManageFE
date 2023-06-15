@@ -143,10 +143,19 @@ function ClassSemesterDetail() {
 
   const handlerSubmit = async () => {
     let isClassExist = classSemesters.some(
-      (classSemester) =>
-        classSemester.idClass === selectedClass &&
-        classSemester.idSemester === selectedSemester
+      (classSemester) =>{
+        console.log(
+          classSemester.idClass , selectedClass ,
+            classSemester.idSemester ,selectedSemester
+        );
+        return (
+          classSemester.idClass === selectedClass &&
+          classSemester.idSemester === selectedSemester
+        );
+      }
+       
     );
+    console.log("isClassExist", isClassExist, classSemesters);
     if (isClassExist) {
       Modal.error({
         title: "Error",
@@ -239,6 +248,7 @@ function ClassSemesterDetail() {
           <Col>
             <Button
               type="primary"
+              danger = {isEdit}
               onClick={
                 !isEdit
                   ? () => {
@@ -247,7 +257,7 @@ function ClassSemesterDetail() {
                   : handlerSubmit
               }
             >
-              {!isEdit ? "Edit" : "Save"}
+              {!isEdit ? "Edit" :  "Save" }
             </Button>
           </Col>
         </Row>

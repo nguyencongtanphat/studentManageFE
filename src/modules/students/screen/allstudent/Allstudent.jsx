@@ -110,15 +110,19 @@ function Allstudent() {
     <div className={style.Allstudent}>
       <Card title="All Student Data">
         <Row style={{ marginTop: 9, marginBottom: 9 }}>
-          <Col flex={4}>
+          <Col flex={4}></Col>
+          <Col flex={0.5}>
             <AutoComplete
-              style={{ width: 200 }}
+              style={{width:'90%'}}
               onSearch={(value) => {
                 setNameQuery(value);
               }}
               placeholder="Search by name"
             />
+          </Col>
+          <Col flex={0.25}>
             <Select
+              style={{width:'90%'}}
               onChange={(value) => {
                 setClassQuery(value);
               }}
@@ -130,10 +134,15 @@ function Allstudent() {
                 };
               })}
             ></Select>
-            <Button onClick={searchHandler} htmlType="search" type="primary">
+          </Col>
+          <Col flex={0}>
+            <Button 
+              onClick={searchHandler} htmlType="search" type="primary">
               Search
             </Button>
           </Col>
+            
+          
         </Row>
         <Table
           columns={columns}
@@ -144,16 +153,18 @@ function Allstudent() {
             },
           })}
         />
-        {user.role === "Admin" && (
-          <Button
-            type="primary"
-            onClick={() => {
+
+        <Row>
+          <Col flex={4}></Col>
+          <Col flex={0}>
+            <Button type="primary" onClick={()=>{
               navigate("/app/add-new-student");
-            }}
-          >
-            Add new student
-          </Button>
-        )}
+            }}>
+              Add new student
+            </Button>
+          </Col>
+        </Row>
+
       </Card>
     </div>
   );

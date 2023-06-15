@@ -176,17 +176,23 @@ function AddingScore () {
                 <Row>
                     <Typography.Title level={2}>Title</Typography.Title>
                 </Row>
-                <SelectField
-                    selectedClass={selectedClass}
-                    classes={classes}
-                    selectedSubject={selectedSubject}
-                    subjects={subjects}
-                    handleClassChange={handleClassChange}
-                    selectedSemester={selectedSemester}
-                    semester={semester}
-                    handleSemesterChange={handleSemesterChange}
-                    handleSubjectChange={handleSubjectChange}
-                />
+                <Row>
+                    <Col flex={4}>
+                    </Col>
+                    <Col flex={0.4}>
+                    <SelectField
+                        selectedClass={selectedClass}
+                        classes={classes}
+                        handleClassChange={handleClassChange}
+                        selectedSubject={selectedSubject}
+                        subjects={subjects}
+                        handleSubjectChange={handleSubjectChange}
+                        selectedSemester={selectedSemester}
+                        semester={semester}
+                        handleSemesterChange={handleSemesterChange}
+                    />
+                    </Col>
+                </Row>
                 <ScoreTable
                     table={table}
                     setTable={setTable}
@@ -199,6 +205,7 @@ function AddingScore () {
                     </Col>
                     <Col flex={0.5}>
                         <Button
+                        danger
                         type='primary'
                         onClick={handleButtonClick}
                         >

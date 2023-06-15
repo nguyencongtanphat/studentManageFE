@@ -99,16 +99,17 @@ function AllTeacherPage() {
       <Card title="All Teachers Data">
         <div>
           <Row style={{ marginTop: 9, marginBottom: 9 }}>
-            <Col flex={4}>
-              <AutoComplete
-                style={{ width: 200 }}
-                onSearch={(value) => {
-                  setNameQuery(value);
-                }}
-                placeholder="Search by name"
-              />
+            <Col flex={4}></Col>
+            <Col flex={1}>
+            <AutoComplete
+              style={{ width: '90%' }}
+              onSearch={(value) => {
+                setNameQuery(value);
+              }}
+              placeholder="Search by name"
+            />
             </Col>
-            <Col flex={0.5}>
+            <Col flex={0}>
               <Button onClick={searchHandler} htmlType="search" type="primary">
                 Search
               </Button>
@@ -124,22 +125,14 @@ function AllTeacherPage() {
             },
           })}
         />
-        {user.role === "Admin" && (
-          <Row style={{ marginTop: 9, marginBottom: 9 }}>
-            <Col flex={4}></Col>
-            <Col flex={0.3}>
-              <Button
-                type="primary"
-                onClick={() => {
-                 
-                    navigate("/app/add-new-teacher");
-                }}
-              >
-                Add new teacher
-              </Button>
-            </Col>
-          </Row>
-        )}
+        <Row style={{ marginTop: 9, marginBottom: 9 }}>
+          <Col flex={4}></Col>
+          <Col flex={0.3}>
+            <Button type="primary">
+              Add new teacher
+            </Button>
+          </Col>
+        </Row>
       </Card>
     </div>
   );

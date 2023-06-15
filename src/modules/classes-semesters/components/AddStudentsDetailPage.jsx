@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Space, Select, Table, Card, AutoComplete, Button, Tag, Modal } from "antd";
+import { Space, Select, Table, Card, AutoComplete, Button, Tag, Modal, Row, Col } from "antd";
 import ApiService from "../../../ApiService";
 function AddStudentDetailPage(props) {
   const columns = [
@@ -94,18 +94,24 @@ function AddStudentDetailPage(props) {
   return (
     <Card title="All Student Data">
       <div>
-        <Space>
-          <AutoComplete
-            style={{ width: 200 }}
-            onSearch={(value) => {
-              setNameQuery(value);
-            }}
-            placeholder="Search by name"
-          />
-          <Button onClick={searchHandler} htmlType="search" type="primary">
-            Search
-          </Button>
-        </Space>
+        <Row>
+          <Col flex={4}>
+          </Col>
+          <Col flex={0.2}>
+            <AutoComplete
+              style={{ width: 200 }}
+              onSearch={(value) => {
+                setNameQuery(value);
+              }}
+              placeholder="Search by name"
+            />
+          </Col>
+          <Col flex={0}>
+            <Button onClick={searchHandler} htmlType="search" type="primary">
+              Search
+            </Button>
+          </Col>
+        </Row>
       </div>
       <Table
         columns={columns}
@@ -117,7 +123,12 @@ function AddStudentDetailPage(props) {
         })}
         rowSelection={rowSelection}
       />
-      <Button 
+      <Row>
+        <Col flex={4}>
+        </Col>
+        <Col flex={0}>
+        <Button 
+        danger
         type="primary"
         onClick={async ()=>{
         const response = await ApiService.post(
@@ -135,6 +146,8 @@ function AddStudentDetailPage(props) {
           onOk() {},
         });
         }}>Save</Button>
+        </Col>
+      </Row>
     </Card>
   );
 }

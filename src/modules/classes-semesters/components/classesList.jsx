@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import ApiService from '../../../ApiService';
 import { useSelector, useDispatch } from "react-redux";
 
+
 const columns = [
   {
     title: "id",
@@ -38,7 +39,7 @@ const columns = [
 ];
 
 function ClassesList(props) {
- 
+  const navigate = useNavigate()
   const user = useSelector((state) => {
     return state.login.value;
   });
@@ -144,29 +145,40 @@ function ClassesList(props) {
               Classes Data
             </Title>
           </Col>
-          {user.role === "Admin" && <Col flex={1.4}>
-            <Button 
-              style={{width:'80%'}}
-              type="primary" className="Button"
-            >
-              Add Class
-            </Button>
-          </Col>}
+       
+          <Col flex={1.5}>
+            <SearchingClasses
+            style ={{with:'150%'}}
+            onClassesChange={handleClassesChange}
+            selectClassOptions={classOptions}
+            onSemesterChange={handleSemesterChange}
+            selectSemesterOptions={semesterOptions}
+            onSearchingClick={handleSearchingClick}
+            classes={classes}
+          />
+          </Col>
         </Row>
-        <SearchingClasses
-          onClassesChange={handleClassesChange}
-          selectClassOptions={classOptions}
-          onSemesterChange={handleSemesterChange}
-          selectSemesterOptions={semesterOptions}
-          onSearchingClick={handleSearchingClick}
-          classes={classes}
-        />
         <ClassesTable
           filteredData={classesSemestersFilter}
           columns={columns}
          
         />
+        <Row>
+          <Col flex={4}></Col>
+          <Col flex={0.5}>
+            <Button 
+              onClick={() =>{
+                navigate("/app/add-new-class-semester");
+              }}
+              style={{width:'80%'}}
+              type="primary" className="Button"
+            >
+              Add Class
+            </Button>
+          </Col>
+        </Row>
       </Card>
+      
     </div>
   );
 }

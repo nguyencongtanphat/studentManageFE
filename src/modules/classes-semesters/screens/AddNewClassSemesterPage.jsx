@@ -193,7 +193,7 @@ function AddNewClass() {
           >
             Add Student
           </Button>
-          <Button type="primary" onClick={handlerSubmit}>
+          <Button  danger type="primary" onClick={handlerSubmit}>
             Save
           </Button>
         </Row>

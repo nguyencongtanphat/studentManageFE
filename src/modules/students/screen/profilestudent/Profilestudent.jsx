@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Alert, { message } from 'antd';
+import Alert, { Col, Row, message } from 'antd';
 import dayjs from 'dayjs';
 import ApiService from '../../../../ApiService';
 
@@ -148,31 +148,36 @@ function Profilestudent () {
               </div>
             </Form.Item>
             <div className={style.spaceButton}>
-              <Space wrap>
-                {editButton && (
-                  <Button
-                    htmlType="submit"
-                    type="primary"
-                    onClick={() => {
-                      FieldEnable();
-                    }}
-                  >
-                    Edit
-                  </Button>
-                )}
-                {!editButton && (
-                  <Button
-                    htmlType="submit"
-                    type="primary"
-                    onClick={() => {
-                      HandleSubmit();
-                    }}
-                    danger
-                  >
-                    Save
-                  </Button>
-                )}
-              </Space>
+              <Row>
+                <Col flex={4}></Col>
+                <Col flex={0}>
+                  {editButton && (
+                    <Button
+                      htmlType="submit"
+                      type="primary"
+                      onClick={() => {
+                        FieldEnable();
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  )}  
+                </Col>
+                <Col flex={0}>
+                  {!editButton && (
+                    <Button
+                      htmlType="submit"
+                      type="primary"
+                      onClick={() => {
+                        HandleSubmit();
+                      }}
+                      danger
+                    >
+                      Save
+                    </Button>
+                  )}
+                </Col>
+              </Row>
             </div>
           </Form>
         </Card>

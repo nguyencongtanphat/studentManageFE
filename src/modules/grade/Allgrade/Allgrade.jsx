@@ -1,7 +1,8 @@
 import React from 'react'
 import style from "./Allgrade.module.css"
-import { Row, Col, Card, Divider, Typography } from "antd";
+import { Row, Col, Card, Divider, Typography, Button} from "antd";
 import { useEffect, useLayoutEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import ApiService from '../../../ApiService';
 const { Title } = Typography;
 
@@ -11,6 +12,7 @@ function Allgrade() {
   const [grade10, setgrade10] = useState(0)
   const [grade11, setgrade11] = useState(0)
   const [grade12, setgrade12] = useState(0)
+  const navigate = useNavigate();
   useLayoutEffect(()=>{
     let g10 =0, g11=0, g12=0;
     const fetchData = async ()=>{
@@ -32,21 +34,33 @@ function Allgrade() {
     <div className={style.homePage}>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <Card>
+          <Card
+            onClick={() => {
+              navigate("/app/classes-grade/1");
+            }}
+          >
             <Title level={2}>Grade 10</Title>
             <Divider />
             <h1>{grade10}</h1>
           </Card>
         </Col>
         <Col span={12}>
-          <Card>
+          <Card
+            onClick={() => {
+              navigate("/app/classes-grade/2");
+            }}
+          >
             <Title level={2}>Grade 11</Title>
             <Divider />
             <h1>{grade11}</h1>
           </Card>
         </Col>
         <Col span={12}>
-          <Card>
+          <Card
+            onClick={() => {
+              navigate("/app/classes-grade/3");
+            }}
+          >
             <Title level={2}>Grade 12</Title>
             <Divider />
             <h1>{grade12}</h1>

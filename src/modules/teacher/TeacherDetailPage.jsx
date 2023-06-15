@@ -9,6 +9,8 @@ import {
   DatePicker,
   Tag,
   message,
+  Row,
+  Col
 } from "antd";
 
 import ApiService from "../../ApiService";
@@ -109,11 +111,15 @@ function TeacherDetailPage() {
               })}
             </div>
           </Form.Item>
-          <Form.Item>
-            <Button onClick={editHandler} type="primary" danger={isEdit}>
-             {isEdit ? "Save" : "Edit"}
-            </Button>
-          </Form.Item>
+          <Row>
+            <Col flex={4}>
+            </Col>
+            <Col flex={0}>
+              <Button onClick={editHandler} type="primary" danger={isEdit}>
+                {isEdit ? "Save" : "Edit"}
+              </Button>
+            </Col>
+          </Row>
         </Form>
       </Card>
     </div>
