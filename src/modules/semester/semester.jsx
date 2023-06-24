@@ -71,8 +71,9 @@ function Semester() {
       const formValues = form.getFieldsValue();
       console.log("Form values:", formValues);
       const res = await ApiService.post("semesters", formValues);
-      if (res.ErrorCode === 0)  message.success("Successfully created new Semester");
+      message.success("Successfully created new Semester");
       form.resetFields();
+      fetchData();
     } catch (e) {
      message.error(`${e.message}   email is used or incorrect format`);
     }
@@ -125,20 +126,6 @@ function Semester() {
         <div className={style.selectClass}>
           <Row style={{ marginTop: 9, marginBottom: 9 }}>
             <Col flex={4}>
-            </Col>
-            <Col flex={2}>
-              <AutoComplete
-                placeholder="Please type year"
-                style={{width:'90%'}}
-                onSearch={(value) => {
-                  setYearQuery(value);
-                }}
-              />
-            </Col>
-            <Col flex={0}>
-              <Button onClick={searchHandler} htmlType="search" type="primary">
-                Search
-              </Button>
             </Col>
           </Row>
         </div>

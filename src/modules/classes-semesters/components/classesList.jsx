@@ -163,7 +163,7 @@ function ClassesList(props) {
           columns={columns}
          
         />
-        <Row>
+        {user.role === "Admin" && <Row>
           <Col flex={4}></Col>
           <Col flex={0.5}>
             <Button 
@@ -176,7 +176,7 @@ function ClassesList(props) {
               Add Class
             </Button>
           </Col>
-        </Row>
+        </Row>}
       </Card>
       
     </div>

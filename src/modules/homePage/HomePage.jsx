@@ -42,7 +42,7 @@ function HomePage() {
         </Col>
         <Col span={12}>
           <Card onClick={()=>{
-                navigate("/app/classes-semesters");
+                //navigate("/app/classes-grade");
               }}>
             <Title level={3}>Total classes</Title>
             <Divider />

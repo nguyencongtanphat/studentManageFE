@@ -45,6 +45,7 @@ function AddNewClass() {
   const [selectedSemester, setSelectedSemester] = useState();
   const [classSemesters, setClassSemesters] = useState();
   const [subjectTeacherList, setSubjectTeacherList] = useState([]);
+  const [maxNumber, setMaxNumber] = useState(0)
 
   //load class semester
   useEffect(() => {
@@ -52,6 +53,10 @@ function AddNewClass() {
       const classSemesters = await ApiService.get("classes-semester");
       console.log("classSemesters:", classSemesters);
       setClassSemesters(classSemesters);
+      const maxNumberDb = await ApiService.get(
+        "parameters?name=maximum quantity"
+      );
+      setMaxNumber(Number(maxNumberDb[0].value));
     };
     fetchData();
   }, []);
@@ -102,6 +107,7 @@ function AddNewClass() {
             onOk() {},
           });
         } else {
+          
           const idStudentsList = studentsList.map((student) => student.id);
           const data = {
             idClass: selectedClass,

@@ -134,12 +134,15 @@ function ScoreAverage() {
         let newData;
         if (valueName !== '' && valueYear !== '') {
             newData = data.filter((item) => {
-                return String(item.fullName) === valueName && String(item.year) === String(valueYear);
+                return (
+                  item.fullName.includes(valueName) &&
+                  String(item.year) === String(valueYear)
+                );
             });
         }
         else if (valueName !== '' && valueYear === '') {
             newData = data.filter((item) => {
-                return String(item.fullName) === valueName;
+                return item.fullName.includes(valueName);
             });
         }
         else if (valueName === '' && valueYear !== '') {

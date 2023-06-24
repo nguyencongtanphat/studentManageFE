@@ -7,6 +7,7 @@ import ApiService from "../../../ApiService";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DeleteOutlined } from "@ant-design/icons";
+import { useSelector, useDispatch } from "react-redux";
 
 function ClassSemesterDetail() {
   const columns = [
@@ -50,7 +51,9 @@ function ClassSemesterDetail() {
       ),
     },
   ];
-
+  const user = useSelector((state) => {
+    return state.login.value;
+  });
   const coulumsEdit = [
     {
       title: "ID",
@@ -245,7 +248,7 @@ function ClassSemesterDetail() {
               </Button>
             )}
           </Col>
-          <Col>
+          {user.role==="Admin" && <Col>
             <Button
               type="primary"
               danger = {isEdit}
@@ -259,7 +262,7 @@ function ClassSemesterDetail() {
             >
               {!isEdit ? "Edit" :  "Save" }
             </Button>
-          </Col>
+          </Col>}
         </Row>
       </Card>
     </div>

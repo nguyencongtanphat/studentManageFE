@@ -25,7 +25,9 @@ function AddingScore () {
     useEffect(() => {
         const fetchFieldData = async () => {
             const classesApi = await ApiService.get('classes');
-            const subjectsApi = await ApiService.get('subjects');
+            const subjectsApi = await ApiService.get(
+              "subjects?isIdTeacher=true"
+            );
             const semestersApi = await ApiService.get('semesters');
             const parametersApi = await ApiService.get('parameters');
             const classsA = classesApi.map((item,index) => {

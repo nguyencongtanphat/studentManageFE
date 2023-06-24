@@ -81,8 +81,8 @@ function SideMenu() {
             icon: <BarChartOutlined />,
             children: [
               {
-                label: "Class Report",
-                key: "semesterReport",
+                label: "Subject report",
+                key: "subjectReport",
               },
               {
                 label: "Semester Report",
